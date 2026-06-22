@@ -1,0 +1,170 @@
+<!--
+=============================================================
+UPDATE für: helges-pcwelt.de/blog/linux/microsoft-kontrolliert-deinen-pc/
+Datei:      01.3.2-Microsoft kontrolliert deinen PC! - Helges-PC Welt.html
+=============================================================
+
+SCHRITT 1 — Button einfügen:
+  Suche im HTML nach dem Block:
+    <div class="msb-phase-buttons">
+  Füge NACH dem dritten <button>-Tag (showMSBPhase('loesung')) folgendes ein:
+    --> Snippet A unten
+
+SCHRITT 2 — Phase-Block einfügen:
+  Suche nach dem abschliessenden </div> von id="msb-loesung"
+  (Zeile nach dem letzten </div> der msb-feature-grid in msb-loesung,
+  BEVOR <!-- FAQ Section --> beginnt)
+  Füge dort direkt dahinter ein:
+    --> Snippet B unten
+
+=============================================================
+SNIPPET A — Button (in .msb-phase-buttons einfügen, nach dem dritten Button)
+=============================================================
+-->
+
+<button class="msb-phase-btn" onclick="showMSBPhase('update2026')">&#128680; Update 2026</button>
+
+<!--
+=============================================================
+SNIPPET B — Phase-Block (nach </div> von id="msb-loesung" einfügen)
+=============================================================
+-->
+
+    <!-- Phase 4: Update 2026 -->
+    <div id="msb-update2026" class="msb-phase-content">
+        <h2 style="text-align: center; margin-bottom: 10px;">Dein PC läuft noch. Microsoft dreht ihm trotzdem still den Sicherheitssaft ab.</h2>
+        <p style="text-align: center; color: #aaa; margin-bottom: 30px;">Was am 27. Juni 2026 abläuft — und warum du davon keine Benachrichtigung bekommst.</p>
+
+        <div class="msb-info-box danger">
+            <h4>&#128680; Das Wichtigste in drei Sätzen:</h4>
+            <p>
+                Seit 2012 hat dein PC beim Starten eine Art Türsteher: Er prüft ob der Startvorgang manipuliert wurde — bevor Windows überhaupt lädt. Am 27. Juni 2026 läuft das Zertifikat ab, das diesem Türsteher seine Berechtigung gibt. Wer kein Update bekommt, hat danach einen Türsteher ohne Ausweis — er steht noch da, aber er erkennt keine neuen Bedrohungen mehr.
+            </p>
+        </div>
+
+        <div class="msb-timeline">
+            <div class="msb-timeline-item">
+                <div class="msb-timeline-year">27. Juni 2026</div>
+                <h4>Das erste Ablaufdatum — still, ohne Warnung</h4>
+                <p>Ein Sicherheitszertifikat das seit 2012 deinen PC beim Starten schützt, läuft ab. Stell dir vor dein Personalausweis verfällt, aber niemand sagt dir Bescheid und du merkst es erst wenn du irgendwo abgewiesen wirst. Windows 11 bekommt automatisch einen neuen Ausweis. Windows 10 nicht. 240 Millionen Windows-10-Nutzer weltweit — alle bekommen nichts, weil Microsoft den Support dafür im Oktober 2025 eingestellt hat. Die offizielle Lösung laut Microsoft: kauf dir einen neuen PC.</p>
+            </div>
+
+            <div class="msb-timeline-item">
+                <div class="msb-timeline-year">Oktober 2026</div>
+                <h4>Das zweite Ablaufdatum — gleiches Spiel, vier Monate später</h4>
+                <p>Noch ein Zertifikat läuft ab. Wer bis dahin noch kein Update bekommen hat, steht mit einem Sicherheitssystem da das glaubt es funktioniert — aber dessen Berechtigungsnachweise längst abgelaufen sind. Die Anzeige sagt "geschützt". Die Realität sagt etwas anderes.</p>
+            </div>
+
+            <div class="msb-timeline-item">
+                <div class="msb-timeline-year">Ende 2026 / 2027</div>
+                <h4>HP und andere Hersteller liefern zuletzt</h4>
+                <p>HP hat angekündigt, die neuen Zertifikate über die Recovery-Partition zu verteilen — aber frühestens Ende 2026. Wer seinen PC nicht komplett neu aufsetzt, wartet also noch länger. HP ist kein Sonderfall. Die meisten Hersteller liefern Sicherheitsupdates für ältere Geräte mit Verzögerung oder gar nicht.</p>
+            </div>
+        </div>
+
+        <div class="msb-feature-grid">
+            <div class="msb-feature-card">
+                <div class="msb-feature-icon">&#128683;</div>
+                <h3>Windows 10 — geht leer aus</h3>
+                <p>Support-Ende war Oktober 2025. Die neuen Zertifikate liefert Microsoft für Windows 10 nicht. Betroffen: 240 Millionen Nutzer weltweit, Stand Anfang 2026. Ohne Ausnahme.</p>
+            </div>
+
+            <div class="msb-feature-card">
+                <div class="msb-feature-icon">&#128197;</div>
+                <h3>Ältere PCs — kein Firmware-Update</h3>
+                <p>PCs die älter als fünf Jahre sind, bekommen oft keine Sicherheitsupdates mehr vom Hersteller. Nicht weil es technisch nicht geht — sondern weil der Hersteller aufgehört hat zu liefern. Dein PC funktioniert noch einwandfrei. Er wird trotzdem zum erklärten Sicherheitsrisiko.</p>
+            </div>
+
+            <div class="msb-feature-card">
+                <div class="msb-feature-icon">&#128260;</div>
+                <h3>Das Muster ist kein Zufall</h3>
+                <p>Oktober 2025: Support weg. Juni 2026: erstes Zertifikat. Oktober 2026: zweites Zertifikat. Immer dieselbe Richtung: neuer PC. Wer das dreimal hintereinander plant, plant es.</p>
+            </div>
+        </div>
+
+        <h2 style="text-align: center; margin: 40px 0 20px;">Black Lotus — der Virus den dein Antivirenprogramm nicht sieht</h2>
+        <p style="text-align: center; color: #aaa; margin-bottom: 30px;">Microsoft wusste seit 2022 davon. Hat nichts getan.</p>
+
+        <div class="msb-info-box danger">
+            <h4>&#128027; Was Black Lotus ist — ohne Fachchinesisch:</h4>
+            <p>
+                Black Lotus ist Schadsoftware. Sie startet vor Windows — noch bevor dein Betriebssystem überhaupt lädt. Das ist wie ein Einbrecher der sich nicht durch die Haustür schleicht, sondern schon im Keller sitzt bevor du aufwachst.<br><br>
+                <strong>Preis:</strong> 5.000 Euro Kaufpreis, 200 Euro Monatsabo. Kaufbar wie jede Software, nur im Darknet.<br>
+                <strong>Größe:</strong> 80 KB. Kleiner als ein einzelnes Foto auf deinem Handy.<br>
+                <strong>Was sie macht:</strong> Schaltet deinen Virenscanner aus. Schaltet die Windows-Verschlüsselung aus. Schaltet den eingebauten Microsoft-Schutz aus. Alles auf einmal — und dein Antivirenprogramm sieht davon nichts, weil es zu spät startet.<br>
+                <strong>Das Perverse daran:</strong> Black Lotus überlebt sogar eine komplette Windows-Neuinstallation. Weil sie nicht auf der Festplatte sitzt, sondern tiefer — in der Schicht die vor Windows startet.
+            </p>
+        </div>
+
+        <div class="msb-steps">
+            <div class="msb-step">
+                <div class="msb-step-number">1</div>
+                <div class="msb-step-content">
+                    <h4>Microsoft wusste es — seit Januar 2022</h4>
+                    <p>Black Lotus nutzt eine Sicherheitslücke die Microsoft im Januar 2022 bekannt war. Ein Patch erschien. Soweit so normal. Nur: Microsoft hat Black Lotus nie auf die Sperrliste gesetzt. Das ist, als würde ein Schlüsseldienst nach einem Einbruch das Schloss wechseln — aber den kopierten Schlüssel des Einbrechers weiterhin akzeptieren. Jahrelang. Die Frage ob das Absicht oder Schlamperei war, beantwortet Microsoft nicht. Die Frage warum es niemanden interessiert hat, ist mindestens so gut.</p>
+                </div>
+            </div>
+
+            <div class="msb-step">
+                <div class="msb-step-number">2</div>
+                <div class="msb-step-content">
+                    <h4>Was das mit dem Zertifikat-Ablauf zu tun hat</h4>
+                    <p>Der Türsteher vom Anfang — der der beim Start prüft ob alles sauber ist — hätte Black Lotus erkennen können, wenn er die richtigen Sperrlisten gehabt hätte. Hat er nicht. Und wer jetzt kein Update bekommt weil sein PC zu alt ist oder Windows 10 läuft, hat diese Schutzfunktion auch in Zukunft nicht. Die abgelaufenen Zertifikate bedeuten: kein Schutz gegen neue Bedrohungen dieser Art mehr. Die alten Lücken bleiben offen.</p>
+                </div>
+            </div>
+
+            <div class="msb-step">
+                <div class="msb-step-number">3</div>
+                <div class="msb-step-content">
+                    <h4>Die Falle schnappt zu wenn man flieht</h4>
+                    <p>Wer jetzt denkt: "Ich schalte diesen Startschutz kurz aus und wieder an, dann hat sich das" — Vorsicht. Das Aus- und Einschalten setzt alles auf Werksstand zurück. Inklusive aller Updates die du bisher bekommen hast. Du stehst dann schlechter da als vorher. Die Falle ist so gebaut, dass der Ausweg zurück in die Falle führt.</p>
+                </div>
+            </div>
+        </div>
+
+        <h2 style="text-align: center; margin: 40px 0 20px;">Bin ich betroffen? — Einfacher Check, klare Antwort</h2>
+
+        <div class="msb-steps">
+            <div class="msb-step">
+                <div class="msb-step-number">1</div>
+                <div class="msb-step-content">
+                    <h4>Die schwarze Box öffnen</h4>
+                    <p>Drücke gleichzeitig die Windows-Taste und R. Es erscheint ein kleines Fenster. Tippe dort <strong>powershell</strong> ein und drücke nicht einfach Enter — sondern halte gleichzeitig Strg und Umschalt gedrückt, dann Enter. Wenn Windows fragt ob du erlaubst dass eine App Änderungen vornimmt: Ja klicken. Es öffnet sich ein schwarzes Fenster mit weißer Schrift. Das ist die schwarze Box.</p>
+                </div>
+            </div>
+            <div class="msb-step">
+                <div class="msb-step-number">2</div>
+                <div class="msb-step-content">
+                    <h4>Diesen Befehl hineinkopieren</h4>
+                    <p>Kopiere den folgenden Text komplett, klicke dann in die schwarze Box und drücke Strg+V um ihn einzufügen. Dann Enter drücken.</p>
+                    <p style="margin-top: 12px; background: #1a1a1a; color: #00ff41; padding: 15px; border-radius: 6px; font-family: monospace; font-size: 0.9em; word-break: break-all; line-height: 1.6;">
+                        [System.Text.Encoding]::UTF8.GetString((Get-SecureBootUEFI db).bytes) -match 'Windows UEFI CA 2023'
+                    </p>
+                </div>
+            </div>
+            <div class="msb-step">
+                <div class="msb-step-number">3</div>
+                <div class="msb-step-content">
+                    <h4>Das Ergebnis lesen</h4>
+                    <p>
+                        Die schwarze Box antwortet mit einem einzelnen Wort.<br><br>
+                        <strong style="color: #16a34a;">True</strong> — Du hast das neue Sicherheitszertifikat. Dein System ist auf dem Stand den Microsoft für 2026 vorgesehen hat. Vorerst.<br><br>
+                        <strong style="color: #dc2626;">False</strong> — Das neue Zertifikat fehlt. Dein PC hat nach dem 27. Juni 2026 keinen aktualisierten Startschutz mehr. Was du dagegen tun kannst: schaue zuerst ob dein PC-Hersteller ein Firmware-Update für dein Modell anbietet. Wenn nicht, lohnt sich der Blick auf Linux — dazu gleich mehr.<br><br>
+                        <span style="color: #888; font-size: 0.9em;">Erscheint stattdessen eine Fehlermeldung: Der Startschutz ist auf deinem System ausgeschaltet. Der Check ist dann nicht nötig — aber Schutz hast du auch keinen.</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="msb-info-box danger">
+            <h4>&#128073; Was das alles wirklich bedeutet — klar gesagt:</h4>
+            <p>
+                Dein PC läuft. Du hast keine Probleme. Microsoft hat dir kein Problem geschickt.<br>
+                Microsoft hat nur aufgehört, dich vor neuen Problemen zu schützen.<br><br>
+                Das ist der Unterschied zwischen einem PC der kaputt ist — und einem PC dem still der Sicherheitssaft abgedreht wird, weil der Konzern dahinter möchte dass du einen neuen kaufst.<br><br>
+                <strong>Linux Mint</strong> läuft auf demselben PC den du gerade benutzt — ob er drei Jahre alt ist oder zehn. Kein Ablaufdatum, kein Zertifikatsstress, kein schwarzes Fenster das dir sagt ob Microsoft dich noch für würdig hält. Kostenlos. Niemand zieht den Stecker.<br><br>
+                Was es bedeutet wenn ein Konzern entscheidet wann dein PC sicher ist und wann nicht, steht hier:
+                <a href="https://helges-pcwelt.de/blog/linux/digitale-souveraenitaet/digitale-erpressbarkeit/" style="color: #c22f1e;">Digitale Erpressbarkeit — was das ist und warum es dich betrifft.</a>
+            </p>
+        </div>
+    </div>

@@ -1,0 +1,805 @@
+<!--
+════════════════════════════════════════════════════════════
+  ELEMENTOR-AUFBAU – "Deine Daten, dein Backup"
+  helgereichert.de · Digitale Souveränität
+
+  ANLEITUNG:
+  1. CSS-Block (SCHRITT 1) → Elementor > Site-Einstellungen
+     > Eigenes CSS einfügen (oder WP-Customizer > Eigenes CSS)
+  2. Jeder "HTML-Widget"-Block → eigenes Elementor HTML-Widget
+  3. Überschriften & Fließtext → normale Text/Heading-Widgets
+     (damit Elementor-Typo-Einstellungen greifen)
+════════════════════════════════════════════════════════════
+-->
+
+
+<!-- ══════════════════════════════════════════════════════
+     SCHRITT 1 — GLOBALES CSS
+     → Elementor > Site-Einstellungen > Eigenes CSS
+     ══════════════════════════════════════════════════════ -->
+<style id="backup-artikel-css">
+/* ── Backup-Artikel · Globale Variablen ── */
+:root {
+  --ba-accent:   #4f8ef7;
+  --ba-green:    #34c47c;
+  --ba-warn:     #f7a84f;
+  --ba-red:      #f05050;
+  --ba-purple:   #9564f0;
+  --ba-surface:  #1a1d27;
+  --ba-surface2: #22263a;
+  --ba-border:   #2e3347;
+  --ba-text:     #e0e4f0;
+  --ba-muted:    #8b92ab;
+  --ba-code-bg:  #12151f;
+}
+
+/* ── Callout-Boxen ── */
+.ba-callout {
+  border-radius: 10px;
+  padding: 16px 20px;
+  margin: 20px 0;
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+.ba-callout-icon { font-size: 1.25rem; flex-shrink: 0; margin-top: 2px; }
+.ba-callout-body p  { margin: 0; font-size: .93rem; }
+.ba-callout-body strong { display: block; margin-bottom: 4px; }
+.ba-callout.info   { background: rgba(79,142,247,.08);  border: 1px solid rgba(79,142,247,.25); color: var(--ba-accent); }
+.ba-callout.warn   { background: rgba(247,168,79,.08);  border: 1px solid rgba(247,168,79,.25); color: var(--ba-warn); }
+.ba-callout.good   { background: rgba(52,196,124,.08);  border: 1px solid rgba(52,196,124,.25); color: var(--ba-green); }
+.ba-callout.info strong { color: #93b8fc; }
+.ba-callout.warn strong { color: #ffd08a; }
+.ba-callout.good strong { color: #7de8b0; }
+
+/* ── Tool-Cards ── */
+.ba-tool-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 16px;
+  margin: 20px 0;
+}
+.ba-card {
+  background: var(--ba-surface);
+  border: 1px solid var(--ba-border);
+  border-radius: 12px;
+  padding: 20px;
+  transition: border-color .2s;
+}
+.ba-card:hover { border-color: var(--ba-accent); }
+.ba-card-head  { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+.ba-logo {
+  width: 36px; height: 36px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem; font-weight: 700; flex-shrink: 0;
+}
+.ba-logo.veeam  { background: rgba(0,160,233,.15); color: #00a0e9; }
+.ba-logo.time   { background: rgba(52,196,124,.15); color: var(--ba-green); }
+.ba-logo.borg   { background: rgba(247,168,79,.15); color: var(--ba-warn); }
+.ba-logo.rsync  { background: rgba(149,100,240,.15); color: var(--ba-purple); }
+.ba-card h4   { font-size: .95rem; font-weight: 700; color: var(--ba-text); margin: 0; }
+.ba-card .sub { font-size: .78rem; color: var(--ba-muted); }
+.ba-tags  { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 12px; }
+.ba-tag   { font-size: .7rem; font-weight: 600; padding: 2px 9px; border-radius: 20px; }
+.ba-tag.g { background: rgba(52,196,124,.15);  color: var(--ba-green); }
+.ba-tag.b { background: rgba(79,142,247,.15);  color: var(--ba-accent); }
+.ba-tag.w { background: rgba(247,168,79,.15);  color: var(--ba-warn); }
+.ba-tag.p { background: rgba(149,100,240,.15); color: var(--ba-purple); }
+.ba-tag.r { background: rgba(240,80,80,.15);   color: var(--ba-red); }
+.ba-pros, .ba-cons { list-style: none; padding: 0; font-size: .85rem; }
+.ba-pros li::before { content: '+ '; color: var(--ba-green); font-weight: 700; }
+.ba-cons li::before { content: '– '; color: var(--ba-red); font-weight: 700; }
+.ba-pros li, .ba-cons li { color: var(--ba-muted); margin-bottom: 4px; }
+.ba-pros li strong, .ba-cons li strong { color: var(--ba-text); }
+.ba-verdict {
+  margin-top: 12px; padding-top: 12px;
+  border-top: 1px solid var(--ba-border);
+  font-size: .82rem; color: var(--ba-muted);
+}
+.ba-verdict strong { color: var(--ba-text); }
+
+/* ── Entscheidungs-Tabelle ── */
+.ba-table { width: 100%; border-collapse: collapse; font-size: .9rem; margin: 16px 0; }
+.ba-table th { background: var(--ba-surface2); color: var(--ba-text); font-weight: 600; padding: 11px 14px; text-align: left; border-bottom: 2px solid var(--ba-border); }
+.ba-table td { padding: 10px 14px; color: var(--ba-muted); border-bottom: 1px solid var(--ba-border); }
+.ba-table tr:last-child td { border-bottom: none; }
+.ba-table tr:hover td { background: var(--ba-surface); }
+.ba-table td:first-child { color: var(--ba-text); font-weight: 500; }
+.ba-table .best { color: var(--ba-green); font-weight: 600; }
+
+/* ── Tabs ── */
+.ba-tabs { margin: 20px 0; }
+.ba-tab-nav {
+  display: flex; gap: 4px;
+  background: var(--ba-surface2);
+  border-radius: 10px; padding: 4px;
+  margin-bottom: 20px; flex-wrap: wrap;
+}
+.ba-tab-btn {
+  flex: 1; min-width: 110px;
+  padding: 8px 14px; border: none;
+  background: transparent; color: var(--ba-muted);
+  font-size: .88rem; font-weight: 500;
+  border-radius: 7px; cursor: pointer;
+  transition: all .2s; white-space: nowrap;
+}
+.ba-tab-btn.active { background: var(--ba-accent); color: #fff; font-weight: 600; }
+.ba-tab-btn:not(.active):hover { color: var(--ba-text); background: var(--ba-border); }
+.ba-tab-panel { display: none; }
+.ba-tab-panel.active { display: block; }
+
+/* ── Code-Blöcke ── */
+.ba-code { background: var(--ba-code-bg); border: 1px solid var(--ba-border); border-radius: 10px; overflow: hidden; margin: 14px 0; }
+.ba-code-header { display: flex; justify-content: space-between; align-items: center; padding: 9px 14px; background: var(--ba-surface2); border-bottom: 1px solid var(--ba-border); }
+.ba-code-label { font-size: .75rem; color: var(--ba-muted); font-family: monospace; }
+.ba-copy { background: transparent; border: 1px solid var(--ba-border); color: var(--ba-muted); font-size: .75rem; padding: 3px 9px; border-radius: 5px; cursor: pointer; transition: all .15s; }
+.ba-copy:hover   { border-color: var(--ba-accent); color: var(--ba-accent); }
+.ba-copy.copied  { border-color: var(--ba-green);  color: var(--ba-green); }
+.ba-pre {
+  padding: 16px 18px; overflow-x: auto; margin: 0;
+  font-family: 'JetBrains Mono','Fira Code',monospace;
+  font-size: .85rem; line-height: 1.65; color: #c8d0e8;
+}
+.ba-c  { color: #4a5068; } /* comment */
+.ba-k  { color: #4f8ef7; } /* command */
+.ba-f  { color: #34c47c; } /* flag */
+.ba-p  { color: #f7a84f; } /* path */
+.ba-o  { color: #8b92ab; } /* output */
+
+/* ── Step-Liste ── */
+.ba-steps { list-style: none; counter-reset: s; padding: 0; }
+.ba-steps li {
+  counter-increment: s;
+  padding: 16px 16px 16px 58px;
+  position: relative;
+  border-left: 2px solid var(--ba-border);
+  margin-left: 18px; margin-bottom: 6px;
+}
+.ba-steps li::before {
+  content: counter(s);
+  position: absolute; left: -18px; top: 14px;
+  width: 32px; height: 32px;
+  background: var(--ba-accent); color: #fff;
+  font-weight: 700; font-size: .85rem;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+}
+.ba-steps li:last-child { border-left-color: transparent; }
+.ba-steps li strong { color: var(--ba-text); display: block; margin-bottom: 4px; }
+.ba-steps li p { margin: 0; font-size: .88rem; color: var(--ba-muted); }
+
+/* ── Accordion ── */
+.ba-acc { margin: 14px 0; }
+.ba-acc-item { background: var(--ba-surface); border: 1px solid var(--ba-border); border-radius: 10px; margin-bottom: 6px; overflow: hidden; }
+.ba-acc-trigger { width: 100%; background: transparent; border: none; padding: 14px 18px; text-align: left; cursor: pointer; display: flex; justify-content: space-between; align-items: center; color: var(--ba-text); font-size: .92rem; font-weight: 600; }
+.ba-acc-trigger:hover { background: var(--ba-surface2); }
+.ba-acc-icon { font-size: 1.1rem; transition: transform .2s; color: var(--ba-muted); }
+.ba-acc-item.open .ba-acc-icon { transform: rotate(45deg); color: var(--ba-accent); }
+.ba-acc-body { display: none; padding: 0 18px 18px; }
+.ba-acc-item.open .ba-acc-body { display: block; }
+
+/* ── Responsiv ── */
+@media (max-width: 600px) {
+  .ba-tool-grid { grid-template-columns: 1fr; }
+  .ba-tab-btn   { min-width: 80px; font-size: .8rem; }
+}
+</style>
+
+
+<!-- ══════════════════════════════════════════════════════
+     SCHRITT 2 — SEITENSTRUKTUR IN ELEMENTOR
+
+     Empfohlener Aufbau:
+     ┌─────────────────────────────────────────────┐
+     │  Section: HERO                              │
+     │  → Elementor Heading-Widget (H1)            │
+     │  → Elementor Text-Widget (Intro-Text)       │
+     ├─────────────────────────────────────────────┤
+     │  Section: EINSTIEG                          │
+     │  → Heading-Widget (H2)                      │
+     │  → Text-Widget (Absätze)                    │
+     │  → HTML-Widget: [WIDGET A] Callout-Box      │
+     ├─────────────────────────────────────────────┤
+     │  Section: TOOL-VERGLEICH                    │
+     │  → Heading-Widget (H2)                      │
+     │  → HTML-Widget: [WIDGET B] Tool-Cards       │
+     ├─────────────────────────────────────────────┤
+     │  Section: ENTSCHEIDUNGSHILFE                │
+     │  → Heading-Widget (H2)                      │
+     │  → HTML-Widget: [WIDGET C] Tabelle          │
+     ├─────────────────────────────────────────────┤
+     │  Section: VEEAM PRAXIS                      │
+     │  → Heading-Widget (H2)                      │
+     │  → HTML-Widget: [WIDGET D] Callout          │
+     │  → HTML-Widget: [WIDGET E] Tabs (Haupt)     │
+     ├─────────────────────────────────────────────┤
+     │  Section: TIMESHIFT & BORG                  │
+     │  → Heading-Widget (H2)                      │
+     │  → HTML-Widget: [WIDGET F] Code-Blöcke      │
+     ├─────────────────────────────────────────────┤
+     │  Section: FAZIT / CTA                       │
+     │  → Heading-Widget (H2)                      │
+     │  → Text-Widget                              │
+     │  → HTML-Widget: [WIDGET G] Fazit-Cards      │
+     │  → Button-Widget (Elementor-nativ)          │
+     └─────────────────────────────────────────────┘
+     ══════════════════════════════════════════════════════ -->
+
+
+<!-- ══════════════════════════════════════════════════════
+     [WIDGET A] — Callout-Box "3-2-1-Regel"
+     → In Elementor HTML-Widget einfügen
+     ══════════════════════════════════════════════════════ -->
+<div class="ba-callout warn">
+  <div class="ba-callout-icon">⚠️</div>
+  <div class="ba-callout-body">
+    <strong>Die 3-2-1-Regel gilt auch für Selbsthoster</strong>
+    <p>3 Kopien der Daten · auf 2 verschiedenen Medien · davon 1 an einem anderen Ort.<br>
+    Wer nur eine lokale Sicherung hat, hat kein Backup — er hat eine zweite Quelle für denselben Hausbrand.</p>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════
+     [WIDGET B] — Tool-Cards (Vergleich)
+     → In Elementor HTML-Widget einfügen
+     ══════════════════════════════════════════════════════ -->
+<div class="ba-tool-grid">
+
+  <div class="ba-card">
+    <div class="ba-card-head">
+      <div class="ba-logo veeam">V</div>
+      <div><h4>Veeam Agent for Linux</h4><div class="sub">Free Edition</div></div>
+    </div>
+    <div class="ba-tags">
+      <span class="ba-tag b">Bare-Metal</span>
+      <span class="ba-tag g">Gratis</span>
+      <span class="ba-tag w">Proprietär</span>
+    </div>
+    <ul class="ba-pros">
+      <li><strong>Bare-Metal-Recovery</strong> — komplettes System wiederherstellbar</li>
+      <li><strong>Bootfähige Recovery-ISO</strong> — auch bei defektem OS</li>
+      <li>Inkrementelle Backups, Zeitplan, GUI + CLI</li>
+      <li>NFS/SMB/Lokal als Backup-Ziel</li>
+    </ul>
+    <ul class="ba-cons">
+      <li>Proprietäre Software</li>
+      <li>Konto-Registrierung empfohlen</li>
+      <li>Free: max. 2 gleichzeitige Jobs</li>
+    </ul>
+    <div class="ba-verdict"><strong>Ideal für:</strong> Server &amp; Workstations, wenn komplette System-Recovery gebraucht wird</div>
+  </div>
+
+  <div class="ba-card">
+    <div class="ba-card-head">
+      <div class="ba-logo time">⟳</div>
+      <div><h4>Timeshift</h4><div class="sub">rsync / btrfs</div></div>
+    </div>
+    <div class="ba-tags">
+      <span class="ba-tag g">Open Source</span>
+      <span class="ba-tag b">Desktop</span>
+      <span class="ba-tag p">System-Snapshots</span>
+    </div>
+    <ul class="ba-pros">
+      <li><strong>System-Snapshots</strong> wie Windows Systemwiederherstellung</li>
+      <li>Einfachste Bedienung, GUI inklusive</li>
+      <li>btrfs-Snapshots extrem schnell &amp; platzsparend</li>
+      <li>Perfekt als Sicherheitsnetz vor Updates</li>
+    </ul>
+    <ul class="ba-cons">
+      <li>Kein Backup von /home per default</li>
+      <li>Kein Bare-Metal-Recovery fremder Systeme</li>
+      <li>Sinnvoll nur lokal oder btrfs</li>
+    </ul>
+    <div class="ba-verdict"><strong>Ideal für:</strong> Linux-Desktop vor jedem größeren Update absichern</div>
+  </div>
+
+  <div class="ba-card">
+    <div class="ba-card-head">
+      <div class="ba-logo borg">B</div>
+      <div><h4>BorgBackup</h4><div class="sub">+ Vorta / Borgmatic</div></div>
+    </div>
+    <div class="ba-tags">
+      <span class="ba-tag g">Open Source</span>
+      <span class="ba-tag b">Deduplizierung</span>
+      <span class="ba-tag g">Verschlüsselt</span>
+    </div>
+    <ul class="ba-pros">
+      <li><strong>Deduplizierung</strong> — minimaler Platzbedarf</li>
+      <li>Starke Verschlüsselung AES256+HMAC</li>
+      <li>Backup auf Remote-Host via SSH</li>
+      <li>Vorta (GUI) oder borgmatic (YAML)</li>
+    </ul>
+    <ul class="ba-cons">
+      <li>Kein Bare-Metal-Recovery out-of-box</li>
+      <li>Steilere Lernkurve</li>
+      <li>Kein Live-DB-Backup ohne Hook</li>
+    </ul>
+    <div class="ba-verdict"><strong>Ideal für:</strong> Daten-Backups auf eigenen Remote-Server, platzsparend &amp; verschlüsselt</div>
+  </div>
+
+  <div class="ba-card">
+    <div class="ba-card-head">
+      <div class="ba-logo rsync">↔</div>
+      <div><h4>rsync</h4><div class="sub">+ rsnapshot</div></div>
+    </div>
+    <div class="ba-tags">
+      <span class="ba-tag g">Open Source</span>
+      <span class="ba-tag p">Einfach</span>
+      <span class="ba-tag b">Flexibel</span>
+    </div>
+    <ul class="ba-pros">
+      <li><strong>Überall verfügbar</strong> — kein Setup nötig</li>
+      <li>Maximale Flexibilität durch Shell-Skripte</li>
+      <li>rsnapshot für automatische Rotationslogik</li>
+      <li>Lesbare Sicherungen (normales Dateisystem)</li>
+    </ul>
+    <ul class="ba-cons">
+      <li>Kein Bare-Metal-Recovery</li>
+      <li>Keine Verschlüsselung nativ</li>
+      <li>Fehlerhandling selbst gebastelt</li>
+    </ul>
+    <div class="ba-verdict"><strong>Ideal für:</strong> einfache Daten-Synchronisation, Skripting, Ergänzung zu anderen Tools</div>
+  </div>
+
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════
+     [WIDGET C] — Entscheidungs-Tabelle
+     → In Elementor HTML-Widget einfügen
+     ══════════════════════════════════════════════════════ -->
+<div style="overflow-x:auto;">
+  <table class="ba-table">
+    <thead>
+      <tr>
+        <th>Szenario</th>
+        <th>Empfehlung</th>
+        <th>Warum</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Produktiv-Server (Debian/Ubuntu)</td>
+        <td class="best">Veeam Agent</td>
+        <td>Bare-Metal-Recovery, Image-Backup, Zeitplan</td>
+      </tr>
+      <tr>
+        <td>Linux-Desktop vor Update absichern</td>
+        <td class="best">Timeshift</td>
+        <td>Einfachster Workflow, System-Snapshot in Sekunden</td>
+      </tr>
+      <tr>
+        <td>Daten verschlüsselt auf NAS/SSH sichern</td>
+        <td class="best">BorgBackup</td>
+        <td>Deduplizierung + AES256, remote-fähig</td>
+      </tr>
+      <tr>
+        <td>Simples /home-Backup lokal oder Netzwerk</td>
+        <td class="best">rsync</td>
+        <td>Null Overhead, sofort verfügbar, lesbare Sicherung</td>
+      </tr>
+      <tr>
+        <td>Vollständige Absicherung (Profi)</td>
+        <td class="best">Veeam + Borg</td>
+        <td>System-Image + verschlüsseltes Remote-Daten-Backup</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════
+     [WIDGET D] — Callout "Proprietär aber lokal"
+     → In Elementor HTML-Widget einfügen
+     ══════════════════════════════════════════════════════ -->
+<div class="ba-callout info">
+  <div class="ba-callout-icon">ℹ️</div>
+  <div class="ba-callout-body">
+    <strong>Proprietär, aber lokal</strong>
+    <p>Veeam Agent for Linux Free ist closed-source. Der kritische Unterschied zu Cloud-Zwangs-Produkten:
+    Die Sicherung läuft vollständig lokal oder auf deinen eigenen Zielen — NFS, SMB, externes Medium.
+    Keine Daten gehen zu Veeam.</p>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════
+     [WIDGET E] — Veeam Praxis-Tabs (Haupt-Widget)
+     → In Elementor HTML-Widget einfügen
+     ══════════════════════════════════════════════════════ -->
+<div class="ba-tabs" id="veeam-tabs">
+  <div class="ba-tab-nav">
+    <button class="ba-tab-btn active" onclick="baTab(this,'vt-install')">1 · Installation</button>
+    <button class="ba-tab-btn"        onclick="baTab(this,'vt-config')">2 · Konfiguration</button>
+    <button class="ba-tab-btn"        onclick="baTab(this,'vt-recovery')">3 · Bare-Metal-Recovery</button>
+    <button class="ba-tab-btn"        onclick="baTab(this,'vt-auto')">4 · Automatisierung</button>
+  </div>
+
+  <!-- Tab 1: Installation -->
+  <div class="ba-tab-panel active" id="vt-install">
+
+    <h3 style="color:#e0e4f0; margin:0 0 12px;">Debian / Ubuntu</h3>
+    <div class="ba-code">
+      <div class="ba-code-header">
+        <span class="ba-code-label">bash · Repo &amp; Installation</span>
+        <button class="ba-copy" onclick="baCopy(this)">Kopieren</button>
+      </div>
+      <pre class="ba-pre"><span class="ba-c"># GPG-Key importieren</span>
+<span class="ba-k">curl</span> <span class="ba-f">-fsSL</span> https://www.veeam.com/downloads/veeam-release-key.pub \
+  | gpg --dearmor \
+  | sudo tee /usr/share/keyrings/veeam-archive-keyring.gpg > /dev/null
+
+<span class="ba-c"># Repository eintragen (Debian 12 / Ubuntu 22.04+)</span>
+<span class="ba-k">echo</span> "deb [signed-by=/usr/share/keyrings/veeam-archive-keyring.gpg] \
+  https://repository.veeam.com/backup/linux/agent/dpkg/debian/x86_64 bookworm veeam" \
+  | sudo tee /etc/apt/sources.list.d/veeam.list
+
+<span class="ba-k">sudo apt update</span> &amp;&amp; <span class="ba-k">sudo apt install</span> veeam</pre>
+    </div>
+
+    <h3 style="color:#e0e4f0; margin:16px 0 12px;">RPM-Systeme (RHEL / Rocky / Fedora)</h3>
+    <div class="ba-code">
+      <div class="ba-code-header">
+        <span class="ba-code-label">bash</span>
+        <button class="ba-copy" onclick="baCopy(this)">Kopieren</button>
+      </div>
+      <pre class="ba-pre"><span class="ba-k">sudo rpm</span> <span class="ba-f">--import</span> https://www.veeam.com/downloads/veeam-release-key.pub
+<span class="ba-k">sudo dnf install</span> https://repository.veeam.com/backup/linux/agent/rpm/rhel/x86_64/veeam-release-rhel-1.0-1.x86_64.rpm
+<span class="ba-k">sudo dnf install</span> veeam</pre>
+    </div>
+
+    <h3 style="color:#e0e4f0; margin:16px 0 12px;">Starten</h3>
+    <div class="ba-code">
+      <div class="ba-code-header">
+        <span class="ba-code-label">bash</span>
+        <button class="ba-copy" onclick="baCopy(this)">Kopieren</button>
+      </div>
+      <pre class="ba-pre"><span class="ba-c"># Terminal-Oberfläche (TUI) starten</span>
+<span class="ba-k">sudo veeam</span>
+
+<span class="ba-c"># Oder: direkte CLI</span>
+<span class="ba-k">sudo veeamconfig</span> ui</pre>
+    </div>
+
+    <div class="ba-callout good" style="margin-top:16px;">
+      <div class="ba-callout-icon">✓</div>
+      <div class="ba-callout-body">
+        <strong>Linux Mint / Ubuntu Desktop</strong>
+        <p>Funktioniert identisch. Veeam erkennt den Desktop-Kontext und bietet ein grafisches Tray-Icon an.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tab 2: Konfiguration -->
+  <div class="ba-tab-panel" id="vt-config">
+
+    <h3 style="color:#e0e4f0; margin:0 0 16px;">Backup-Job anlegen (TUI)</h3>
+    <ol class="ba-steps">
+      <li>
+        <strong>TUI starten</strong>
+        <p><code>sudo veeam</code> → im Menü „Configure Backup" auswählen</p>
+      </li>
+      <li>
+        <strong>Backup-Modus wählen</strong>
+        <p><em>Entire Machine</em> für Bare-Metal-Recovery · <em>Volume Level</em> für einzelne Partitionen · <em>File Level</em> für Verzeichnisse</p>
+      </li>
+      <li>
+        <strong>Backup-Ziel festlegen</strong>
+        <p>Lokales Verzeichnis, NFS-Mount, SMB-Share oder Veeam Backup &amp; Replication Server</p>
+      </li>
+      <li>
+        <strong>Zeitplan konfigurieren</strong>
+        <p>Täglich, wöchentlich oder manuell. Inkrementelle Sicherungen werden automatisch erstellt.</p>
+      </li>
+      <li>
+        <strong>Job ausführen &amp; Logs prüfen</strong>
+        <p>Ersten Lauf manuell anstoßen, Ausgabe kontrollieren.</p>
+      </li>
+    </ol>
+
+    <h3 style="color:#e0e4f0; margin:20px 0 12px;">NFS-Ziel vorbereiten (empfohlen)</h3>
+    <div class="ba-code">
+      <div class="ba-code-header">
+        <span class="ba-code-label">bash · NFS-Mount einrichten</span>
+        <button class="ba-copy" onclick="baCopy(this)">Kopieren</button>
+      </div>
+      <pre class="ba-pre"><span class="ba-k">sudo apt install</span> nfs-common
+<span class="ba-k">sudo mkdir</span> <span class="ba-f">-p</span> <span class="ba-p">/mnt/backup-nfs</span>
+
+<span class="ba-c"># Test-Mount</span>
+<span class="ba-k">sudo mount</span> <span class="ba-f">-t nfs</span> <span class="ba-p">192.168.1.10:/volume1/backups</span> <span class="ba-p">/mnt/backup-nfs</span>
+
+<span class="ba-c"># Dauerhaft in /etc/fstab</span>
+<span class="ba-k">echo</span> "<span class="ba-p">192.168.1.10:/volume1/backups /mnt/backup-nfs nfs defaults,_netdev 0 0</span>" \
+  | sudo tee -a /etc/fstab</pre>
+    </div>
+
+    <h3 style="color:#e0e4f0; margin:20px 0 12px;">Job per CLI anlegen</h3>
+    <div class="ba-code">
+      <div class="ba-code-header">
+        <span class="ba-code-label">bash · Entire Machine → NFS</span>
+        <button class="ba-copy" onclick="baCopy(this)">Kopieren</button>
+      </div>
+      <pre class="ba-pre"><span class="ba-k">sudo veeamconfig</span> job create entirenmachine \
+  <span class="ba-f">--name</span> "Server-Vollbackup" \
+  <span class="ba-f">--repoName</span> "NAS-Backup" \
+  <span class="ba-f">--compressionLevel</span> 5
+
+<span class="ba-c"># Job manuell starten</span>
+<span class="ba-k">sudo veeamconfig</span> job start <span class="ba-f">--name</span> "Server-Vollbackup"
+
+<span class="ba-c"># Status prüfen</span>
+<span class="ba-k">sudo veeamconfig</span> session list</pre>
+    </div>
+  </div>
+
+  <!-- Tab 3: Bare-Metal-Recovery -->
+  <div class="ba-tab-panel" id="vt-recovery">
+
+    <div class="ba-callout warn" style="margin-bottom:20px;">
+      <div class="ba-callout-icon">🔥</div>
+      <div class="ba-callout-body">
+        <strong>Recovery-ISO jetzt erstellen, nicht nach dem Crash</strong>
+        <p>Wer erst nach dem Systemausfall an die Recovery-Medien denkt, hat verloren. ISO erstellen, booten, testen — das kostet 20 Minuten und rettet im Ernstfall Stunden.</p>
+      </div>
+    </div>
+
+    <div class="ba-acc">
+
+      <div class="ba-acc-item">
+        <button class="ba-acc-trigger" onclick="baAcc(this)">
+          <span>Schritt 1 · Recovery-ISO erstellen</span>
+          <span class="ba-acc-icon">+</span>
+        </button>
+        <div class="ba-acc-body">
+          <div class="ba-code">
+            <div class="ba-code-header">
+              <span class="ba-code-label">bash</span>
+              <button class="ba-copy" onclick="baCopy(this)">Kopieren</button>
+            </div>
+            <pre class="ba-pre"><span class="ba-k">sudo veeamconfig</span> livecd create \
+  <span class="ba-f">--output</span> <span class="ba-p">/tmp/veeam-recovery.iso</span>
+
+<span class="ba-c"># Auf USB-Stick schreiben (Gerät anpassen!)</span>
+<span class="ba-k">sudo dd</span> <span class="ba-f">if=</span><span class="ba-p">/tmp/veeam-recovery.iso</span> <span class="ba-f">of=</span><span class="ba-p">/dev/sdX</span> bs=4M status=progress
+<span class="ba-k">sync</span></pre>
+          </div>
+          <p style="margin-top:10px; font-size:.88rem; color:#8b92ab;">Die ISO enthält minimalen Linux-Kernel + Veeam Recovery-Umgebung inkl. Netzwerktreiber.</p>
+        </div>
+      </div>
+
+      <div class="ba-acc-item">
+        <button class="ba-acc-trigger" onclick="baAcc(this)">
+          <span>Schritt 2 · Vom Recovery-Medium booten</span>
+          <span class="ba-acc-icon">+</span>
+        </button>
+        <div class="ba-acc-body">
+          <p style="font-size:.9rem; color:#8b92ab; margin:0;">USB-Stick beim Boot auswählen (BIOS/UEFI → Boot-Reihenfolge). Die Recovery-Umgebung startet automatisch im TUI-Modus und fragt nach dem Backup-Repository. NFS-Mount wird unterstützt.</p>
+        </div>
+      </div>
+
+      <div class="ba-acc-item">
+        <button class="ba-acc-trigger" onclick="baAcc(this)">
+          <span>Schritt 3 · System wiederherstellen</span>
+          <span class="ba-acc-icon">+</span>
+        </button>
+        <div class="ba-acc-body">
+          <ol class="ba-steps">
+            <li><strong>Repository verbinden</strong><p>NFS-Share oder lokales Laufwerk mit den Backups angeben</p></li>
+            <li><strong>Restore-Punkt wählen</strong><p>Datum/Uhrzeit der gewünschten Sicherung auswählen</p></li>
+            <li><strong>Ziel-Laufwerk auswählen</strong><p>Originalplatte oder neue Hardware — Veeam passt Partitionsgrößen an</p></li>
+            <li><strong>Wiederherstellung starten</strong><p>Je nach Datenmenge und Netzwerk 30–90 Minuten</p></li>
+            <li><strong>Bootloader neu schreiben</strong><p>GRUB-Neuinstallation anbieten lassen — bei neuer Hardware immer wählen</p></li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="ba-acc-item">
+        <button class="ba-acc-trigger" onclick="baAcc(this)">
+          <span>Schritt 4 · Einzelne Dateien wiederherstellen</span>
+          <span class="ba-acc-icon">+</span>
+        </button>
+        <div class="ba-acc-body">
+          <div class="ba-code">
+            <div class="ba-code-header">
+              <span class="ba-code-label">bash · File-Level-Restore auf laufendem System</span>
+              <button class="ba-copy" onclick="baCopy(this)">Kopieren</button>
+            </div>
+            <pre class="ba-pre"><span class="ba-k">sudo veeamconfig</span> backup mount \
+  <span class="ba-f">--backupId</span> &lt;id&gt; \
+  <span class="ba-f">--mountDir</span> <span class="ba-p">/mnt/veeam-restore</span>
+
+<span class="ba-c"># Dateien manuell kopieren</span>
+<span class="ba-k">cp</span> <span class="ba-p">/mnt/veeam-restore/home/user/dokument.pdf</span> <span class="ba-p">~/</span>
+
+<span class="ba-c"># Mount freigeben</span>
+<span class="ba-k">sudo veeamconfig</span> backup unmount <span class="ba-f">--mountDir</span> <span class="ba-p">/mnt/veeam-restore</span></pre>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Tab 4: Automatisierung -->
+  <div class="ba-tab-panel" id="vt-auto">
+
+    <h3 style="color:#e0e4f0; margin:0 0 12px;">Systemd-Timer (empfohlen statt Cron)</h3>
+    <div class="ba-code">
+      <div class="ba-code-header">
+        <span class="ba-code-label">/etc/systemd/system/veeam-backup.service</span>
+        <button class="ba-copy" onclick="baCopy(this)">Kopieren</button>
+      </div>
+      <pre class="ba-pre"><span class="ba-o">[Unit]</span>
+Description=Veeam Backup Job
+After=network-online.target
+Wants=network-online.target
+
+<span class="ba-o">[Service]</span>
+Type=oneshot
+ExecStart=/bin/bash -c 'veeamconfig job start --name "Server-Vollbackup"'
+User=root</pre>
+    </div>
+
+    <div class="ba-code">
+      <div class="ba-code-header">
+        <span class="ba-code-label">/etc/systemd/system/veeam-backup.timer</span>
+        <button class="ba-copy" onclick="baCopy(this)">Kopieren</button>
+      </div>
+      <pre class="ba-pre"><span class="ba-o">[Unit]</span>
+Description=Tägliches Veeam Backup
+
+<span class="ba-o">[Timer]</span>
+OnCalendar=*-*-* 02:30:00
+RandomizedDelaySec=300
+Persistent=true
+
+<span class="ba-o">[Install]</span>
+WantedBy=timers.target</pre>
+    </div>
+
+    <div class="ba-code">
+      <div class="ba-code-header">
+        <span class="ba-code-label">bash · Timer aktivieren</span>
+        <button class="ba-copy" onclick="baCopy(this)">Kopieren</button>
+      </div>
+      <pre class="ba-pre"><span class="ba-k">sudo systemctl</span> daemon-reload
+<span class="ba-k">sudo systemctl</span> enable --now veeam-backup.timer
+<span class="ba-k">sudo systemctl</span> list-timers veeam*</pre>
+    </div>
+
+    <h3 style="color:#e0e4f0; margin:20px 0 12px;">Monitoring-Skript</h3>
+    <div class="ba-code">
+      <div class="ba-code-header">
+        <span class="ba-code-label">bash · /usr/local/bin/check-veeam.sh</span>
+        <button class="ba-copy" onclick="baCopy(this)">Kopieren</button>
+      </div>
+      <pre class="ba-pre"><span class="ba-c">#!/bin/bash</span>
+STATUS=$(<span class="ba-k">sudo veeamconfig</span> session list | tail -1 | awk '{print $NF}')
+if [[ "$STATUS" != "Success" ]]; then
+  <span class="ba-k">echo</span> "Veeam Backup fehlgeschlagen: $STATUS" \
+    | <span class="ba-k">mail</span> <span class="ba-f">-s</span> "[ALARM] Backup-Fehler $(hostname)" admin@example.com
+fi</pre>
+    </div>
+
+    <div class="ba-callout good" style="margin-top:16px;">
+      <div class="ba-callout-icon">✓</div>
+      <div class="ba-callout-body">
+        <strong>Tipp: Healthchecks.io selbst hosten</strong>
+        <p>Healthchecks.io ist open source und per Docker deploybar. Backup-Skript sendet HTTP-Ping nach Erfolg — bleibt er aus, kommt die Alarm-Mail. Kein Drittdienst nötig.</p>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /veeam-tabs -->
+
+
+<!-- ══════════════════════════════════════════════════════
+     [WIDGET F] — Timeshift & Borg Code-Blöcke
+     → In Elementor HTML-Widget einfügen
+     ══════════════════════════════════════════════════════ -->
+
+<!-- Timeshift -->
+<div class="ba-code">
+  <div class="ba-code-header">
+    <span class="ba-code-label">bash · Timeshift — installieren &amp; Snapshot erstellen</span>
+    <button class="ba-copy" onclick="baCopy(this)">Kopieren</button>
+  </div>
+  <pre class="ba-pre"><span class="ba-k">sudo apt install</span> timeshift
+
+<span class="ba-c"># Snapshot manuell erstellen (vor apt upgrade)</span>
+<span class="ba-k">sudo timeshift</span> <span class="ba-f">--create</span> <span class="ba-f">--comments</span> "Vor System-Update $(date +%Y-%m-%d)"
+
+<span class="ba-c"># Snapshots anzeigen</span>
+<span class="ba-k">sudo timeshift</span> <span class="ba-f">--list</span>
+
+<span class="ba-c"># Zu Snapshot zurückrollen</span>
+<span class="ba-k">sudo timeshift</span> <span class="ba-f">--restore</span> <span class="ba-f">--snapshot</span> "2026-03-19_02-00-01"</pre>
+</div>
+
+<!-- BorgBackup -->
+<div class="ba-code" style="margin-top:20px;">
+  <div class="ba-code-header">
+    <span class="ba-code-label">bash · BorgBackup — Repository initialisieren &amp; Backup erstellen</span>
+    <button class="ba-copy" onclick="baCopy(this)">Kopieren</button>
+  </div>
+  <pre class="ba-pre"><span class="ba-k">sudo apt install</span> borgbackup
+
+<span class="ba-c"># Repository auf Remote-Server initialisieren (verschlüsselt)</span>
+<span class="ba-k">borg init</span> <span class="ba-f">--encryption=repokey</span> <span class="ba-p">user@backup-server:/backups/mein-repo</span>
+
+<span class="ba-c"># Backup erstellen</span>
+<span class="ba-k">borg create</span> <span class="ba-f">--stats --progress</span> \
+  <span class="ba-p">user@backup-server:/backups/mein-repo::</span>{hostname}-{now:%Y-%m-%d} \
+  <span class="ba-p">/home /etc /var/www</span> \
+  <span class="ba-f">--exclude</span> <span class="ba-p">/home/*/.cache</span>
+
+<span class="ba-c"># Alte Backups rotieren (7 tägl., 4 wöchentl., 6 monatl.)</span>
+<span class="ba-k">borg prune</span> <span class="ba-f">-d 7 -w 4 -m 6</span> <span class="ba-p">user@backup-server:/backups/mein-repo</span></pre>
+</div>
+
+<div class="ba-callout info" style="margin-top:16px;">
+  <div class="ba-callout-icon">💡</div>
+  <div class="ba-callout-body">
+    <strong>borgmatic — YAML statt Bash-Skript</strong>
+    <p><code>borgmatic</code> kapselt Borg-Aufrufe in eine übersichtliche YAML-Konfiguration und übernimmt Zeitplan, Prune-Logik und Monitoring. Installierbar via <code>pip install borgmatic</code>.</p>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════
+     [WIDGET G] — Fazit-Cards
+     → In Elementor HTML-Widget einfügen
+     ══════════════════════════════════════════════════════ -->
+<div class="ba-tool-grid">
+  <div class="ba-card" style="border-color:rgba(0,160,233,.3);">
+    <div class="ba-card-head">
+      <div class="ba-logo veeam">V</div>
+      <div><h4>Veeam Agent</h4><div class="sub">System-Recovery</div></div>
+    </div>
+    <p style="font-size:.88rem; color:#8b92ab; margin:0;">Wenn der Server abraucht — komplette Wiederherstellung auf neuer Hardware in unter zwei Stunden.</p>
+  </div>
+  <div class="ba-card" style="border-color:rgba(52,196,124,.3);">
+    <div class="ba-card-head">
+      <div class="ba-logo time">⟳</div>
+      <div><h4>Timeshift</h4><div class="sub">Desktop-Sicherheitsnetz</div></div>
+    </div>
+    <p style="font-size:.88rem; color:#8b92ab; margin:0;">Vor jedem Update. Kostet 30 Sekunden und rettet im Ernstfall eine Neuinstallation.</p>
+  </div>
+  <div class="ba-card" style="border-color:rgba(247,168,79,.3);">
+    <div class="ba-card-head">
+      <div class="ba-logo borg">B</div>
+      <div><h4>BorgBackup</h4><div class="sub">Daten-Archiv</div></div>
+    </div>
+    <p style="font-size:.88rem; color:#8b92ab; margin:0;">Tägliche Datensicherung, verschlüsselt, dedupliziert, auf deinen eigenen Remote-Server.</p>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════
+     JAVASCRIPT — einmalig am Seitenende einfügen
+     → z.B. in Elementor > Erweitert > Eigener Code (Footer)
+       oder in einem letzten HTML-Widget ganz unten
+     ══════════════════════════════════════════════════════ -->
+<script>
+/* Backup-Artikel Interaktivität */
+function baTab(btn, id) {
+  var tabs = btn.closest('.ba-tabs');
+  tabs.querySelectorAll('.ba-tab-btn').forEach(function(b){ b.classList.remove('active'); });
+  tabs.querySelectorAll('.ba-tab-panel').forEach(function(p){ p.classList.remove('active'); });
+  btn.classList.add('active');
+  tabs.querySelector('#' + id).classList.add('active');
+}
+function baAcc(trigger) {
+  trigger.closest('.ba-acc-item').classList.toggle('open');
+}
+function baCopy(btn) {
+  var text = btn.closest('.ba-code').querySelector('.ba-pre').innerText;
+  navigator.clipboard.writeText(text).then(function(){
+    btn.textContent = 'Kopiert!';
+    btn.classList.add('copied');
+    setTimeout(function(){ btn.textContent = 'Kopieren'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+</script>

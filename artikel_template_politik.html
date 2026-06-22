@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- ════ SEO: Basis ════ -->
+  <title>{{TITEL}} | helges-pcwelt.de</title>
+  <meta name="description" content="{{META_DESCRIPTION}}">
+  <meta name="author" content="Helge Reichert">
+  <meta name="keywords" content="{{META_KEYWORDS}}">
+  <link rel="canonical" href="https://helges-pcwelt.de/blog/{{CLUSTER_SLUG}}/{{ARTIKEL_SLUG}}/">
+
+  <!-- ════ Open Graph ════ -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="{{TITEL}}">
+  <meta property="og:description" content="{{META_DESCRIPTION}}">
+  <meta property="og:image" content="https://helges-pcwelt.de/blog/{{CLUSTER_SLUG}}/{{ARTIKEL_SLUG}}/titelbild.jpg">
+  <meta property="og:url" content="https://helges-pcwelt.de/blog/{{CLUSTER_SLUG}}/{{ARTIKEL_SLUG}}/">
+  <meta property="og:site_name" content="helges-pcwelt.de">
+  <meta property="og:locale" content="de_DE">
+  <meta property="article:author" content="Helge Reichert">
+  <meta property="article:published_time" content="{{DATUM}}T08:00:00+02:00">
+  <meta property="article:section" content="{{CLUSTER}}">
+  <meta property="article:tag" content="{{META_KEYWORDS}}">
+
+  <!-- ════ Twitter / X Card ════ -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{{TITEL}}">
+  <meta name="twitter:description" content="{{META_DESCRIPTION}}">
+  <meta name="twitter:image" content="https://helges-pcwelt.de/blog/{{CLUSTER_SLUG}}/{{ARTIKEL_SLUG}}/titelbild.jpg">
+
+  <!-- ════ GEO: JSON-LD Article Schema ════ -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "{{TITEL}}",
+    "description": "{{META_DESCRIPTION}}",
+    "image": "https://helges-pcwelt.de/blog/{{CLUSTER_SLUG}}/{{ARTIKEL_SLUG}}/titelbild.jpg",
+    "datePublished": "{{DATUM}}",
+    "dateModified": "{{DATUM}}",
+    "author": {
+      "@type": "Person",
+      "name": "Helge Reichert",
+      "url": "https://helges-pcwelt.de",
+      "jobTitle": "IT-Techniker, KI-Trainer, Experte für Digitale Souveränität",
+      "address": { "@type": "PostalAddress", "addressLocality": "Saarbrücken", "addressCountry": "DE" },
+      "knowsAbout": ["Linux", "Digitale Souveränität", "Open Source", "Nextcloud", "KMU IT", "Datenschutz", "KI für Unternehmen", "EU-Politik", "Bürgerrechte"]
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "helges-pcwelt.de",
+      "url": "https://helges-pcwelt.de"
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://helges-pcwelt.de/blog/{{CLUSTER_SLUG}}/{{ARTIKEL_SLUG}}/"
+    },
+    "keywords": "{{META_KEYWORDS}}",
+    "inLanguage": "de-DE",
+    "about": { "@type": "Thing", "name": "{{CLUSTER}}" }
+  }
+  </script>
+
+  <style>
+    /* ════ POLITIK BRAND: Schwarz · Rot · Gold ════ */
+    :root {
+      --bg:       #0c0c0c;
+      --surface:  #161616;
+      --surface2: #1e1e1e;
+      --border:   #2a2a2a;
+      --gold:     #D4A017;
+      --gold-dim: #9a7210;
+      --rot:      #CC1100;
+      --rot-dim:  #7a0a00;
+      --text:     #E8E4DC;
+      --muted:    #888480;
+      --font:     'Georgia', serif;
+      --font-ui:  'Inter', -apple-system, sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      font-size: 1.1rem;
+      line-height: 1.82;
+    }
+
+    /* ════ HEADER ════ */
+    .site-header {
+      background: #080808;
+      padding: 16px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .site-header .logo {
+      font-family: var(--font-ui);
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+    .site-header .logo span { color: var(--gold); }
+    .site-header .tagline {
+      font-family: var(--font-ui);
+      font-size: .78rem;
+      color: var(--muted);
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+    /* Deutschlandfahne-Streifen */
+    .flag-stripe {
+      height: 6px;
+      background: linear-gradient(to bottom,
+        #000 0%, #000 33.3%,
+        var(--rot) 33.3%, var(--rot) 66.6%,
+        var(--gold) 66.6%, var(--gold) 100%
+      );
+      width: 100%;
+    }
+
+    /* ════ HERO TITELBILD — volle Breite ════ */
+    .hero-wrap {
+      width: 100%;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-image {
+      width: 100%;
+      max-height: 540px;
+      object-fit: cover;
+      display: block;
+    }
+    .hero-placeholder {
+      width: 100%;
+      height: 460px;
+      background: linear-gradient(160deg, #0a0a0a 0%, #1a0a00 50%, #0c0800 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      border-bottom: 3px solid var(--rot-dim);
+    }
+    .hero-placeholder .prompt-label {
+      font-family: var(--font-ui);
+      font-size: .68rem;
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: .15em;
+    }
+    .hero-placeholder .prompt-text {
+      font-family: var(--font-ui);
+      font-size: .88rem;
+      color: var(--muted);
+      max-width: 680px;
+      text-align: center;
+      font-style: italic;
+      line-height: 1.5;
+    }
+
+    /* ════ WRAPPER — volle Breite mit großzügigem Padding ════ */
+    .artikel-outer {
+      width: 100%;
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 52px 48px 100px;
+    }
+
+    /* ════ META-ZEILE ════ */
+    .meta {
+      font-family: var(--font-ui);
+      font-size: .76rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      margin-bottom: 24px;
+      display: flex;
+      gap: 20px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    /* Roter Badge für "Politik & EU" */
+    .cluster-badge {
+      background: var(--rot);
+      color: #fff;
+      padding: 3px 14px;
+      border-radius: 3px;
+      font-weight: 700;
+      font-size: .72rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    /* ════ TITEL ════ */
+    h1.artikel-titel {
+      font-family: var(--font-ui);
+      font-size: clamp(2rem, 3.8vw, 3rem);
+      font-weight: 900;
+      line-height: 1.1;
+      color: #fff;
+      margin-bottom: 16px;
+      max-width: 900px;
+    }
+    h1.artikel-titel em {
+      color: var(--gold);
+      font-style: normal;
+    }
+
+    /* ════ LEAD ════ */
+    .lead {
+      font-size: 1.22rem;
+      color: #c8c0b4;
+      line-height: 1.65;
+      margin-bottom: 48px;
+      padding-bottom: 36px;
+      border-bottom: 1px solid var(--border);
+      max-width: 860px;
+    }
+
+    /* ════ ABSCHNITTE (Grid: 65/35) ════ */
+    .abschnitt { margin-bottom: 56px; }
+    .abschnitt.mit-bild-rechts {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 40px;
+      align-items: start;
+    }
+    .abschnitt.mit-bild-links {
+      display: grid;
+      grid-template-columns: 340px 1fr;
+      gap: 40px;
+      align-items: start;
+    }
+    .abschnitt.mit-bild-links .abschnitt-text { order: 2; }
+    .abschnitt.mit-bild-links .abschnitt-bild  { order: 1; }
+
+    .abschnitt-bild .bild-placeholder {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      background: var(--surface);
+      border: 1px dashed var(--border);
+      border-radius: 3px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 20px;
+    }
+    .bild-placeholder .prompt-label {
+      font-family: var(--font-ui);
+      font-size: .64rem;
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: .1em;
+    }
+    .bild-placeholder .prompt-text {
+      font-family: var(--font-ui);
+      font-size: .78rem;
+      color: var(--muted);
+      text-align: center;
+      font-style: italic;
+      line-height: 1.5;
+    }
+    .abschnitt-bild img {
+      width: 100%;
+      border-radius: 3px;
+      border: 1px solid var(--border);
+      display: block;
+    }
+
+    /* ════ H2 — Gold ════ */
+    h2.abschnitt-h2 {
+      font-family: var(--font-ui);
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--gold);
+      margin-bottom: 18px;
+      padding-left: 14px;
+      border-left: 4px solid var(--gold);
+      line-height: 1.3;
+    }
+    .abschnitt-text p,
+    .abschnitt.ohne-bild p { margin-bottom: 20px; }
+
+    /* ════ SCHLAGSATZ — Rot ════ */
+    .schlagsatz {
+      font-family: var(--font-ui);
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: #fff;
+      background: var(--surface2);
+      border-left: 5px solid var(--rot);
+      padding: 12px 18px;
+      margin: 24px 0;
+      letter-spacing: .01em;
+    }
+
+    /* ════ OHNE BILD ════ */
+    .abschnitt.ohne-bild { max-width: 860px; }
+
+    /* ════ ZITAT — Gold ════ */
+    blockquote.zitat {
+      border-left: 5px solid var(--gold-dim);
+      margin: 32px 0;
+      padding: 18px 28px;
+      background: var(--surface);
+      color: #c8bfa8;
+      font-style: italic;
+      font-size: 1.05rem;
+      line-height: 1.7;
+      border-radius: 0 3px 3px 0;
+    }
+
+    /* ════ TRENNLINIE zwischen Abschnitten ════ */
+    .section-divider {
+      width: 60px;
+      height: 3px;
+      background: linear-gradient(to right, var(--rot), var(--gold));
+      margin: 0 0 48px 0;
+    }
+
+    /* ════ FAQ-BLOCK ════ */
+    .faq-block {
+      margin-top: 56px;
+      padding-top: 36px;
+      border-top: 1px solid var(--border);
+      max-width: 860px;
+    }
+    .faq-block h2.abschnitt-h2 { margin-bottom: 24px; }
+    details.faq-item {
+      margin-bottom: 12px;
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    details.faq-item summary {
+      font-family: var(--font-ui);
+      font-weight: 700;
+      color: #e8e4dc;
+      cursor: pointer;
+      padding: 14px 18px;
+      background: var(--surface);
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    details.faq-item summary::after {
+      content: '+';
+      color: var(--gold);
+      font-size: 1.3rem;
+      font-weight: 300;
+      flex-shrink: 0;
+      margin-left: 12px;
+    }
+    details.faq-item[open] summary::after { content: '−'; }
+    details.faq-item p {
+      padding: 14px 18px 16px;
+      margin: 0;
+      color: #c8c0b4;
+      background: var(--bg);
+    }
+
+    /* ════ FOOTER ════ */
+    .artikel-footer {
+      margin-top: 72px;
+      padding-top: 32px;
+      border-top: 1px solid var(--border);
+      font-family: var(--font-ui);
+      font-size: .84rem;
+      color: var(--muted);
+      max-width: 860px;
+    }
+    .artikel-footer a { color: var(--gold); text-decoration: none; }
+
+    /* ════ RESPONSIVE ════ */
+    @media (max-width: 780px) {
+      .abschnitt.mit-bild-rechts,
+      .abschnitt.mit-bild-links { grid-template-columns: 1fr; }
+      .abschnitt.mit-bild-links .abschnitt-text { order: 1; }
+      .abschnitt.mit-bild-links .abschnitt-bild { order: 2; }
+      .artikel-outer { padding: 36px 20px 72px; }
+      .site-header { padding: 14px 20px; }
+      h1.artikel-titel { font-size: 1.8rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ════ SITE HEADER ════ -->
+<header class="site-header">
+  <div>
+    <div class="logo">helges<span>-pcwelt.de</span></div>
+    <div class="tagline">Klartext · Ohne Filter · Für Bürger</div>
+  </div>
+</header>
+<!-- Deutschlandfahne-Streifen -->
+<div class="flag-stripe"></div>
+
+<!-- ════ TITELBILD — volle Breite ════
+     → Platzhalter durch <img class="hero-image" src="PFAD" alt="ALT"> ersetzen
+     → Bildprompt für Nano Banana / Flux / Grok steht im prompt-text
+════ -->
+<div class="hero-wrap">
+  <div class="hero-placeholder">
+    <span class="prompt-label">Titelbild-Prompt (16:9 · volle Breite)</span>
+    <span class="prompt-text">{{TITELBILD_PROMPT}}</span>
+  </div>
+</div>
+
+<div class="artikel-outer">
+
+  <!-- ════ META: Cluster-Badge · Datum · Autor ════ -->
+  <div class="meta">
+    <span class="cluster-badge">{{CLUSTER}}</span>
+    <span>{{DATUM}}</span>
+    <span>Helge Reichert</span>
+  </div>
+
+  <!-- ════ TITEL ════ -->
+  <h1 class="artikel-titel">{{TITEL}}</h1>
+
+  <!-- ════ LEAD ════ -->
+  <p class="lead">{{LEAD}}</p>
+
+  <!-- ════════════════════════════════════════════════════════
+       ABSCHNITT 1 — TEXT LINKS · BILD RECHTS
+  ════════════════════════════════════════════════════════ -->
+  <div class="abschnitt mit-bild-rechts">
+    <div class="abschnitt-text">
+      <h2 class="abschnitt-h2">{{H2_1}}</h2>
+      <!-- Stapelsatz: langer atemloser Satz -->
+      <p>{{ABSATZ_1}}</p>
+      <!-- Schlagsatz: ein Satz, Rot, brennt -->
+      <div class="schlagsatz">{{SCHLAGSATZ_1}}</div>
+      <!-- Fortsetzung -->
+      <p>{{ABSATZ_2}}</p>
+    </div>
+    <!-- ════ ILLUSTRATION 1 (1:1) ════ -->
+    <div class="abschnitt-bild">
+      <div class="bild-placeholder">
+        <span class="prompt-label">Illustration 1 (1:1)</span>
+        <span class="prompt-text">{{BILD_1_PROMPT}}</span>
+      </div>
+      <!-- Wenn Bild fertig: <img src="illustration-1.jpg" alt="{{BILD_1_ALT}}" width="680" height="680"> -->
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ════════════════════════════════════════════════════════
+       ABSCHNITT 2 — BILD LINKS · TEXT RECHTS
+  ════════════════════════════════════════════════════════ -->
+  <div class="abschnitt mit-bild-links">
+    <!-- ════ ILLUSTRATION 2 (1:1) ════ -->
+    <div class="abschnitt-bild">
+      <div class="bild-placeholder">
+        <span class="prompt-label">Illustration 2 (1:1)</span>
+        <span class="prompt-text">{{BILD_2_PROMPT}}</span>
+      </div>
+      <!-- Wenn Bild fertig: <img src="illustration-2.jpg" alt="{{BILD_2_ALT}}" width="680" height="680"> -->
+    </div>
+    <div class="abschnitt-text">
+      <h2 class="abschnitt-h2">{{H2_2}}</h2>
+      <p>{{ABSATZ_3}}</p>
+      <div class="schlagsatz">{{SCHLAGSATZ_2}}</div>
+      <p>{{ABSATZ_4}}</p>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ════════════════════════════════════════════════════════
+       ABSCHNITT 3 — SCHLUSS (kein Bild, volle Textbreite)
+  ════════════════════════════════════════════════════════ -->
+  <div class="abschnitt ohne-bild">
+    <h2 class="abschnitt-h2">{{H2_3}}</h2>
+    <p>{{ABSATZ_5}}</p>
+    <!-- Zitat aus Quelle oder prägnante Kernthese — Gold-Rand -->
+    <blockquote class="zitat">{{ZITAT}}</blockquote>
+    <p>{{ABSATZ_6}}</p>
+    <div class="schlagsatz">{{SCHLAGSATZ_3}}</div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════
+       FAQ-BLOCK (GEO-kritisch)
+       KI-Suchmaschinen extrahieren FAQ bevorzugt als Antworten
+  ════════════════════════════════════════════════════════ -->
+  <div class="faq-block">
+    <h2 class="abschnitt-h2">Häufige Fragen</h2>
+
+    <details class="faq-item">
+      <summary>{{FAQ_1_FRAGE}}</summary>
+      <p>{{FAQ_1_ANTWORT}}</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>{{FAQ_2_FRAGE}}</summary>
+      <p>{{FAQ_2_ANTWORT}}</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>{{FAQ_3_FRAGE}}</summary>
+      <p>{{FAQ_3_ANTWORT}}</p>
+    </details>
+  </div>
+
+  <!-- ════ FAQ JSON-LD Schema (GEO) ════ -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "{{FAQ_1_FRAGE}}",
+        "acceptedAnswer": { "@type": "Answer", "text": "{{FAQ_1_ANTWORT}}" }
+      },
+      {
+        "@type": "Question",
+        "name": "{{FAQ_2_FRAGE}}",
+        "acceptedAnswer": { "@type": "Answer", "text": "{{FAQ_2_ANTWORT}}" }
+      },
+      {
+        "@type": "Question",
+        "name": "{{FAQ_3_FRAGE}}",
+        "acceptedAnswer": { "@type": "Answer", "text": "{{FAQ_3_ANTWORT}}" }
+      }
+    ]
+  }
+  </script>
+
+  <!-- ════ FOOTER ════ -->
+  <footer class="artikel-footer">
+    <p>Helge Reichert · IT-Techniker · KI-Trainer · <a href="https://helges-pcwelt.de">helges-pcwelt.de</a></p>
+  </footer>
+
+</div><!-- /.artikel-outer -->
+</body>
+</html>

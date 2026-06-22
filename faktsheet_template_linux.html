@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- ════ SEO / GEO META ════ -->
+<title>{{TITEL}} | helges-pcwelt.de</title>
+<meta name="description" content="{{META_DESCRIPTION}}">
+<meta name="keywords" content="{{META_KEYWORDS}}">
+<meta name="author" content="Helge Reichert">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://helges-pcwelt.de/{{CLUSTER_SLUG}}/{{ARTIKEL_SLUG}}/">
+
+<!-- ════ OPEN GRAPH ════ -->
+<meta property="og:type" content="article">
+<meta property="og:title" content="{{TITEL}}">
+<meta property="og:description" content="{{META_DESCRIPTION}}">
+<meta property="og:url" content="https://helges-pcwelt.de/{{CLUSTER_SLUG}}/{{ARTIKEL_SLUG}}/">
+<meta property="og:site_name" content="Helges PC-Welt">
+<meta property="og:locale" content="de_DE">
+<meta property="article:author" content="Helge Reichert">
+<meta property="article:published_time" content="{{DATUM}}">
+
+<!-- ════ TWITTER CARD ════ -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{TITEL}}">
+<meta name="twitter:description" content="{{META_DESCRIPTION}}">
+<meta name="twitter:site" content="@helgespcwelt">
+
+<!-- ════ JSON-LD SCHEMA ════ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "headline": "{{TITEL}}",
+      "description": "{{META_DESCRIPTION}}",
+      "author": {
+        "@type": "Person",
+        "name": "Helge Reichert",
+        "url": "https://helges-pcwelt.de/ueber-mich/",
+        "knowsAbout": ["Linux", "Digitale Souveränität", "Open Source", "KMU IT"]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Helges PC-Welt",
+        "url": "https://helges-pcwelt.de"
+      },
+      "datePublished": "{{DATUM}}",
+      "url": "https://helges-pcwelt.de/{{CLUSTER_SLUG}}/{{ARTIKEL_SLUG}}/"
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "{{FAQ_1_FRAGE}}",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "{{FAQ_1_ANTWORT}}"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "{{FAQ_2_FRAGE}}",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "{{FAQ_2_ANTWORT}}"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "{{FAQ_3_FRAGE}}",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "{{FAQ_3_ANTWORT}}"
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+<style>
+/* ════ CSS VARIABLEN — Helge Brand ════ */
+:root {
+  --bg:           #0a0f0a;
+  --surface:      #111811;
+  --surface-card: #ffffff;       /* Artikel-Body hell = lesbar */
+  --border:       #1e2e1e;
+  --accent:       #7ab800;
+  --helges-green: #87c540;
+  --helges-red:   #c22f1e;
+  --helges-warn:  #ffc107;
+  --text-on-dark: #d8e8d0;
+  --text-on-card: #1a1a1a;       /* dunkle Schrift auf weißen Cards */
+  --muted:        #7a9070;
+  --radius:       10px;
+  --radius-sm:    6px;
+
+  /* Multicolor-Akzente für Karten/Verdikt */
+  --teal:         #1D9E75;
+  --blue:         #378ADD;
+  --coral:        #D85A30;
+  --amber:        #BA7517;
+  --green:        #639922;
+}
+
+/* ════ RESET ════ */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text-on-dark);
+  font-size: 15px;
+  line-height: 1.65;
+}
+
+/* ════ BRAND HEADER ════ */
+/* Dunkel mit grünem Akzent-Stripe unten */
+.brand-header {
+  background: var(--surface);
+  border-bottom: 3px solid var(--helges-green);
+  padding: 1rem 1.5rem;
+}
+
+.brand-header-inner {
+  max-width: 1140px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.brand-logo {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--helges-green);
+  text-decoration: none;
+  letter-spacing: -0.3px;
+}
+
+.brand-logo span {
+  color: var(--text-on-dark);
+  font-weight: 400;
+}
+
+.brand-nav {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.brand-nav a {
+  color: var(--muted);
+  text-decoration: none;
+}
+
+.brand-nav a:hover { color: var(--helges-green); }
+
+/* ════ PAGE WRAPPER — 2-spaltig ════ */
+.page-wrapper {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 4rem;
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 2rem;
+  align-items: start;
+}
+
+/* ════════════════════════════════════ */
+/*  HAUPTINHALT (linke Spalte)         */
+/* ════════════════════════════════════ */
+.main-content {}
+
+/* ════ ARTIKEL-HEADER ════ */
+.artikel-header {
+  margin-bottom: 1.75rem;
+}
+
+.artikel-eyebrow {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 0.5rem;
+}
+
+.artikel-header h1 {
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--text-on-dark);
+  line-height: 1.3;
+  margin-bottom: 0.5rem;
+}
+
+.artikel-meta {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* ════ CARD — weiß mit dunklem Text ════ */
+/* Alle lesbaren Inhaltsbereiche sind weiße Cards */
+.card {
+  background: var(--surface-card);
+  color: var(--text-on-card);
+  border-radius: var(--radius);
+  padding: 1.4rem 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.card h2 {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-on-card);
+  margin-bottom: 0.5rem;
+  line-height: 1.35;
+}
+
+.card h3 {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-on-card);
+  margin-bottom: 0.4rem;
+}
+
+.card p {
+  font-size: 14px;
+  color: #333;
+  line-height: 1.7;
+  margin-bottom: 0.75rem;
+}
+
+.card p:last-child { margin-bottom: 0; }
+
+/* ════ TITELBILD ════ */
+/* ← hier img src= einfügen wenn Bild fertig */
+/* Bildprompt für KI-Generierung: {{BILD_1_PROMPT}} */
+.bild-wrap {
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  position: relative;
+}
+
+.bild-wrap img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* Bild-Platzhalter */
+.bild-placeholder {
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  color: var(--muted);
+  font-size: 12px;
+  text-align: center;
+  gap: 0.5rem;
+  border: 2px dashed var(--border);
+  border-radius: var(--radius);
+}
+
+.bild-alt-text {
+  font-size: 12px;
+  color: var(--muted);
+  padding: 0.4rem 0.6rem;
+  background: var(--surface);
+  border-left: 2px solid var(--helges-green);
+  margin-bottom: 1.5rem;
+}
+
+/* ════ FAKT-KARTEN GRID ════ */
+.fakt-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 1.5rem;
+}
+
+.fakt-card {
+  background: var(--surface-card);
+  color: var(--text-on-card);
+  border-radius: var(--radius-sm);
+  padding: 1rem 1.1rem;
+  border-top: 3px solid var(--helges-green);
+}
+
+.fakt-card.blue   { border-top-color: var(--blue);  }
+.fakt-card.coral  { border-top-color: var(--coral); }
+.fakt-card.amber  { border-top-color: var(--amber); }
+
+.fakt-card-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-on-card);
+  margin-bottom: 5px;
+}
+
+.fakt-card-text {
+  font-size: 13px;
+  color: #444;
+  line-height: 1.6;
+}
+
+/* ════ SCHLAGSÄTZE ════ */
+/* Prägnante Kernaussagen — gut sichtbar auf dunklem Hintergrund */
+.schlagsatz {
+  background: var(--surface);
+  border-left: 4px solid var(--helges-green);
+  color: var(--text-on-dark);
+  padding: 0.85rem 1.1rem;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  font-size: 15px;
+  font-weight: 600;
+  font-style: italic;
+  margin-bottom: 1rem;
+  line-height: 1.5;
+}
+
+/* ════ ZITAT-BLOCK ════ */
+.zitat-block {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--accent);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  padding: 1.1rem 1.3rem;
+  margin-bottom: 1.5rem;
+  color: var(--text-on-dark);
+  font-size: 14px;
+  line-height: 1.7;
+  font-style: italic;
+}
+
+/* ════ BILD 2 ════ */
+/* ← hier zweites Bild (img src=) einfügen wenn fertig */
+/* Bildprompt: {{BILD_2_PROMPT}} | Alt: {{BILD_2_ALT}} */
+
+/* ════ FAQ / ACCORDION ════ */
+/* Accordion auf weißen Cards */
+.accordion-item {
+  background: var(--surface-card);
+  border-radius: var(--radius-sm);
+  margin-bottom: 6px;
+  overflow: hidden;
+}
+
+.accordion-toggle {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.85rem 1rem;
+  background: none;
+  border: none;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-on-card);
+  cursor: pointer;
+  text-align: left;
+  gap: 1rem;
+  transition: background 0.12s;
+}
+
+.accordion-toggle:hover { background: #f5f5f5; }
+
+.accordion-icon {
+  flex-shrink: 0;
+  color: var(--helges-green);
+  font-size: 18px;
+  transition: transform 0.2s;
+}
+
+.accordion-body {
+  display: none;
+  padding: 0 1rem 0.9rem;
+  font-size: 13px;
+  color: #333;
+  line-height: 1.7;
+  border-top: 1px solid #e8e8e8;
+  padding-top: 0.8rem;
+}
+
+.accordion-item.open .accordion-body { display: block; }
+.accordion-item.open .accordion-icon { transform: rotate(45deg); }
+
+/* ════ FINAL CTA — GRÜN (exakt aus pc-kauf-warnung) ════ */
+.final-cta {
+  background: white;
+  border-left: 6px solid #90ee90;
+  padding: 40px 36px;
+  margin: 2rem 0 1rem;
+  border-radius: var(--radius);
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(135,197,64,0.12);
+}
+
+.final-cta h2 {
+  color: #28a745;
+  font-size: 1.8em;
+  margin-bottom: 14px;
+}
+
+.final-cta p {
+  font-size: 1.05em;
+  color: #333;
+  margin-bottom: 24px;
+}
+
+.cta-buttons {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.cta-btn {
+  padding: 16px 36px;
+  font-size: 1em;
+  font-weight: 700;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  transition: all 0.25s;
+}
+
+.cta-btn-primary {
+  background: #28a745;
+  color: white;
+}
+
+.cta-btn-primary:hover {
+  background: #218838;
+  transform: scale(1.04);
+  box-shadow: 0 5px 20px rgba(40,167,69,0.3);
+}
+
+.cta-btn-secondary {
+  background: white;
+  color: #28a745;
+  border: 3px solid #28a745;
+}
+
+.cta-btn-secondary:hover {
+  background: #28a745;
+  color: white;
+  transform: scale(1.04);
+}
+
+/* ════ QUELLEN ════ */
+.quellen-box {
+  background: var(--surface-card);
+  color: var(--text-on-card);
+  border-radius: var(--radius-sm);
+  padding: 1rem 1.2rem;
+  font-size: 12px;
+  color: #555;
+  line-height: 1.7;
+}
+
+/* ════════════════════════════════════ */
+/*  SIDEBAR (rechte Spalte)            */
+/* ════════════════════════════════════ */
+.sidebar {}
+
+/* Sticky-Verhalten ab gewisser Bildschirmhöhe */
+.sidebar-sticky {
+  position: sticky;
+  top: 1.5rem;
+}
+
+/* ════ PRIVACY WIDGET (Sidebar-Banner) ════ */
+/* Exaktes Design aus privacy-widget-privat-Logo-CTA-Mailto.html */
+.priv-warn-widget {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  max-width: 320px;
+  margin: 0 auto;
+  color: #1a1a1a;
+}
+
+.priv-warn-header {
+  border-radius: 10px 10px 0 0;
+  overflow: hidden;
+  position: relative;
+}
+
+.priv-warn-header img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 10px 10px 0 0;
+}
+
+.priv-warn-header-text {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 20px 16px 14px;
+  background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.72) 100%);
+  text-align: center;
+}
+
+.priv-warn-header .slogan {
+  color: var(--helges-green);
+  font-size: 1.1em;
+  font-weight: 900;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin: 0;
+  text-shadow: 0 1px 6px rgba(0,0,0,0.8);
+}
+
+.priv-warn-body {
+  background: #fff;
+  border: 2px solid #ddd;
+  border-top: none;
+  border-radius: 0 0 10px 10px;
+  padding: 18px;
+}
+
+.priv-warn-body .subline {
+  text-align: center;
+  color: var(--helges-red);
+  font-weight: 700;
+  font-size: 0.88em;
+  margin: 0 0 14px 0;
+}
+
+.priv-warn-list {
+  list-style: none;
+  margin: 0 0 14px 0;
+  padding: 0;
+}
+
+.priv-warn-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 0.84em;
+  color: #333;
+  padding: 6px 0;
+  border-bottom: 1px solid #f0f0f0;
+  line-height: 1.4;
+}
+
+.priv-warn-list li:last-child { border-bottom: none; }
+
+.priv-x {
+  color: var(--helges-red);
+  font-weight: 900;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.priv-hint {
+  background: #fff8e1;
+  border-left: 3px solid var(--helges-warn);
+  padding: 10px 12px;
+  border-radius: 0 6px 6px 0;
+  margin: 12px 0;
+  font-size: 0.8em;
+  color: #555;
+  line-height: 1.5;
+}
+
+.priv-hint strong { color: #1a1a1a; }
+
+.priv-compare {
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 12px 14px;
+  margin: 12px 0;
+  text-align: center;
+}
+
+.priv-compare-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.priv-col { flex: 1; text-align: center; }
+
+.priv-col .label {
+  font-size: 0.67em;
+  color: #666;
+  display: block;
+  margin-bottom: 2px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.priv-col .price {
+  font-size: 1.05em;
+  font-weight: 800;
+  display: block;
+}
+
+.priv-col.bad  .price { color: var(--helges-red); }
+.priv-col.good .price { color: var(--helges-green); }
+
+.priv-vs {
+  font-size: 0.7em;
+  font-weight: 700;
+  color: #999;
+  flex-shrink: 0;
+}
+
+.priv-note {
+  font-size: 0.7em;
+  color: #666;
+  margin: 0;
+  border-top: 1px solid #e0e0e0;
+  padding-top: 7px;
+}
+
+.priv-cta {
+  display: block;
+  background: var(--helges-green);
+  color: white !important;
+  text-align: center;
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 0.9em;
+  text-decoration: none !important;
+  margin-top: 14px;
+  transition: background 0.2s;
+}
+
+.priv-cta:hover { background: #6da832; }
+
+.priv-cta span {
+  display: block;
+  font-size: 0.74em;
+  font-weight: 400;
+  opacity: 0.9;
+  margin-top: 2px;
+}
+
+.priv-footer {
+  text-align: center;
+  font-size: 0.7em;
+  color: #999;
+  margin-top: 10px;
+  line-height: 1.5;
+}
+
+/* ════ SITE FOOTER ════ */
+.site-footer {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 1.5rem 1.5rem 3rem;
+  border-top: 1px solid var(--border);
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.site-footer a { color: var(--muted); text-decoration: none; }
+.site-footer a:hover { color: var(--helges-green); }
+
+/* ════ RESPONSIVE — Sidebar unter Hauptinhalt ab 768px ════ */
+@media (max-width: 768px) {
+  .page-wrapper {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    order: 99; /* Sidebar nach unten */
+  }
+
+  .sidebar-sticky {
+    position: static;
+  }
+
+  .priv-warn-widget {
+    max-width: 100%;
+  }
+
+  .fakt-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .brand-header-inner { flex-direction: column; align-items: flex-start; gap: 0.4rem; }
+  .artikel-header h1  { font-size: 21px; }
+  .final-cta          { padding: 28px 20px; }
+  .final-cta h2       { font-size: 1.4em; }
+}
+</style>
+</head>
+<body>
+
+<!-- ════ BRAND HEADER ════ -->
+<!-- Dunkler Header mit grünem Akzent-Stripe -->
+<header class="brand-header">
+  <div class="brand-header-inner">
+    <a href="https://helges-pcwelt.de/" class="brand-logo">Helges <span>PC-Welt</span></a>
+    <nav class="brand-nav" aria-label="Breadcrumb">
+      <a href="https://helges-pcwelt.de/">Start</a> ›
+      <a href="https://helges-pcwelt.de/{{CLUSTER_SLUG}}/">{{CLUSTER_SLUG}}</a> ›
+      {{TITEL}}
+    </nav>
+  </div>
+</header>
+
+<!-- ════ 2-SPALTEN LAYOUT ════ -->
+<div class="page-wrapper">
+
+  <!-- ════════════════════════════════════════ -->
+  <!--  HAUPTINHALT (70% — linke Spalte)       -->
+  <!-- ════════════════════════════════════════ -->
+  <main class="main-content">
+
+    <!-- ════ ARTIKEL-HEADER ════ -->
+    <div class="artikel-header">
+      <div class="artikel-eyebrow">Faktencheck · helges-pcwelt.de</div>
+      <h1>{{TITEL}}</h1>
+      <p class="artikel-meta">
+        Von <strong>Helge Reichert</strong> ·
+        <time datetime="{{DATUM}}">{{DATUM}}</time>
+      </p>
+    </div>
+
+    <!-- ════ TITELBILD (BILD 1) ════ -->
+    <!-- ← hier img src= einfügen wenn Bild fertig -->
+    <!-- Bildprompt für KI-Generierung: {{BILD_1_PROMPT}} -->
+    <!-- Alt-Text: {{BILD_1_ALT}} -->
+    <div class="bild-wrap">
+      <div class="bild-placeholder">
+        Titelbild · Prompt: {{BILD_1_PROMPT}}<br>
+        <small>← hier img src="PFAD" alt="{{BILD_1_ALT}}" einfügen</small>
+      </div>
+    </div>
+
+    <!-- ════ SCHLAGSATZ 1 ════ -->
+    <div class="schlagsatz">{{SCHLAGSATZ_1}}</div>
+
+    <!-- ════ EINLEITUNG (weiße Card) ════ -->
+    <div class="card">
+      <h2>Worum geht es?</h2>
+      <p>
+        Einleitungstext hier einfügen. Erkläre knapp warum das Thema relevant ist —
+        ohne Weichspüler, ohne Marketingsprache.
+      </p>
+      <p>
+        {{META_DESCRIPTION}}
+      </p>
+    </div>
+
+    <!-- ════ FAKT-KARTEN ════ -->
+    <!-- 4 Karten: grün / blau / coral / amber Akzent-Border oben -->
+    <div class="fakt-grid">
+
+      <div class="fakt-card">
+        <div class="fakt-card-title">{{FAKT_1_TITEL}}</div>
+        <div class="fakt-card-text">{{FAKT_1_TEXT}}</div>
+      </div>
+
+      <div class="fakt-card blue">
+        <div class="fakt-card-title">{{FAKT_2_TITEL}}</div>
+        <div class="fakt-card-text">{{FAKT_2_TEXT}}</div>
+      </div>
+
+      <div class="fakt-card coral">
+        <div class="fakt-card-title">{{FAKT_3_TITEL}}</div>
+        <div class="fakt-card-text">{{FAKT_3_TEXT}}</div>
+      </div>
+
+      <div class="fakt-card amber">
+        <div class="fakt-card-title">{{FAKT_4_TITEL}}</div>
+        <div class="fakt-card-text">{{FAKT_4_TEXT}}</div>
+      </div>
+
+    </div>
+    <!-- ════ ENDE FAKT-KARTEN ════ -->
+
+    <!-- ════ SCHLAGSATZ 2 ════ -->
+    <div class="schlagsatz">{{SCHLAGSATZ_2}}</div>
+
+    <!-- ════ HAUPTTEXT CARD ════ -->
+    <div class="card">
+      <h2>Was steckt wirklich dahinter?</h2>
+      <p>
+        Hier den Haupttext einfügen. Fakten, Kontext, Hintergründe.
+        Kein NGO-Sprech, keine Meinungsblase — nur Daten und Logik.
+      </p>
+      <p>
+        Zweiter Absatz. Kann mehrere <code>&lt;p&gt;</code>-Tags enthalten.
+      </p>
+    </div>
+
+    <!-- ════ BILD 2 ════ -->
+    <!-- ← hier zweites Bild einfügen wenn fertig -->
+    <!-- Bildprompt: {{BILD_2_PROMPT}} | Alt-Text: {{BILD_2_ALT}} -->
+    <div class="bild-alt-text">
+      Bild 2 · Prompt: {{BILD_2_PROMPT}}
+      <!-- img src="PFAD" alt="{{BILD_2_ALT}}" — einfügen wenn Bild fertig -->
+    </div>
+
+    <!-- ════ ZITAT-BLOCK ════ -->
+    <blockquote class="zitat-block">
+      „{{ZITAT}}"
+    </blockquote>
+
+    <!-- ════ SCHLAGSATZ 3 ════ -->
+    <div class="schlagsatz">{{SCHLAGSATZ_3}}</div>
+
+    <!-- ════ FAQ / ACCORDION ════ -->
+    <!-- JSON-LD FAQPage-Schema im <head> ebenfalls befüllen! -->
+    <div class="card" style="padding-bottom:0.5rem;">
+      <h2 style="margin-bottom:0.75rem;">Häufige Fragen</h2>
+
+      <div class="accordion-item open">
+        <button class="accordion-toggle" aria-expanded="true">
+          <span>{{FAQ_1_FRAGE}}</span>
+          <span class="accordion-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="accordion-body">{{FAQ_1_ANTWORT}}</div>
+      </div>
+
+      <div class="accordion-item">
+        <button class="accordion-toggle" aria-expanded="false">
+          <span>{{FAQ_2_FRAGE}}</span>
+          <span class="accordion-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="accordion-body">{{FAQ_2_ANTWORT}}</div>
+      </div>
+
+      <div class="accordion-item" style="margin-bottom:0;">
+        <button class="accordion-toggle" aria-expanded="false">
+          <span>{{FAQ_3_FRAGE}}</span>
+          <span class="accordion-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="accordion-body">{{FAQ_3_ANTWORT}}</div>
+      </div>
+
+    </div>
+    <!-- ════ ENDE FAQ ════ -->
+
+    <!-- ════ QUELLEN ════ -->
+    <div class="quellen-box" style="margin-bottom:1.5rem;">
+      <strong>Quellen:</strong> Hier Primärquellen, Studien und offizielle Daten verlinken.
+      Kein Wikipedia, keine Aktivisten-Seiten — Primärliteratur.
+    </div>
+
+    <!-- ════ FINAL CTA — GRÜN (exakt aus pc-kauf-warnung-modular) ════ -->
+    <div class="final-cta">
+      <h2>Jetzt weißt du Bescheid!</h2>
+      <p>Weg von Windows — rein in die Freiheit. Linux Mint läuft auf jedem PC.</p>
+
+      <div class="cta-buttons">
+        <a href="mailto:agentur@helgereichert.de?subject=Kostenloses%20Erstgespräch&body=Hallo%20Herr%20Reichert%2C%0A%0Aich%20interessiere%20mich%20für%20ein%20Erstgespräch.%0A%0AName%3A%0ATel.-Nr.%3A"
+           class="cta-btn cta-btn-primary">
+          💬 Kostenloses Erstgespräch
+        </a>
+        <a href="https://linuxmint.com/download.php" target="_blank" rel="noopener"
+           class="cta-btn cta-btn-secondary">
+          🐧 Linux Mint
+        </a>
+      </div>
+    </div>
+    <!-- ════ ENDE FINAL CTA ════ -->
+
+  </main>
+  <!-- ════ ENDE HAUPTINHALT ════ -->
+
+  <!-- ════════════════════════════════════════ -->
+  <!--  SIDEBAR (30% — rechte Spalte)          -->
+  <!--  Unter 768px: wird unter Hauptinhalt    -->
+  <!-- ════════════════════════════════════════ -->
+  <aside class="sidebar">
+    <div class="sidebar-sticky">
+
+      <!-- ════ PRIVACY WIDGET — SIDEBAR BANNER ════ -->
+      <!-- Exaktes Design aus privacy-widget-privat-Logo-CTA-Mailto.html -->
+      <div class="priv-warn-widget">
+
+        <div class="priv-warn-header">
+          <!-- Bild-URL aus Original-Widget -->
+          <img src="https://helges-pcwelt.de/wp-content/uploads/sites/10084/2025/03/Webhintergrund-06.jpg"
+               alt="Helges PC-Welt — IT-Beratung Saarbrücken"
+               loading="lazy">
+          <div class="priv-warn-header-text">
+            <p class="slogan">Einfach gut zu wissen</p>
+          </div>
+        </div>
+
+        <div class="priv-warn-body">
+          <p class="subline">Was Windows 11 täglich über dich sammelt</p>
+
+          <ul class="priv-warn-list">
+            <li><span class="priv-x">✗</span> Jede <strong>Tastatureingabe</strong> (Telemetrie läuft immer)</li>
+            <li><span class="priv-x">✗</span> Dein <strong>Surfverhalten</strong> (Edge sendet fleißig mit)</li>
+            <li><span class="priv-x">✗</span> Welche <strong>Dateien du öffnest</strong> (Defender scannt durch)</li>
+            <li><span class="priv-x">✗</span> Wann du <strong>online bist</strong> (Hardware-ID bei jedem Start)</li>
+            <li><span class="priv-x">✗</span> Dein MS-Konto = <strong>dein Profil bei Microsoft</strong></li>
+          </ul>
+
+          <div class="priv-hint">
+            <strong>Windows 10 Support endet Oktober 2025</strong> — danach keine Sicherheitsupdates.
+            Deine Wahl: 145 € für Windows 11 oder kostenlos zu Linux Mint.
+          </div>
+
+          <div class="priv-compare">
+            <div class="priv-compare-row">
+              <div class="priv-col bad">
+                <span class="label">Windows 11 + MS 365</span>
+                <span class="price">~270 €/Jahr</span>
+              </div>
+              <div class="priv-vs">vs.</div>
+              <div class="priv-col good">
+                <span class="label">Linux Mint + LibreOffice</span>
+                <span class="price">0 €/Jahr</span>
+              </div>
+            </div>
+            <p class="priv-note">Einmalig: kostenloser Umstieg — deine Daten bleiben bei dir.</p>
+          </div>
+
+          <a href="mailto:agentur@helgereichert.de?subject=Umstieg%20auf%20Linux&body=Hallo%20Herr%20Reichert%2C%0A%0Aich%20m%C3%B6chte%20von%20Windows%20auf%20Linux%20umsteigen.%20Bitte%20melden%20Sie%20sich%20f%C3%BCr%20einen%20Termin.%0A%0AName%3A%0ATel.-Nr.%3A"
+             class="priv-cta">
+            Kostenloses Erstgespräch anfragen
+            <span>Einfach anklicken — ich melde mich</span>
+          </a>
+
+        </div>
+
+        <p class="priv-footer">
+          Kein Abo. Kein Vertrag. Erstgespräch kostenlos.<br>
+          <strong>helges-pcwelt.de</strong>
+        </p>
+
+      </div>
+      <!-- ════ ENDE PRIVACY WIDGET ════ -->
+
+    </div><!-- /.sidebar-sticky -->
+  </aside>
+  <!-- ════ ENDE SIDEBAR ════ -->
+
+</div><!-- /.page-wrapper -->
+
+<!-- ════ SITE FOOTER ════ -->
+<footer class="site-footer">
+  &copy; helges-pcwelt.de · Helge Reichert · Saarbrücken ·
+  <a href="https://helges-pcwelt.de/impressum/">Impressum</a> ·
+  <a href="https://helges-pcwelt.de/datenschutz/">Datenschutz</a>
+</footer>
+
+<!-- ════ JAVASCRIPT — kein Framework, kein CDN ════ -->
+<script>
+/* ─── ACCORDION ─── */
+(function () {
+  document.querySelectorAll('.accordion-toggle').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      const item = btn.closest('.accordion-item');
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.accordion-item').forEach(function (i) {
+        i.classList.remove('open');
+        i.querySelector('.accordion-toggle').setAttribute('aria-expanded', 'false');
+      });
+      if (!isOpen) {
+        item.classList.add('open');
+        btn.setAttribute('aria-expanded', 'true');
+      }
+    });
+  });
+})();
+</script>
+
+</body>
+</html>

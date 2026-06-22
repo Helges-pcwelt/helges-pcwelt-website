@@ -1,0 +1,11 @@
+{
+  "last_updated": "2026-06-19",
+  "base_url": "https://TBD",
+  "server": "TBD (Hetzner / Infomaniak / Sliplane)",
+  "clusters": {
+    "politik": "Politik, EU, Demokratieabbau, Bürgerschikane, Medien, ÖRR",
+    "linux": "Linux, Digitale Souveränität, Open Source, Selbsthosting, KMU, Datenschutz",
+    "kreuzung": "EU-Digitalgesetze, Überwachung, Microsoft/Google als Machtinstrument, Digitalzwang"
+  },
+  "articles": []
+}
