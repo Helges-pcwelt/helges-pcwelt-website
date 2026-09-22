@@ -52,7 +52,7 @@
         "addressLocality": "Saarbrücken",
         "addressCountry": "DE"
       },
-      "knowsAbout": ["Linux", "Digitale Souveränität", "Open Source", "Nextcloud", "KMU IT", "Datenschutz", "KI für Unternehmen"]
+      "knowsAbout": ["Linux", "Digitale Souveränität", "Open Source", "Nextcloud", "KMU IT", "Datenschutz", "KI für Unternehmen", "Energiepolitik"]
     },
     "publisher": {
       "@type": "Organization",
@@ -72,25 +72,41 @@
   }
   </script>
 
+  <!-- ════════════════════════════════════════════════════════
+       EIGENSTÄNDIGE VISUELLE IDENTITÄT: "Physik schlägt Meinung"
+       Blaupause/Ingenieur-Dokument — bewusst abgegrenzt von:
+       - Passierschein A38 (Clown/Marionette, Regen, Reichstag)
+       - helges-pcwelt.de Hauptbrand (dunkelgrün #7ab800, Inter)
+       Navy statt Grün, Cyan statt Grün als Akzent, dezentes
+       Rasterpapier-Muster im Hintergrund, Monospace für Zahlen/
+       Fakten/Summen im Fließtext.
+  ════════════════════════════════════════════════════════ -->
   <style>
     :root {
-      --bg: #0a0f0a;
-      --surface: #111811;
-      --border: #1e2e1e;
-      --accent: #7ab800;
-      --accent2: #4a7c00;
-      --text: #d8e8d0;
-      --muted: #7a9070;
-      --font: 'Georgia', serif;
-      --font-ui: 'Inter', -apple-system, sans-serif;
+      --bg: #0a1420;
+      --surface: #0f1e30;
+      --border: #1e3a52;
+      --accent: #3ab8d8;
+      --accent2: #2a7f96;
+      --stamp-red: #c53030;
+      --text: #d6e4ef;
+      --muted: #7fa3bd;
+      --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-ui: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-mono: 'JetBrains Mono', 'Roboto Mono', 'Courier New', monospace;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      background: var(--bg);
+      background:
+        linear-gradient(var(--bg), var(--bg)),
+        repeating-linear-gradient(0deg, rgba(58,184,216,.06) 0, rgba(58,184,216,.06) 1px, transparent 1px, transparent 32px),
+        repeating-linear-gradient(90deg, rgba(58,184,216,.06) 0, rgba(58,184,216,.06) 1px, transparent 1px, transparent 32px);
+      background-blend-mode: normal;
       color: var(--text);
       font-family: var(--font);
-      font-size: 1.1rem;
-      line-height: 1.8;
+      font-size: 1.2rem;
+      font-weight: 500;
+      line-height: 1.75;
     }
 
     /* ── Header ── */
@@ -115,6 +131,16 @@
       font-size: .8rem;
       color: var(--muted);
     }
+    .site-header .serie-badge {
+      margin-left: auto;
+      font-family: var(--font-mono);
+      font-size: .72rem;
+      color: var(--accent);
+      border: 1px solid var(--accent2);
+      padding: 3px 10px;
+      border-radius: 2px;
+      letter-spacing: .06em;
+    }
 
     /* ── Titelbild ── */
     .hero-image {
@@ -126,7 +152,7 @@
     .hero-image-placeholder {
       width: 100%;
       height: 380px;
-      background: linear-gradient(135deg, #0f1f0f, #1a2e1a);
+      background: linear-gradient(135deg, #0d1c2c, #16304a);
       border-bottom: 2px solid var(--border);
       display: flex;
       flex-direction: column;
@@ -135,7 +161,7 @@
       gap: 12px;
     }
     .hero-image-placeholder .prompt-label {
-      font-family: var(--font-ui);
+      font-family: var(--font-mono);
       font-size: .7rem;
       color: var(--accent);
       text-transform: uppercase;
@@ -145,34 +171,49 @@
       font-family: var(--font-ui);
       font-size: .85rem;
       color: var(--muted);
+      max-width: 600px;
       text-align: center;
       font-style: italic;
     }
 
     /* ── Artikel-Wrapper ── */
     .artikel {
-      width: 100%;
-      padding: 48px 32px 80px;
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 48px 40px 90px;
+    }
+
+    /* ── Prosa-Spaltenbreite ── */
+    .lead,
+    .kurzfassung,
+    .abschnitt-text,
+    .abschnitt.ohne-bild,
+    .quellen-block,
+    .artikel-footer {
+      max-width: 780px;
     }
 
     /* ── Meta ── */
     .meta {
-      font-family: var(--font-ui);
+      font-family: var(--font-mono);
       font-size: .78rem;
       color: var(--muted);
       text-transform: uppercase;
-      letter-spacing: .1em;
+      letter-spacing: .08em;
       margin-bottom: 20px;
       display: flex;
       gap: 20px;
       align-items: center;
     }
     .meta .cluster-badge {
-      background: rgba(122,184,0,.15);
-      border: 1px solid rgba(122,184,0,.3);
+      background: rgba(58,184,216,.12);
+      border: 1px solid rgba(58,184,216,.35);
       color: var(--accent);
       padding: 3px 12px;
-      border-radius: 12px;
+      border-radius: 2px;
+    }
+    .meta .folgen-nr {
+      color: var(--accent);
     }
 
     /* ── Titel ── */
@@ -183,13 +224,14 @@
       line-height: 1.15;
       color: #fff;
       margin-bottom: 12px;
+      max-width: 900px;
     }
     h1.artikel-titel em { color: var(--accent); font-style: normal; }
 
     /* ── Lead ── */
     .lead {
       font-size: 1.2rem;
-      color: #b8c8b0;
+      color: #a9c4d8;
       line-height: 1.6;
       margin-bottom: 40px;
       padding-bottom: 32px;
@@ -202,13 +244,13 @@
     }
     .abschnitt.mit-bild-rechts {
       display: grid;
-      grid-template-columns: 1fr 280px;
+      grid-template-columns: 1fr 420px;
       gap: 32px;
       align-items: start;
     }
     .abschnitt.mit-bild-links {
       display: grid;
-      grid-template-columns: 280px 1fr;
+      grid-template-columns: 420px 1fr;
       gap: 32px;
       align-items: start;
     }
@@ -217,7 +259,7 @@
 
     .abschnitt-bild img {
       width: 100%;
-      border-radius: 4px;
+      border-radius: 2px;
       border: 1px solid var(--border);
       display: block;
     }
@@ -226,7 +268,7 @@
       aspect-ratio: 1 / 1;
       background: var(--surface);
       border: 1px dashed var(--border);
-      border-radius: 4px;
+      border-radius: 2px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -235,7 +277,7 @@
       padding: 16px;
     }
     .bild-placeholder .prompt-label {
-      font-family: var(--font-ui);
+      font-family: var(--font-mono);
       font-size: .65rem;
       color: var(--accent);
       text-transform: uppercase;
@@ -253,7 +295,9 @@
     h2.abschnitt-h2 {
       font-family: var(--font-ui);
       font-size: 1.3rem;
-      font-weight: 700;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .02em;
       color: var(--accent);
       margin-bottom: 16px;
       padding-left: 12px;
@@ -261,6 +305,16 @@
     }
     .abschnitt-text p {
       margin-bottom: 18px;
+    }
+    /* Zahlen/Fakten/Summen im Fließtext hervorheben — Klasse manuell um Zahlwerte legen,
+       z.B. <span class="zahl">35,6 Cent</span> */
+    .zahl {
+      font-family: var(--font-mono);
+      color: #fff;
+      background: rgba(58,184,216,.1);
+      padding: 1px 5px;
+      border-radius: 2px;
+      border: 1px solid rgba(58,184,216,.25);
     }
     .schlagsatz {
       font-family: var(--font-ui);
@@ -274,7 +328,6 @@
     }
 
     /* ── Einfacher Absatz ohne Bild ── */
-    .abschnitt.ohne-bild { max-width: 100%; }
     .abschnitt.ohne-bild p { margin-bottom: 18px; }
 
     /* ── Zitat / Highlight ── */
@@ -283,9 +336,39 @@
       margin: 28px 0;
       padding: 16px 24px;
       background: var(--surface);
-      color: #b8c8b0;
+      color: #a9c4d8;
       font-style: italic;
+      max-width: 780px;
     }
+
+    /* ── Stempel-Element (optional, dezent, im Deko-Sinn der Bildsprache) ── */
+    .stempel {
+      display: inline-block;
+      font-family: var(--font-ui);
+      font-weight: 900;
+      font-size: .85rem;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: var(--stamp-red);
+      border: 2px solid var(--stamp-red);
+      border-radius: 3px;
+      padding: 4px 10px;
+      transform: rotate(-3deg);
+      margin: 8px 0;
+    }
+
+    /* ── HITL-Status-Feld ── */
+    .hitl-status {
+      max-width: 780px;
+      font-family: var(--font-mono);
+      font-size: .75rem;
+      color: var(--muted);
+      border: 1px dashed var(--border);
+      padding: 10px 14px;
+      margin-bottom: 24px;
+      border-radius: 2px;
+    }
+    .hitl-status strong { color: var(--accent); }
 
     /* ── Footer ── */
     .artikel-footer {
@@ -300,12 +383,12 @@
 
     /* ── Responsive ── */
     @media (max-width: 1240px) {
-      .abschnitt.mit-bild-rechts { grid-template-columns: 1fr 240px; }
-      .abschnitt.mit-bild-links { grid-template-columns: 240px 1fr; }
+      .abschnitt.mit-bild-rechts { grid-template-columns: 1fr 360px; }
+      .abschnitt.mit-bild-links { grid-template-columns: 360px 1fr; }
     }
     @media (max-width: 1080px) {
-      .abschnitt.mit-bild-rechts { grid-template-columns: 1fr 200px; gap: 24px; }
-      .abschnitt.mit-bild-links { grid-template-columns: 200px 1fr; gap: 24px; }
+      .abschnitt.mit-bild-rechts { grid-template-columns: 1fr 300px; gap: 24px; }
+      .abschnitt.mit-bild-links { grid-template-columns: 300px 1fr; gap: 24px; }
     }
     @media (max-width: 680px) {
       .abschnitt.mit-bild-rechts,
@@ -315,38 +398,50 @@
       .abschnitt.mit-bild-links .abschnitt-text { order: 1; }
       .abschnitt.mit-bild-links .abschnitt-bild { order: 2; }
       .artikel { padding: 32px 20px 60px; }
+      .lead, .kurzfassung, .abschnitt-text, .abschnitt.ohne-bild, .quellen-block, .artikel-footer, h1.artikel-titel, blockquote.zitat, .hitl-status {
+        max-width: 100%;
+      }
     }
   </style>
 </head>
 <body>
 
 <!-- ════════════════════════════════════════════════════════
-     SITE HEADER
+     SITE HEADER — Serien-Badge statt Cluster-Tagline
 ════════════════════════════════════════════════════════ -->
 <header class="site-header">
   <div>
     <div class="logo">helges-pcwelt.de</div>
-    <div class="tagline">Linux · Digitale Souveränität · Klartext</div>
+    <div class="tagline">Physik schlägt Meinung — Kolumne</div>
   </div>
+  <span class="serie-badge">PSM-{{FOLGEN_NR}}</span>
 </header>
 
 <!-- ════════════════════════════════════════════════════════
-     TITELBILD (16:9)
+     TITELBILD (16:9) — Modus D Blaupause/Technik
      → Platzhalter durch <img src="PFAD"> ersetzen wenn Bild fertig
-     → Bildprompt für Nano Banana / Flux steht im prompt-text
+     → Bildprompt siehe image-generator.md, Modus D
 ════════════════════════════════════════════════════════ -->
 <div class="hero-image-placeholder">
-  <span class="prompt-label">Titelbild-Prompt (16:9)</span>
+  <span class="prompt-label">Titelbild-Prompt (16:9, Modus D)</span>
   <span class="prompt-text">{{TITELBILD_PROMPT}}</span>
 </div>
 
 <main class="artikel">
 
-  <!-- ════ META: Cluster-Badge · Datum · Autor ════ -->
+  <!-- ════════════════════════════════════════════════════════
+       HITL-STATUS (Pflichtfeld — vor Veröffentlichung ausfüllen)
+       → Wird von content-writer/Orchestrator gepflegt, nicht vom
+         Bild-/Layout-Rendering entfernen
+  ════════════════════════════════════════════════════════ -->
+  <div class="hitl-status"><strong>Status:</strong> {{HITL_STATUS}}</div>
+
+  <!-- ════ META: Cluster-Badge · Datum · Autor · Folgen-Nr ════ -->
   <div class="meta">
     <span class="cluster-badge">{{CLUSTER}}</span>
     <span>{{DATUM}}</span>
     <span>Helge Reichert</span>
+    <span class="folgen-nr">Folge {{FOLGEN_NR}}</span>
   </div>
 
   <!-- ════ TITEL ════ -->
@@ -363,19 +458,19 @@
     <div class="abschnitt-text">
       <!-- Überschrift Abschnitt 1 -->
       <h2 class="abschnitt-h2">{{H2_1}}</h2>
-      <!-- Stapelsatz: langer atemloser Satz -->
+      <!-- Stapelsatz: langer atemloser Satz — Zahlen/Fakten optional in <span class="zahl">…</span> -->
       <p>{{ABSATZ_1}}</p>
       <!-- Schlagsatz: ein Satz, hart -->
       <div class="schlagsatz">{{SCHLAGSATZ_1}}</div>
       <!-- Fortsetzung -->
       <p>{{ABSATZ_2}}</p>
     </div>
-    <!-- ════ ILLUSTRATION 1 (1:1) — Bildprompt unten ════
+    <!-- ════ ILLUSTRATION 1 (1:1) — Modus D Bildprompt unten ════
          Alt-Text für SEO: beschreibt was im Bild ist, nicht "Bild von..."
     ════ -->
     <div class="abschnitt-bild">
       <div class="bild-placeholder">
-        <span class="prompt-label">Illustration 1 (1:1)</span>
+        <span class="prompt-label">Illustration 1 (1:1, Modus D)</span>
         <span class="prompt-text">{{BILD_1_PROMPT}}</span>
       </div>
       <!-- Wenn Bild fertig: <img src="illustration-1.jpg" alt="{{BILD_1_ALT}}" width="560" height="560"> -->
@@ -387,12 +482,12 @@
        Alternierende Seite für Abwechslung
   ════════════════════════════════════════════════════════ -->
   <div class="abschnitt mit-bild-links">
-    <!-- ════ ILLUSTRATION 2 (1:1) — Bildprompt unten ════
+    <!-- ════ ILLUSTRATION 2 (1:1) — Modus D Bildprompt unten ════
          Alt-Text für SEO: präzise Beschreibung des Bildinhalts
     ════ -->
     <div class="abschnitt-bild">
       <div class="bild-placeholder">
-        <span class="prompt-label">Illustration 2 (1:1)</span>
+        <span class="prompt-label">Illustration 2 (1:1, Modus D)</span>
         <span class="prompt-text">{{BILD_2_PROMPT}}</span>
       </div>
       <!-- Wenn Bild fertig: <img src="illustration-2.jpg" alt="{{BILD_2_ALT}}" width="560" height="560"> -->
@@ -432,21 +527,24 @@
        FAQ-Sektionen bevorzugt als Antworten auf Nutzerfragen.
        3-5 Fragen die echte Suchanfragen widerspiegeln.
        JSON-LD FAQPage Schema automatisch generieren lassen.
+       (Sichtbarkeit wie bei Modus-A-Artikeln: nach Helges Vorgabe
+       optional per Kommentar ausblenden, wenn FAQ-Box den Satire-
+       Ton bricht — Schema-Markup bleibt in dem Fall trotzdem stehen.)
   ════════════════════════════════════════════════════════ -->
   <div class="abschnitt ohne-bild" style="margin-top:48px; padding-top:32px; border-top:1px solid var(--border);">
     <h2 class="abschnitt-h2">Häufige Fragen</h2>
 
-    <details style="margin-bottom:16px; border:1px solid var(--border); border-radius:4px; padding:16px;">
+    <details style="margin-bottom:16px; border:1px solid var(--border); border-radius:2px; padding:16px;">
       <summary style="font-family:var(--font-ui); font-weight:600; color:#fff; cursor:pointer;">{{FAQ_1_FRAGE}}</summary>
       <p style="margin-top:12px;">{{FAQ_1_ANTWORT}}</p>
     </details>
 
-    <details style="margin-bottom:16px; border:1px solid var(--border); border-radius:4px; padding:16px;">
+    <details style="margin-bottom:16px; border:1px solid var(--border); border-radius:2px; padding:16px;">
       <summary style="font-family:var(--font-ui); font-weight:600; color:#fff; cursor:pointer;">{{FAQ_2_FRAGE}}</summary>
       <p style="margin-top:12px;">{{FAQ_2_ANTWORT}}</p>
     </details>
 
-    <details style="margin-bottom:16px; border:1px solid var(--border); border-radius:4px; padding:16px;">
+    <details style="margin-bottom:16px; border:1px solid var(--border); border-radius:2px; padding:16px;">
       <summary style="font-family:var(--font-ui); font-weight:600; color:#fff; cursor:pointer;">{{FAQ_3_FRAGE}}</summary>
       <p style="margin-top:12px;">{{FAQ_3_ANTWORT}}</p>
     </details>
@@ -479,7 +577,7 @@
 
   <!-- ════ FOOTER ════ -->
   <footer class="artikel-footer">
-    <p>Helge Reichert · IT-Techniker · KI-Trainer · <a href="https://helges-pcwelt.de">helges-pcwelt.de</a></p>
+    <p>Helge Reichert · IT-Techniker · KI-Trainer · <a href="https://helges-pcwelt.de">helges-pcwelt.de</a> · Serie: Physik schlägt Meinung</p>
   </footer>
 
 </main>

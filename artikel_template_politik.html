@@ -373,6 +373,14 @@
     .artikel-footer a { color: var(--gold); text-decoration: none; }
 
     /* ════ RESPONSIVE ════ */
+    @media (max-width: 1240px) {
+      .abschnitt.mit-bild-rechts { grid-template-columns: 1fr 290px; }
+      .abschnitt.mit-bild-links { grid-template-columns: 290px 1fr; }
+    }
+    @media (max-width: 1080px) {
+      .abschnitt.mit-bild-rechts { grid-template-columns: 1fr 240px; gap: 28px; }
+      .abschnitt.mit-bild-links { grid-template-columns: 240px 1fr; gap: 28px; }
+    }
     @media (max-width: 780px) {
       .abschnitt.mit-bild-rechts,
       .abschnitt.mit-bild-links { grid-template-columns: 1fr; }
