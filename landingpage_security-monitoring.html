@@ -1,0 +1,647 @@
+<!-- ============================================================
+     SECURITY MONITORING — helges-pcwelt.de
+     Version: 2.0 | 26.06.2026
+     Tabs: 1·Start  2·Für KMU  3·Für Handwerker  4·Sicherheit  5·KI-Risiken  6·Preise
+     SEO/GEO: Schema.org LocalBusiness + FAQ, Meta optimiert
+     Kontrast: WCAG AA, min. 16px Fließtext, keine hell-auf-hell Buttons
+     Einbau: Elementor HTML-Widget, Volle Breite
+     ============================================================ -->
+
+<!-- ── SEO/GEO META (in WP via Yoast setzen, hier zur Referenz) ──────────────
+     Title:       Security Monitoring für KMU & Handwerker – Helge Reichert IT Saarbrücken
+     Description: Tägliche automatische Sicherheitschecks für kleine Betriebe. 6 Checks/Tag,
+                  Sofort-Alarm, monatlicher Report. Ab 100€/Monat. IT-Service Saarbrücken.
+     Keywords:    Security Monitoring KMU, IT-Sicherheit Saarbrücken, Linux Migration Saarland,
+                  NIS2 Handwerk, Datenschutz KI, DSGVO KMU
+     ─────────────────────────────────────────────────────────────────────────── -->
+
+<!-- ── SCHEMA.ORG JSON-LD ─────────────────────────────────────────────────── -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "LocalBusiness",
+      "@id": "https://helges-pcwelt.de/#business",
+      "name": "Helge Reichert IT",
+      "description": "IT-Sicherheit, Linux-Migration und digitale Souveränität für KMU und Handwerksbetriebe im Saarland.",
+      "url": "https://helges-pcwelt.de",
+      "email": "agentur@helgereichert.de",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Saarbrücken",
+        "addressRegion": "Saarland",
+        "addressCountry": "DE"
+      },
+      "areaServed": ["Saarbrücken","Saarland","Rheinland-Pfalz"],
+      "priceRange": "€€"
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Was kostet Security Monitoring für KMU?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Das laufende Monitoring kostet 100€/Monat, monatlich kündbar. Der einmalige Security Audit kostet 500€ und wird bei Beauftragung voll angerechnet." }
+        },
+        {
+          "@type": "Question",
+          "name": "Betrifft mich NIS2 als kleiner Betrieb?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Auch wenn NIS2 Sie nicht direkt trifft – Ihre Großkunden trifft es und reichen die Anforderungen als Lieferkettenpflicht nach unten durch. Unsere Monitoring-Reports decken typische Kunden-Fragebögen ab." }
+        },
+        {
+          "@type": "Question",
+          "name": "Muss ich für E-Rechnung etwas tun?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Ja. Seit 2025 müssen Sie E-Rechnungen empfangen können. Die Versandpflicht kommt stufenweise bis 2028." }
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+<style>
+/* === RESET === */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* === VARIABLEN === */
+:root {
+  --bg:      #060f0a;
+  --panel:   rgba(255,255,255,0.06);
+  --green:   #00ff88;
+  --green-d: #00c96a;
+  --red:     #e63946;
+  --yellow:  #f4a800;
+  --text:    #e8e8e8;
+  --dim:     #a8a8a8;
+  --border:  rgba(0,255,136,0.18);
+  --mono:    'IBM Plex Mono','Courier New',monospace;
+  --sans:    'DM Sans','Segoe UI',sans-serif;
+  --disp:    'Bebas Neue','Impact',sans-serif;
+}
+
+/* === WRAPPER === */
+.sm { background:var(--bg); color:var(--text); font-family:var(--sans); font-size:17px; line-height:1.7; width:100%; }
+
+/* === TAB-NAV === */
+.tab-nav { display:flex; flex-wrap:wrap; gap:4px; padding:1.2rem 2rem 0; border-bottom:2px solid var(--border); position:sticky; top:0; background:var(--bg); z-index:100; }
+
+/* === TAB-BUTTON === */
+.tab-btn { background:transparent; border:1px solid var(--border); border-bottom:none; border-radius:6px 6px 0 0; color:var(--dim); cursor:pointer; font-family:var(--sans); font-size:15px; font-weight:500; padding:.55rem 1.1rem; transition:all .2s; white-space:nowrap; }
+.tab-btn.active,.tab-btn:hover { background:var(--panel); color:var(--green); border-color:var(--green); }
+
+/* === PANELS — SEO: position statt display:none === */
+.tab-panel { position:absolute; opacity:0; pointer-events:none; width:1px; height:1px; overflow:hidden; }
+.tab-panel.active { position:relative; opacity:1; pointer-events:auto; width:auto; height:auto; overflow:visible; padding:2.5rem 2rem 3rem; }
+
+/* === TYPO === */
+h1 { font-family:var(--disp); font-size:clamp(2.2rem,5vw,3.8rem); line-height:1.1; color:#fff; margin-bottom:1rem; }
+h2 { font-family:var(--disp); font-size:clamp(1.6rem,3.5vw,2.4rem); line-height:1.15; color:#fff; margin-bottom:1rem; }
+h3 { font-size:1.1rem; font-weight:600; color:#fff; margin-bottom:.5rem; }
+p  { margin-bottom:1rem; color:var(--text); }
+p:last-child { margin-bottom:0; }
+
+/* === LAYOUT === */
+.two-col   { display:grid; grid-template-columns:1fr 1fr; gap:2rem; align-items:start; margin-top:1.5rem; }
+.three-col { display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem; margin-top:1.5rem; }
+
+/* === KARTE === */
+.card { background:var(--panel); border:1px solid var(--border); border-radius:10px; padding:1.6rem; }
+.card-red    { border-left:3px solid var(--red); }
+.card-green  { border-left:3px solid var(--green); }
+.card-yellow { border-left:3px solid var(--yellow); }
+
+/* === LABELS === */
+.sec-tag { display:inline-block; background:var(--panel); border:1px solid var(--border); border-radius:4px; color:var(--green); font-family:var(--mono); font-size:12px; letter-spacing:.12em; padding:3px 10px; text-transform:uppercase; margin-bottom:.7rem; }
+.mono-lbl { font-family:var(--mono); font-size:12px; letter-spacing:.1em; text-transform:uppercase; color:var(--green); margin-bottom:.5rem; }
+
+/* === LISTEN === */
+.feat-list { list-style:none; padding:0; margin:.8rem 0 0; }
+.feat-list li { padding:.4rem 0; font-size:16px; color:var(--text); border-bottom:1px solid rgba(255,255,255,.06); display:flex; gap:.6rem; align-items:flex-start; }
+.feat-list li:last-child { border-bottom:none; }
+.feat-list li::before { content:"✔"; color:var(--green); flex-shrink:0; margin-top:3px; }
+
+.chk-list { list-style:none; padding:0; margin:.8rem 0 0; }
+.chk-list li { padding:.3rem 0; font-size:16px; color:var(--text); border-bottom:1px solid rgba(255,255,255,.06); }
+.chk-list li:last-child { border-bottom:none; }
+
+/* === BUTTONS — kein hell-auf-hell === */
+.btn-group { display:flex; gap:1rem; flex-wrap:wrap; margin-top:1.5rem; }
+
+.btn-p {
+  background:var(--green); border:none; border-radius:6px;
+  color:#060f0a;            /* dunkel auf grün */
+  cursor:pointer; font-family:var(--sans); font-size:16px; font-weight:700;
+  padding:.75rem 1.6rem; text-decoration:none; display:inline-block; transition:background .2s;
+}
+.btn-p:hover { background:var(--green-d); }
+
+.btn-s {
+  background:transparent; border:2px solid var(--green); border-radius:6px;
+  color:var(--green);       /* grün auf dunkel */
+  cursor:pointer; font-family:var(--sans); font-size:16px; font-weight:600;
+  padding:.7rem 1.5rem; text-decoration:none; display:inline-block; transition:all .2s;
+}
+.btn-s:hover { background:rgba(0,255,136,.12); }
+
+/* === HERO === */
+.hero { text-align:center; padding:3rem 1rem 2rem; max-width:860px; margin:0 auto; }
+.hero-sub { font-size:18px; color:var(--dim); max-width:620px; margin:0 auto 1.8rem; }
+
+/* === STATS === */
+.stat-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:1rem; margin:2rem 0; }
+.stat-box  { background:var(--panel); border:1px solid var(--border); border-radius:8px; padding:1.2rem; text-align:center; }
+.stat-num  { font-family:var(--disp); font-size:2.2rem; color:var(--green); line-height:1; display:block; }
+.stat-lbl  { font-size:13px; color:var(--dim); margin-top:.3rem; display:block; }
+
+/* === TERMINAL === */
+.terminal { background:#0a1a0f; border:1px solid rgba(0,255,136,.25); border-radius:8px; font-family:var(--mono); font-size:14px; line-height:1.8; padding:1.4rem 1.6rem; margin:1.5rem 0; overflow-x:auto; }
+.t-ok   { color:var(--green); }
+.t-warn { color:var(--yellow); }
+.t-dim  { color:var(--dim); }
+
+/* === TABELLE === */
+.ptbl { width:100%; border-collapse:collapse; margin-top:1.2rem; }
+.ptbl th { background:rgba(0,255,136,.1); color:var(--green); font-size:14px; font-weight:600; padding:.8rem 1rem; text-align:left; border-bottom:2px solid var(--border); }
+.ptbl td { padding:.8rem 1rem; border-bottom:1px solid rgba(255,255,255,.07); font-size:16px; color:var(--text); vertical-align:top; }
+.ptbl tr:last-child td { border-bottom:none; }
+.ptbl tr:hover td { background:rgba(255,255,255,.03); }
+.ph { color:var(--green); font-weight:700; }
+
+/* === PREIS-KARTE === */
+.pr-card { background:var(--panel); border:1px solid var(--border); border-radius:12px; padding:2rem; text-align:center; }
+.pr-card.feat { border-color:var(--green); border-width:2px; }
+.pr-amount { font-family:var(--disp); font-size:3.2rem; color:var(--green); line-height:1; }
+.pr-period { font-size:14px; color:var(--dim); margin-bottom:1.2rem; display:block; }
+
+/* === VS-GRID === */
+.vs-grid { display:grid; grid-template-columns:1fr auto 1fr; gap:1.5rem; align-items:center; margin-top:1.5rem; }
+.vs-lbl  { background:var(--panel); border-radius:50%; color:var(--dim); font-family:var(--disp); font-size:1.4rem; height:56px; width:56px; display:flex; align-items:center; justify-content:center; }
+
+/* === RISK-CARD === */
+.risk-card { background:var(--panel); border:1px solid rgba(230,57,70,.25); border-radius:10px; padding:1.5rem; }
+.risk-icon { font-size:1.8rem; display:block; margin-bottom:.5rem; }
+
+/* === DIVIDER / CTA === */
+.divider { border:none; border-top:1px solid rgba(255,255,255,.08); margin:2.5rem 0; }
+.cta-banner { background:rgba(0,255,136,.07); border:1px solid var(--border); border-radius:12px; padding:2.5rem; text-align:center; margin-top:2.5rem; }
+
+/* === RESPONSIVE === */
+@media(max-width:900px){
+  .two-col,.vs-grid { grid-template-columns:1fr; }
+  .three-col        { grid-template-columns:1fr; }
+  .stat-grid        { grid-template-columns:repeat(2,1fr); }
+  .vs-lbl           { display:none; }
+  .tab-panel.active { padding:1.5rem 1rem 2rem; }
+}
+@media(max-width:600px){
+  .stat-grid { grid-template-columns:1fr 1fr; }
+  .tab-btn   { font-size:13px; padding:.45rem .8rem; }
+}
+</style>
+
+
+<!-- ── CONTAINER ─────────────────────────────────────────────────────────── -->
+<div class="sm" id="sm-top">
+
+  <!-- ── NAV ─────────────────────────────────────────────────────────────── -->
+  <nav class="tab-nav" role="tablist">
+    <button class="tab-btn active" data-tab="start"      role="tab" aria-controls="p-start">1 · Start</button>
+    <button class="tab-btn"        data-tab="kmu"        role="tab" aria-controls="p-kmu">2 · Für KMU</button>
+    <button class="tab-btn"        data-tab="handwerker" role="tab" aria-controls="p-handwerker">3 · Für Handwerker</button>
+    <button class="tab-btn"        data-tab="sicherheit" role="tab" aria-controls="p-sicherheit">4 · Sicherheit</button>
+    <button class="tab-btn"        data-tab="ki"         role="tab" aria-controls="p-ki">5 · KI-Risiken</button>
+    <button class="tab-btn"        data-tab="preise"     role="tab" aria-controls="p-preise">6 · Preise</button>
+  </nav>
+
+
+  <!-- ════════════ TAB 1 — START ════════════ -->
+  <div id="p-start" class="tab-panel active" role="tabpanel">
+    <div class="hero">
+      <span class="sec-tag">IT-Sicherheit · Saarbrücken</span>
+      <h1>Ihr Server.<br>Unser Wachposten.</h1>
+      <p class="hero-sub">200.000+ dokumentierte Angriffe auf deutsche Systeme — jede Woche. Während Ihr Windows-Betreuer schläft, läuft unser System rund um die Uhr.</p>
+      <div class="btn-group" style="justify-content:center;">
+        <a href="mailto:agentur@helgereichert.de" class="btn-p">Kostenloses Erstgespräch</a>
+        <button class="btn-s" onclick="switchTab('preise')">Preise ansehen</button>
+      </div>
+    </div>
+
+    <div class="stat-grid">
+      <div class="stat-box"><span class="stat-num">200.669</span><span class="stat-lbl">Angriffe auf DE / Woche</span></div>
+      <div class="stat-box"><span class="stat-num" style="color:var(--red)">Platz 3</span><span class="stat-lbl">Deutschland weltweit</span></div>
+      <div class="stat-box"><span class="stat-num" style="color:var(--yellow)">74 %</span><span class="stat-lbl">KMU ohne Schutzkonzept</span></div>
+      <div class="stat-box"><span class="stat-num">100 €</span><span class="stat-lbl">Monatlicher Vollschutz</span></div>
+    </div>
+
+    <div class="terminal">
+      <span class="t-dim">$ sudo security-check --full  # Musterbetrieb GmbH | 03:00 Uhr</span><br>
+      <span class="t-ok">✔ Port Scan         OK — alle Ports bekannt</span><br>
+      <span class="t-ok">✔ Update Check      OK — System aktuell</span><br>
+      <span class="t-ok">✔ Rootkit Scan      OK — keine Funde</span><br>
+      <span class="t-warn">⚠ Log Analysis      47 fehlgeschlagene Logins — alle geblockt ✔</span><br>
+      <span class="t-ok">✔ Geräte-Scan       6 bekannte Geräte online</span><br><br>
+      <span class="t-warn">⚠ Alert gesendet → agentur@helgereichert.de</span>
+    </div>
+
+    <p style="color:var(--dim);font-size:15px;text-align:center;">
+      Wählen Sie Ihr Thema oben: <strong style="color:#fff">Für KMU</strong> · <strong style="color:#fff">Für Handwerker</strong> · <strong style="color:#fff">Sicherheit</strong> · <strong style="color:#fff">KI-Risiken</strong>
+    </p>
+  </div>
+
+
+  <!-- ════════════ TAB 2 — FÜR KMU ════════════ -->
+  <div id="p-kmu" class="tab-panel" role="tabpanel">
+    <span class="sec-tag">Für Entscheider</span>
+    <h2>Was Windows Sie<br>wirklich kostet</h2>
+
+    <div class="vs-grid">
+      <div class="card card-red">
+        <div class="mono-lbl" style="color:var(--red)">⚠ Windows — Ist-Situation</div>
+        <table class="ptbl" style="margin-top:.8rem;">
+          <tbody>
+            <tr><td>Microsoft 365 Business (10 User)</td><td style="color:var(--red);white-space:nowrap;">120 €/Mon</td></tr>
+            <tr><td>Windows Server + CALs</td><td style="color:var(--red);white-space:nowrap;">ab 80 €/Mon</td></tr>
+            <tr><td>IT-Betreuer (4h/Mon)</td><td style="color:var(--red);white-space:nowrap;">200–320 €</td></tr>
+            <tr><td>Antivirus-Software</td><td style="color:var(--red);white-space:nowrap;">30–60 €</td></tr>
+            <tr><td>DSGVO-Haftungsrisiko</td><td style="color:var(--red)">unbegrenzt</td></tr>
+          </tbody>
+        </table>
+        <div style="margin-top:1rem;padding-top:.8rem;border-top:1px solid rgba(255,255,255,.1);">
+          <span style="font-family:var(--disp);font-size:1.8rem;color:var(--red)">430–580 €</span>
+          <span style="color:var(--dim);font-size:14px"> / Monat</span>
+        </div>
+      </div>
+
+      <div class="vs-lbl">VS</div>
+
+      <div class="card card-green">
+        <div class="mono-lbl">✔ Linux — Mit uns</div>
+        <table class="ptbl" style="margin-top:.8rem;">
+          <tbody>
+            <tr><td>Linux + LibreOffice + Thunderbird</td><td style="color:var(--green);white-space:nowrap;">0 € Lizenz</td></tr>
+            <tr><td>Nextcloud (eigener Server)</td><td style="color:var(--green);white-space:nowrap;">0 € Lizenz</td></tr>
+            <tr><td>Security Monitoring täglich</td><td style="color:var(--green);white-space:nowrap;">100 €/Mon</td></tr>
+            <tr><td>Antivirus</td><td style="color:var(--green)">nicht nötig</td></tr>
+            <tr><td>DSGVO-Haftung</td><td style="color:var(--green)">dramatisch reduziert</td></tr>
+          </tbody>
+        </table>
+        <div style="margin-top:1rem;padding-top:.8rem;border-top:1px solid rgba(255,255,255,.1);">
+          <span style="font-family:var(--disp);font-size:1.8rem;color:var(--green)">100 €</span>
+          <span style="color:var(--dim);font-size:14px"> / Monat</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:1.5rem;text-align:center;border:2px solid var(--green);">
+      <div class="mono-lbl" style="text-align:center">Ihre monatliche Ersparnis nach Migration</div>
+      <span style="font-family:var(--disp);font-size:4.5rem;color:var(--green);line-height:1;display:block;margin:.3rem 0">330–480 €</span>
+      <p style="font-size:1.1rem;margin-top:.3rem"><strong>Jeden Monat. Jedes Jahr.</strong> Nicht einmal. Nicht als Sonderaktion.</p>
+      <p style="color:var(--dim);font-size:15px">Nach 3 Jahren haben Sie über 15.000 € bezahlt — und besitzen: nichts. Kein einziges Bit gehört Ihnen.</p>
+    </div>
+
+    <hr class="divider">
+
+    <span class="sec-tag">NIS2 &amp; Lieferkette</span>
+    <h2>Compliance ohne Berater-Zirkus</h2>
+    <p>Auch wenn NIS2 Sie nicht direkt trifft — Ihre Großkunden trifft es. Der Fragebogen liegt schon im Postfach: <em>"Beschreiben Sie Ihr IT-Sicherheitskonzept."</em> Wer nichts vorweisen kann, fliegt aus der Lieferkette.</p>
+
+    <div class="two-col">
+      <div class="card card-green">
+        <div class="mono-lbl">Was Sie automatisch haben</div>
+        <ul class="feat-list">
+          <li>Tägliches Security Monitoring mit Protokoll</li>
+          <li>Dokumentierte Sicherheits-Audits</li>
+          <li>Daten auf eigenem Server in Deutschland</li>
+          <li>Backup-Konzept mit Nachweis</li>
+          <li>Monatlicher Report als fertige Anlage für Kunden-Fragebögen</li>
+        </ul>
+      </div>
+      <div class="card card-yellow">
+        <div class="mono-lbl" style="color:var(--yellow)">Was andere teuer einkaufen</div>
+        <ul class="chk-list">
+          <li style="color:var(--dim)">Compliance-Berater ab 2.000 €/Tag</li>
+          <li style="color:var(--dim)">80-Seiten-Gutachten</li>
+          <li style="color:var(--dim)">Separate Audit-Projekte</li>
+          <li style="color:var(--dim)">Jährliche Zertifizierungsgebühren</li>
+        </ul>
+        <p style="margin-top:1rem;font-size:15px">Bei Ihnen fällt das als <strong style="color:#fff">Nebenprodukt</strong> des täglichen Monitorings ab.</p>
+      </div>
+    </div>
+
+    <div class="btn-group" style="margin-top:2rem;">
+      <a href="mailto:agentur@helgereichert.de" class="btn-p">Security Audit anfragen (500 €)</a>
+      <button class="btn-s" onclick="switchTab('preise')">Alle Preise</button>
+    </div>
+  </div>
+
+
+  <!-- ════════════ TAB 3 — FÜR HANDWERKER ════════════ -->
+  <div id="p-handwerker" class="tab-panel" role="tabpanel">
+    <span class="sec-tag">Feierabend-Paket</span>
+    <h2>Der Arbeitszettel wird<br>zur Rechnung — von allein.</h2>
+    <p>18 Uhr. Du kommst grad von der letzten Baustelle oder die Werkstatt ist sauber. Eigentlich Feierabend. Eigentlich.</p>
+    <p>Aber da warten noch drei Angebote, zwei Rechnungen und eine Mahnung die du seit Wochen vor dir herschiebst. Also PC an. Windows braucht erstmal ein Update — also holst du dir erst mal ein Bier. Bis der fertig ist bist du halb voll und das wars mal wieder mit den dringenden Mahnungen für heute.</p>
+    <p><strong>Du backst die Doppelweck auch nicht selbst und schlachtest kein Schwein um den Fleischkäs zu machen.</strong> Du machst dein Handwerk — lass den Bürokram von jemandem erledigen der sich damit auskennt. Automatisch. Bevor du überhaupt das erste Bier aufmachst.</p>
+    <p style="color:var(--dim);font-size:15px"><a href="#" style="color:var(--green);text-decoration:none">→ Die ganze Geschichte im Blog lesen</a></p>
+
+    <div class="two-col">
+      <div>
+        <h3 style="color:var(--green);margin-bottom:.8rem">Fundament: PC-Setup</h3>
+        <ul class="feat-list">
+          <li>Linux statt Windows — startet in Sekunden, kein Update-Theater</li>
+          <li>E-Rechnung (XRechnung/ZUGFeRD) ab Tag 1</li>
+          <li>GoBD-Archiv automatisch, revisionssicher, 10 Jahre</li>
+          <li>Mahnungen halbautomatisch — Text liegt fertig zur Freigabe</li>
+        </ul>
+        <h3 style="color:var(--green);margin:1.5rem 0 .8rem">Erweiterung: Büro-Automatik</h3>
+        <ul class="feat-list">
+          <li>Digitaler Arbeitszettel auf Tablet → automatische Rechnung</li>
+          <li>Mail-Anfrage → fertiger Angebots-Entwurf zur Prüfung</li>
+          <li>Nichts geht ohne Ihre Freigabe raus</li>
+        </ul>
+      </div>
+      <div>
+        <div class="card card-yellow" style="margin-bottom:1.2rem">
+          <div class="mono-lbl" style="color:var(--yellow)">⚠ E-Rechnung — betrifft Sie das?</div>
+          <p style="margin-top:.8rem">Ja. Empfangen können müssen Sie seit 2025. Die Versandpflicht kommt je nach Umsatz stufenweise bis 2028. Wer früh umstellt, hat keinen Stress wenn der erste Großkunde nur noch XRechnung akzeptiert.</p>
+        </div>
+        <div class="card card-green">
+          <div class="mono-lbl">✔ Ergebnis</div>
+          <p style="margin-top:.8rem;font-size:1.1rem"><strong>Mindestens eine Stunde pro Abend zurück.</strong></p>
+          <p style="font-size:15px;color:var(--dim)">Sie haben einen Betrieb gegründet um Ihr Handwerk zu machen — nicht um abends Bürokaufmann zu spielen.</p>
+        </div>
+      </div>
+    </div>
+
+    <hr class="divider">
+    <h3 style="margin-bottom:.8rem">Preisrahmen</h3>
+    <table class="ptbl">
+      <thead><tr><th>Paket</th><th>Umfang</th><th>Investition</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Basis</strong></td><td>1 PC, Linux + E-Rechnung + GoBD-Archiv</td><td class="ph">1.800 €</td></tr>
+        <tr><td><strong>Komfort</strong></td><td>2 PCs + KI-Diktat für Angebote/Rechnungen</td><td class="ph">2.900 €</td></tr>
+        <tr><td><strong>Modul: Arbeitszettel → Rechnung</strong></td><td>Tablet-Erfassung, Auto-Rechnung, Freigabe per Klick</td><td class="ph">1.800 €</td></tr>
+        <tr><td><strong>Modul: Angebots-Assistent</strong></td><td>Mail-Anfrage → fertiger Angebots-Entwurf</td><td class="ph">1.200 €</td></tr>
+        <tr style="background:rgba(0,255,136,.05)"><td><strong style="color:var(--green)">Sorglos komplett</strong></td><td>Komfort + beide Module</td><td class="ph">4.900 € <span style="color:var(--dim);font-size:13px">statt 5.900 €</span></td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:15px;color:var(--dim);margin-top:.8rem">Optional: Wartung + Hotline 50 €/Monat · monatlich kündbar</p>
+    <div class="btn-group" style="margin-top:1.5rem">
+      <a href="mailto:agentur@helgereichert.de" class="btn-p">Rückruf anfordern</a>
+    </div>
+  </div>
+
+
+  <!-- ════════════ TAB 4 — SICHERHEIT ════════════ -->
+  <div id="p-sicherheit" class="tab-panel" role="tabpanel">
+    <span class="sec-tag">Aktuelle Bedrohungslage</span>
+    <h2>Deutschland ist<br>Angriffsziel Nr. 3 weltweit.</h2>
+    <p>Das sind keine Einzelfälle. Automatisiertes Scannen — jeden Tag, rund um die Uhr. Ihr Server ist kein zu kleines Ziel. Er ist genau das richtige: wenig Schutz, viele Daten.</p>
+
+    <div class="stat-grid">
+      <div class="stat-box"><span class="stat-num" style="color:var(--red)">81.067</span><span class="stat-lbl">Angriffs-IPs aus China / 7 Tage</span></div>
+      <div class="stat-box"><span class="stat-num" style="color:var(--red)">68.836</span><span class="stat-lbl">Angriffs-IPs aus Brasilien</span></div>
+      <div class="stat-box"><span class="stat-num">200.669</span><span class="stat-lbl">Angriffe auf deutsche Systeme</span></div>
+      <div class="stat-box"><span class="stat-num" style="color:var(--green)">24/7</span><span class="stat-lbl">Unser Monitoring läuft</span></div>
+    </div>
+
+    <hr class="divider">
+    <span class="sec-tag">Was wir täglich prüfen</span>
+    <h2>6 automatische Sicherheitschecks</h2>
+
+    <div class="three-col">
+      <div class="card"><span style="font-size:1.8rem">🔌</span><h3 style="margin-top:.5rem">Port-Scan</h3><p>Jeder unbekannte Port ist eine potenzielle Einbruchstür. Täglich gegen Whitelist geprüft.</p><div class="mono-lbl">Täglich gegen Whitelist</div></div>
+      <div class="card"><span style="font-size:1.8rem">🔄</span><h3 style="margin-top:.5rem">Update-Check</h3><p>Veraltete Software ist die häufigste Einbruchsursache. Wir messen wann zuletzt aktualisiert wurde.</p><div class="mono-lbl">Sicherheits-Updates separat</div></div>
+      <div class="card"><span style="font-size:1.8rem">🦠</span><h3 style="margin-top:.5rem">Rootkit-Scan</h3><p>Rootkits verstecken sich monatelang. Wir suchen täglich danach — automatisch.</p><div class="mono-lbl">rkhunter mit FP-Filter</div></div>
+      <div class="card"><span style="font-size:1.8rem">📋</span><h3 style="margin-top:.5rem">Log-Analyse + IP-Check</h3><p>Jede verdächtige IP wird gegen internationale Angreifer-Datenbanken geprüft.</p><div class="mono-lbl">AbuseIPDB-Abgleich</div></div>
+      <div class="card"><span style="font-size:1.8rem">🌐</span><h3 style="margin-top:.5rem">Offene Verbindungen</h3><p>Unbekannte Verbindungen können auf Schadsoftware oder Datenlecks hinweisen.</p><div class="mono-lbl">Anomalie-Erkennung</div></div>
+      <div class="card"><span style="font-size:1.8rem">💻</span><h3 style="margin-top:.5rem">Geräte-Inventar</h3><p>Ein unbekanntes Gerät kann ein eingeschleustes System sein.</p><div class="mono-lbl">Alert bei unbekanntem Gerät</div></div>
+    </div>
+
+    <hr class="divider">
+    <span class="sec-tag">Was die Enterprise-Branche verschweigt</span>
+    <h2>Maschinengeschwindigkeit<br>auch ohne Konzernbudget</h2>
+    <p>Die großen Security-Anbieter trommeln für KI-gesteuerte SOC-Plattformen — sechsstellig pro Jahr. Ihre Kernaussage stimmt: <strong>Patch-Geschwindigkeit entscheidet.</strong> Nur die Größenordnung passt nicht zu Ihrem Betrieb.</p>
+    <div class="card card-green" style="margin-top:1.2rem">
+      <div class="mono-lbl">Gleiches Prinzip — andere Größenordnung</div>
+      <p style="margin-top:.8rem;font-size:1.1rem">6 Checks täglich + Sofort-Alarm + Linux (kein Hauptziel von Massenangriffen) — für <strong style="color:var(--green)">100 €/Monat</strong> statt fünfstellig/Jahr.</p>
+    </div>
+    <div class="btn-group" style="margin-top:1.5rem"><a href="mailto:agentur@helgereichert.de" class="btn-p">Jetzt Check anfragen</a></div>
+  </div>
+
+
+  <!-- ════════════ TAB 5 — KI-RISIKEN ════════════ -->
+  <div id="p-ki" class="tab-panel" role="tabpanel">
+
+    <!-- A: DSGVO-Falle -->
+    <span class="sec-tag">Praxisbeispiel</span>
+    <h2>Was auf irgendeiner Webseite steht,<br>schützt Sie nicht.</h2>
+
+    <div class="two-col">
+      <div>
+        <p>Ein Datenschutzbeauftragter aus der Praxis: Sein Kunde nutzt plötzlich doch irgendein KI-Tool über das er gestolpert ist. Ohne Bescheid zu sagen. Auf der Webseite stand groß: <strong style="color:var(--red)">"DSGVO-konform"</strong>. Der Kunde denkt: passt.</p>
+        <p>Im Kleingedruckten steht: Die Einwilligung jedes Kommunikationspartners liegt beim Nutzer — nicht beim Anbieter. Die komplette Geschäftskommunikation, Kundendaten, Zahlen, vertrauliche Absprachen — alles mitgelesen, in Amerika gespeichert, zum Training genutzt. Weg.</p>
+        <p>Kennt ihr das? Wie ein Kumpel der die Molkereistatistik der letzten drei Monate von ChatGPT zu einem kleinen Artikel für die Eier-Butter-Käse-Zeitung hat schreiben lassen — und zu seinem Chef der ihn für die schnelle Erledigung gelobt hat sagte: <em>"Ich kenn mich ja auch mit KI aus."</em> 😂 Nur dass in dem Fall keine Firmengeheimnisse in Amerika gelandet sind.</p>
+        <p style="color:var(--dim);font-size:15px"><a href="#" style="color:var(--green);text-decoration:none">→ Die ganze Geschichte im Blog lesen</a></p>
+      </div>
+      <div class="card card-red">
+        <div class="mono-lbl" style="color:var(--red)">⚠ Was passiert ist</div>
+        <ul class="chk-list" style="margin-top:.8rem">
+          <li style="color:var(--red)">✗ Kundenkommunikation in US-Cloud</li>
+          <li style="color:var(--red)">✗ KI hat damit trainiert</li>
+          <li style="color:var(--red)">✗ Datenkontrolle: null</li>
+          <li style="color:var(--red)">✗ DSGVO-Verstoß: ja</li>
+          <li style="color:var(--red)">✗ Cloud Act greift: ja</li>
+        </ul>
+        <hr class="divider" style="margin:1rem 0">
+        <div class="mono-lbl">✔ Die einzige Lösung</div>
+        <p style="margin-top:.6rem;font-size:1.05rem"><strong>Daten verlassen den eigenen Server nicht. Punkt.</strong></p>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- B: Halluzinationen -->
+    <span class="sec-tag">Risiko 1</span>
+    <h2>KI erfindet. Überzeugend.</h2>
+    <div class="three-col">
+      <div class="risk-card">
+        <span class="risk-icon">🎭</span>
+        <h3>Halluzinationen</h3>
+        <p>KI formuliert falsche Informationen so überzeugend, dass sie wie Fakten wirken. Je weniger Sie sich im Fachgebiet auskennen, desto gefährlicher.</p>
+        <div class="mono-lbl" style="color:var(--yellow)">→ Output immer im eigenen Fachgebiet testen</div>
+      </div>
+      <div class="risk-card">
+        <span class="risk-icon">📚</span>
+        <h3>Schlechte Trainingsdaten</h3>
+        <p>KI lernt aus dem Internet — inklusive falschem Code, Fehlinformationen, Meinungen als Fakten. Keine automatische Quellenkritik.</p>
+        <div class="mono-lbl" style="color:var(--yellow)">→ Output gegen bekannte Quellen prüfen</div>
+      </div>
+      <div class="risk-card">
+        <span class="risk-icon">⚖️</span>
+        <h3>Einfluss des Anbieters</h3>
+        <p>Wer die KI trainiert, beeinflusst die Antworten. DeepSeek (China) kritisiert westliche Regierungen — aber nicht Peking. Antworten sind nie neutral.</p>
+        <div class="mono-lbl" style="color:var(--yellow)">→ Wer hat dieses Tool entwickelt?</div>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- C: Schatten-KI -->
+    <span class="sec-tag">Risiko 2</span>
+    <h2>Schatten-KI — der unsichtbare Risikofaktor</h2>
+    <div class="two-col">
+      <div class="card card-yellow">
+        <div class="mono-lbl" style="color:var(--yellow)">⚠ Das passiert gerade in Ihrem Betrieb</div>
+        <p style="margin-top:.8rem">Mitarbeiter nutzen ChatGPT auf dem Privathandy — weil es die Arbeit erleichtert. Ohne Freigabe. Ohne Regelung. Ohne dass Sie es wissen.</p>
+        <p><strong>Ihre Unternehmensdaten wandern trotzdem nach Amerika.</strong></p>
+      </div>
+      <div>
+        <p><strong>Die Lösung ist kein Verbot</strong> — Verbote werden umgangen. Die Lösung ist eine klare Regelung mit sicherer Alternative.</p>
+        <ul class="feat-list">
+          <li>Welche Tools sind freigegeben — welche nicht?</li>
+          <li>Was darf eingegeben werden?</li>
+          <li>Lokale KI auf eigenem Server als sichere Alternative</li>
+          <li>Mitarbeiter werden informiert — nicht verboten</li>
+        </ul>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- D: Angreifer -->
+    <span class="sec-tag">Risiko 3</span>
+    <h2>Die Angreifer nutzen KI.<br>Seit gestern.</h2>
+    <div class="three-col">
+      <div class="risk-card">
+        <span class="risk-icon">🎭</span>
+        <h3>DeepFakes &amp; CEO-Fraud</h3>
+        <p>Wenige Sekunden Stimme reichen — aus einem YouTube-Video. Der Anruf klingt wie Ihr Chef. Die Überweisung soll sofort raus.</p>
+        <div class="mono-lbl" style="color:var(--red)">Erfolgsquote: dramatisch gestiegen</div>
+      </div>
+      <div class="risk-card">
+        <span class="risk-icon">🎣</span>
+        <h3>KI-Phishing</h3>
+        <p>Keine Schreibfehler mehr. Personalisiert mit Ihrem Namen, Ihrer Branche, Ihrem Lieferanten — automatisch aus öffentlichen Quellen zusammengesetzt.</p>
+        <div class="mono-lbl" style="color:var(--red)">Erkennungsrate: deutlich schwieriger</div>
+      </div>
+      <div class="risk-card">
+        <span class="risk-icon">🤖</span>
+        <h3>Automatisierte Schwachstellensuche</h3>
+        <p>KI scannt rund um die Uhr. Die Zeit zwischen Patch-Veröffentlichung und erstem Exploit schrumpft auf Stunden.</p>
+        <div class="mono-lbl" style="color:var(--red)">Patch-Geschwindigkeit entscheidet</div>
+      </div>
+    </div>
+
+    <div class="cta-banner">
+      <h2 style="margin-bottom:.5rem">Die einzige Antwort die zählt</h2>
+      <p style="max-width:600px;margin:0 auto 1.5rem;color:var(--dim)">Eigener Server. Eigene KI. Daten die den Betrieb nicht verlassen. Kein Kleingedrucktes das Sie ruiniert.</p>
+      <div class="btn-group" style="justify-content:center">
+        <a href="mailto:agentur@helgereichert.de" class="btn-p">Jetzt beraten lassen</a>
+        <button class="btn-s" onclick="switchTab('preise')">Preise ansehen</button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ════════════ TAB 6 — PREISE ════════════ -->
+  <div id="p-preise" class="tab-panel" role="tabpanel">
+    <span class="sec-tag">Transparent &amp; kalkulierbar</span>
+    <h2>Keine Überraschungen.<br>Kein Abo-Dschungel.</h2>
+
+    <div class="two-col" style="margin-top:1.5rem">
+      <div class="pr-card">
+        <div class="mono-lbl">Einmalig</div>
+        <div class="pr-amount">500 €</div>
+        <span class="pr-period">einmalige Zahlung · Security Audit</span>
+        <ul class="feat-list" style="text-align:left">
+          <li>Vollständige Sicherheitsanalyse Ihres Systems</li>
+          <li>Shodan-Check Ihrer Public IP</li>
+          <li>Report ohne IT-Kauderwelsch</li>
+          <li>Konkrete Handlungsempfehlungen</li>
+          <li>Persönliche Besprechung</li>
+          <li>Linux-Migrationspotenzial aufgezeigt</li>
+        </ul>
+        <div style="margin-top:1.2rem"><a href="mailto:agentur@helgereichert.de" class="btn-s" style="display:block;text-align:center">Audit anfragen</a></div>
+      </div>
+      <div class="pr-card feat">
+        <div class="mono-lbl">Monatlich · kündbar</div>
+        <div class="pr-amount">100 €</div>
+        <span class="pr-period">pro Monat · Laufendes Monitoring</span>
+        <ul class="feat-list" style="text-align:left">
+          <li>6 automatische Sicherheitschecks täglich</li>
+          <li>Sofort-Alarm bei Problemen</li>
+          <li>IP-Abgleich mit Angreifer-Datenbanken</li>
+          <li>Monatlicher Report</li>
+          <li>Geräte-Inventar mit Unbekannt-Alert</li>
+          <li>Keine Vertragslaufzeit — monatlich kündbar</li>
+        </ul>
+        <div style="margin-top:1.2rem"><a href="mailto:agentur@helgereichert.de" class="btn-p" style="display:block;text-align:center">Monitoring starten</a></div>
+      </div>
+    </div>
+
+    <hr class="divider">
+    <h3 style="margin-bottom:.8rem">Handwerker — Feierabend-Paket</h3>
+    <table class="ptbl">
+      <thead><tr><th>Paket</th><th>Umfang</th><th>Investition</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Basis</strong></td><td>1 PC, Linux + E-Rechnung + GoBD-Archiv</td><td class="ph">1.800 €</td></tr>
+        <tr><td><strong>Komfort</strong></td><td>2 PCs + CRM-Einrichtung + Datenrettung</td><td class="ph">2.900 €</td></tr>
+        <tr style="background:rgba(0,255,136,.04)"><td><strong style="color:var(--green)">Sorglos komplett</strong></td><td>Komfort + beide Automatik-Module</td><td class="ph">4.900 €</td></tr>
+      </tbody>
+    </table>
+
+    <hr class="divider">
+    <h3 style="margin-bottom:.8rem">KMU — Souveränitäts-Migration</h3>
+    <table class="ptbl">
+      <thead><tr><th>Paket</th><th>Umfang</th><th>Investition</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Kompakt</strong></td><td>5 Arbeitsplätze + Server + Schulung</td><td class="ph">ab 8.000 €</td></tr>
+        <tr><td><strong>Standard</strong></td><td>10 Arbeitsplätze + Server + Schulung + 3 Mon. Support</td><td class="ph">ab 14.000 €</td></tr>
+        <tr style="background:rgba(0,255,136,.04)"><td><strong style="color:var(--green)">Komplett</strong></td><td>15–25 Arbeitsplätze + Server + Schulung + 6 Mon. Support</td><td class="ph">ab 20.000 €</td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:15px;color:var(--dim);margin-top:.6rem">Einmalige Investition — amortisiert durch wegfallende Lizenzkosten in 2–3 Jahren.</p>
+
+    <div class="cta-banner">
+      <h2 style="font-size:1.8rem;margin-bottom:.5rem">Wann wurde Ihr Server zuletzt geprüft?</h2>
+      <p style="color:var(--dim);margin-bottom:1.2rem">Wenn Sie diese Frage nicht sofort beantworten können, ist die Antwort: zu lange her.</p>
+      <a href="mailto:agentur@helgereichert.de" class="btn-p">Jetzt kostenloses Erstgespräch anfragen</a>
+    </div>
+
+    <div style="margin-top:2.5rem;padding-top:1.5rem;border-top:1px solid rgba(255,255,255,.08);font-size:14px;color:var(--dim);text-align:center">
+      Helge Reichert IT · Saarbrücken ·
+      <a href="mailto:agentur@helgereichert.de" style="color:var(--green);text-decoration:none">agentur@helgereichert.de</a> ·
+      <a href="https://helges-pcwelt.de" style="color:var(--green);text-decoration:none">helges-pcwelt.de</a> ·
+      Telegram: <a href="https://t.me/ppm600" style="color:var(--green);text-decoration:none">@ppm600</a>
+    </div>
+  </div>
+
+</div><!-- Ende .sm -->
+
+
+<!-- ── JAVASCRIPT ─────────────────────────────────────────────────────────── -->
+<script>
+/* Tab wechseln */
+function switchTab(id) {
+  document.querySelectorAll('.tab-btn').forEach(function(b){ b.classList.remove('active'); b.setAttribute('aria-selected','false'); });
+  document.querySelectorAll('.tab-panel').forEach(function(p){ p.classList.remove('active'); });
+  var btn   = document.querySelector('[data-tab="'+id+'"]');
+  var panel = document.getElementById('p-'+id);
+  if(btn)   { btn.classList.add('active'); btn.setAttribute('aria-selected','true'); }
+  if(panel) { panel.classList.add('active'); }
+  document.getElementById('sm-top').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+/* Klick-Listener */
+document.querySelectorAll('.tab-btn').forEach(function(btn){
+  btn.addEventListener('click', function(){ switchTab(this.getAttribute('data-tab')); });
+});
+
+/* URL-Hash beim Laden */
+(function(){
+  var h = window.location.hash.replace('#','');
+  if(['start','kmu','handwerker','sicherheit','ki','preise'].indexOf(h)!==-1){ switchTab(h); }
+})();
+</script>
