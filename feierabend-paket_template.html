@@ -1,0 +1,1193 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>Feierabend-Paket</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&family=Karla:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap">
+
+<style>
+  :root {
+    --ground: #FAF7EF;
+    --surface: #FFFFFF;
+    --surface-2: #F1EBDA;
+    --ink: #221D14;
+    --ink-muted: #756B57;
+    --ink-faint: #A79C86;
+    --accent: #4C9A22;
+    --accent-strong: #3A7A18;
+    --accent-ink: #FFFFFF;
+    --accent-wash: #E7F1DC;
+    --line: #E4DCC6;
+    --warn: #B5791C;
+    --warn-wash: #F5E9D2;
+    --danger: #B23A2E;
+    --danger-wash: #F6DFD9;
+    --shadow: 0 1px 2px rgba(34,29,20,0.06), 0 8px 24px -12px rgba(34,29,20,0.18);
+    --radius: 14px;
+    color-scheme: light;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground: #16130E;
+      --surface: #201B13;
+      --surface-2: #2A2418;
+      --ink: #F3EEE0;
+      --ink-muted: #A99E86;
+      --ink-faint: #746A55;
+      --accent: #74C93C;
+      --accent-strong: #8BDA55;
+      --accent-ink: #14210A;
+      --accent-wash: #263620;
+      --line: #362F21;
+      --warn: #E0A93A;
+      --warn-wash: #332911;
+      --danger: #E2695A;
+      --danger-wash: #3A2018;
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 12px 28px -14px rgba(0,0,0,0.6);
+      color-scheme: dark;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --ground: #16130E;
+    --surface: #201B13;
+    --surface-2: #2A2418;
+    --ink: #F3EEE0;
+    --ink-muted: #A99E86;
+    --ink-faint: #746A55;
+    --accent: #74C93C;
+    --accent-strong: #8BDA55;
+    --accent-ink: #14210A;
+    --accent-wash: #263620;
+    --line: #362F21;
+    --warn: #E0A93A;
+    --warn-wash: #332911;
+    --danger: #E2695A;
+    --danger-wash: #3A2018;
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 12px 28px -14px rgba(0,0,0,0.6);
+    color-scheme: dark;
+  }
+
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: "Karla", ui-sans-serif, system-ui, sans-serif;
+    font-size: 18px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3 {
+    font-family: "Big Shoulders Display", "Arial Narrow", sans-serif;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.01em;
+    text-wrap: balance;
+    margin: 0;
+    color: var(--ink);
+  }
+
+  .mono {
+    font-family: "JetBrains Mono", ui-monospace, "SFMono-Regular", monospace;
+    font-variant-numeric: tabular-nums;
+  }
+
+  a { color: inherit; }
+
+  .wrap {
+    max-width: 560px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  @media (min-width: 720px) {
+    .wrap { max-width: 860px; padding: 0 32px; }
+  }
+
+  /* ---------- Eyebrow / labels ---------- */
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent-strong);
+  }
+  .eyebrow::before {
+    content: "";
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-wash);
+  }
+
+  /* ---------- Hero ---------- */
+  header.hero {
+    padding: 40px 0 28px;
+    border-bottom: 1px solid var(--line);
+  }
+  header.hero h1 {
+    font-size: clamp(34px, 9vw, 46px);
+    line-height: 0.98;
+    margin-top: 14px;
+  }
+  header.hero h1 em {
+    font-style: normal;
+    color: var(--accent-strong);
+  }
+  .lede {
+    margin: 16px 0 0;
+    color: var(--ink-muted);
+    font-size: 17.5px;
+    max-width: 44ch;
+  }
+
+  /* ---------- Gewerk switcher ---------- */
+  .switcher {
+    margin-top: 24px;
+  }
+  .switcher-label {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 8px;
+    display: block;
+  }
+  .pills {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .pill {
+    font-family: "Karla", sans-serif;
+    font-weight: 600;
+    font-size: 15.5px;
+    padding: 10px 16px;
+    border-radius: 999px;
+    border: 1.5px solid var(--line);
+    background: var(--surface);
+    color: var(--ink);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease, transform 0.1s ease;
+  }
+  .pill:hover { border-color: var(--accent); transform: translateY(-1px); }
+  .pill:active { transform: translateY(0); }
+  .pill[aria-pressed="true"] {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--accent-ink);
+  }
+  .pill .dot { font-size: 16px; line-height: 1; }
+
+  /* ---------- Device / dashboard mock ---------- */
+  /* Bewusst eigene, schmalere Breite als .wrap — das Kästchen soll wie ein
+     Screenshot der App wirken, nicht wie die Seite selbst. */
+  .device {
+    max-width: 420px;
+    margin: 26px auto 0;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+  .device-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 18px;
+    background: var(--surface-2);
+    border-bottom: 1px solid var(--line);
+  }
+  .device-bar .who {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+  }
+  .device-bar .avatar {
+    width: 30px; height: 30px;
+    border-radius: 9px;
+    background: var(--accent);
+    color: var(--accent-ink);
+    display: flex; align-items: center; justify-content: center;
+    font-family: "Big Shoulders Display", sans-serif;
+    font-weight: 800;
+    font-size: 17px;
+    flex: none;
+  }
+  .device-bar .firm {
+    font-weight: 700;
+    font-size: 15.5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .device-bar .firm small {
+    display: block;
+    font-weight: 500;
+    font-size: 12.5px;
+    color: var(--ink-muted);
+  }
+  .device-bar .date {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 12.5px;
+    color: var(--ink-faint);
+    flex: none;
+  }
+
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--line);
+  }
+  .stat {
+    background: var(--surface);
+    padding: 14px 12px;
+  }
+  .stat .n {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 1;
+  }
+  .stat .n.warn { color: var(--warn); }
+  .stat .n.ok { color: var(--accent-strong); }
+  .stat .l {
+    margin-top: 4px;
+    font-size: 12.5px;
+    color: var(--ink-muted);
+    line-height: 1.3;
+  }
+
+  .ede-line {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    padding: 16px 18px 18px;
+  }
+  .ede-line .badge {
+    flex: none;
+    width: 22px; height: 22px;
+    border-radius: 6px;
+    background: var(--accent-wash);
+    color: var(--accent-strong);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px;
+    margin-top: 1px;
+  }
+  .ede-line p {
+    margin: 0;
+    font-size: 15.5px;
+    color: var(--ink);
+  }
+  .ede-line p b { color: var(--accent-strong); font-weight: 700; }
+
+  .pending-line {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    padding: 0 18px 16px;
+  }
+  .pending-line .badge {
+    flex: none;
+    width: 22px; height: 22px;
+    border-radius: 6px;
+    background: var(--warn-wash);
+    color: var(--warn);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px;
+    margin-top: 1px;
+  }
+  .pending-line .txt { flex: 1; min-width: 0; }
+  .pending-line p { margin: 0; font-size: 14.5px; color: var(--ink); }
+  .pending-line .sub { font-size: 12.5px; color: var(--ink-muted); }
+  .pending-line .go {
+    flex: none;
+    font-family: "Karla", sans-serif;
+    font-weight: 700;
+    font-size: 13.5px;
+    padding: 7px 12px;
+    border-radius: 8px;
+    background: var(--accent);
+    color: var(--accent-ink);
+    border: none;
+    cursor: default;
+  }
+  .device-foot {
+    padding: 12px 18px 16px;
+    border-top: 1px dashed var(--line);
+    font-size: 13px;
+    color: var(--ink-faint);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .device-foot svg { width: 13px; height: 13px; flex: none; }
+
+  /* ---------- Sections ---------- */
+  section {
+    padding: 40px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  section:last-of-type { border-bottom: none; }
+
+  .section-head { margin-bottom: 22px; }
+  .section-head h2 {
+    font-size: clamp(24px, 6vw, 30px);
+    margin-top: 8px;
+  }
+  .section-head p {
+    margin: 8px 0 0;
+    color: var(--ink-muted);
+    max-width: 46ch;
+  }
+
+  /* Office task cards */
+  .cards { display: grid; gap: 10px; }
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 16px;
+  }
+  .card-top {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 6px;
+  }
+  .card-icon {
+    flex: none;
+    width: 34px; height: 34px;
+    border-radius: 9px;
+    background: var(--accent-wash);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--accent-strong);
+  }
+  .card-icon svg { width: 18px; height: 18px; }
+  .card h3 {
+    font-family: "Karla", sans-serif;
+    text-transform: none;
+    font-weight: 700;
+    font-size: 17px;
+    letter-spacing: 0;
+    color: var(--ink);
+  }
+  .card p {
+    margin: 0;
+    color: var(--ink-muted);
+    font-size: 15.5px;
+  }
+  .card .example {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px dashed var(--line);
+    font-family: "JetBrains Mono", monospace;
+    font-size: 13.5px;
+    color: var(--ink-faint);
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+  }
+  .card .example b { color: var(--ink); font-weight: 500; }
+
+  /* Ampel / Governance */
+  .card.ampel-green { border-left: 4px solid var(--accent); }
+  .card.ampel-yellow { border-left: 4px solid var(--warn); }
+  .card.ampel-red { border-left: 4px solid var(--danger); }
+  .card.ampel-yellow .card-icon { background: var(--warn-wash); color: var(--warn); }
+  .card.ampel-red .card-icon { background: var(--danger-wash); color: var(--danger); }
+  .card-icon.emoji { font-size: 18px; }
+  .decision-row {
+    margin-top: 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 14px 16px;
+  }
+  .decision-row .card-icon { flex: none; }
+  .decision-row p { margin: 0; font-size: 14.5px; color: var(--ink-muted); }
+  .decision-row p b { color: var(--ink); font-weight: 700; }
+
+  /* Team */
+  .team-list { display: flex; flex-direction: column; gap: 1px; background: var(--line); border-radius: var(--radius); overflow: hidden; border: 1px solid var(--line); }
+  .team-row {
+    background: var(--surface);
+    padding: 12px 14px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .team-row .initials {
+    flex: none;
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    background: var(--surface-2);
+    border: 1px solid var(--line);
+    display: flex; align-items: center; justify-content: center;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink-muted);
+  }
+  .team-row .info { min-width: 0; flex: 1; }
+  .team-row .name { font-weight: 600; font-size: 15.5px; }
+  .team-row .role { font-size: 13.5px; color: var(--ink-muted); }
+  .team-row .pnr {
+    flex: none;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 12px;
+    color: var(--ink-faint);
+    text-align: right;
+  }
+
+  .team-divider {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 26px 0 12px;
+  }
+  .team-divider .t {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 12.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    white-space: nowrap;
+  }
+  .team-divider .line { height: 1px; background: var(--line); flex: 1; }
+  .team-note { margin: 0 0 12px; font-size: 14.5px; color: var(--ink-muted); }
+
+  .agent-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+  .agent-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 10px 11px;
+    display: flex;
+    gap: 9px;
+    align-items: flex-start;
+  }
+  .agent-card .a-badge {
+    flex: none;
+    width: 26px; height: 26px;
+    border-radius: 7px;
+    background: var(--accent-wash);
+    color: var(--accent-strong);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .agent-card .a-badge svg { width: 14px; height: 14px; }
+  .agent-card .a-info { min-width: 0; }
+  .agent-card .a-name { font-weight: 700; font-size: 13.5px; line-height: 1.25; }
+  .agent-card .a-role {
+    font-size: 11.5px;
+    color: var(--ink-muted);
+    line-height: 1.3;
+    margin-top: 2px;
+    display: block;
+  }
+
+  /* Process steps */
+  .steps { display: flex; flex-direction: column; gap: 0; }
+  .step {
+    display: grid;
+    grid-template-columns: 34px 1fr;
+    gap: 14px;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .step:last-child { border-bottom: none; padding-bottom: 0; }
+  .step:first-child { padding-top: 0; }
+  .step .num {
+    font-family: "Big Shoulders Display", sans-serif;
+    font-weight: 800;
+    font-size: 26px;
+    color: var(--ink-faint);
+    line-height: 1;
+  }
+  .step.active .num { color: var(--accent-strong); }
+  .step h3 {
+    font-family: "Karla", sans-serif;
+    text-transform: none;
+    letter-spacing: 0;
+    font-size: 17px;
+    font-weight: 700;
+  }
+  .step p { margin: 4px 0 0; color: var(--ink-muted); font-size: 15px; }
+  .step .tag {
+    display: inline-block;
+    margin-top: 8px;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11.5px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 999px;
+    background: var(--accent-wash);
+    color: var(--accent-strong);
+  }
+  .step.later .tag { background: var(--surface-2); color: var(--ink-faint); }
+
+  /* Sovereignty flow */
+  .flow {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 16px;
+  }
+  .card .flow {
+    margin-top: 10px;
+    padding: 10px;
+    background: var(--surface-2);
+    border: none;
+    border-radius: 10px;
+  }
+  .flow-node {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 12.5px;
+    background: var(--surface-2);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 7px 9px;
+    color: var(--ink);
+    white-space: nowrap;
+  }
+  .flow-node.cloud { border-color: var(--warn); color: var(--warn); background: var(--warn-wash); }
+  .flow-arrow { color: var(--ink-faint); font-size: 14px; }
+  .flow-note {
+    margin: 12px 0 0;
+    font-size: 14.5px;
+    color: var(--ink-muted);
+  }
+
+  .done-badge {
+    margin-top: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--accent-wash);
+    border: 1px solid var(--accent);
+    border-radius: 12px;
+    padding: 14px 16px;
+    font-weight: 700;
+    font-size: 15.5px;
+    color: var(--accent-strong);
+  }
+  .done-badge .check {
+    flex: none;
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: var(--accent-ink);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+  }
+
+  /* Stack */
+  .stack { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .stack-item {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 14px 10px;
+    text-align: center;
+  }
+  .stack-item .card-icon { margin: 0 auto 8px; }
+  .stack-item .t { font-weight: 700; font-size: 14.5px; }
+  .stack-item .d { font-size: 12.5px; color: var(--ink-muted); margin-top: 2px; }
+
+  .access-row {
+    margin-top: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 14px 16px;
+  }
+  .access-devices { display: flex; gap: 8px; flex-wrap: wrap; }
+  .access-dev, .access-server {
+    font-size: 13.5px;
+    font-weight: 600;
+    padding: 6px 10px;
+    border-radius: 8px;
+    background: var(--surface-2);
+    border: 1px solid var(--line);
+    white-space: nowrap;
+  }
+  .access-server { background: var(--accent-wash); border-color: var(--accent); color: var(--accent-strong); }
+
+  /* Footer / CTA */
+  footer {
+    padding: 36px 0 48px;
+  }
+  .cta-box {
+    background: var(--ink);
+    color: var(--ground);
+    border-radius: 18px;
+    padding: 26px 22px;
+  }
+  .cta-box .price {
+    font-family: "Big Shoulders Display", sans-serif;
+    font-weight: 900;
+    font-size: 40px;
+    color: var(--accent-strong);
+    line-height: 1;
+  }
+  .cta-box .price span {
+    font-family: "Karla", sans-serif;
+    font-weight: 500;
+    font-size: 15px;
+    color: var(--ground);
+    opacity: 0.7;
+    text-transform: none;
+  }
+  .cta-box p {
+    margin: 10px 0 0;
+    font-size: 15.5px;
+    opacity: 0.85;
+    max-width: 40ch;
+  }
+  .usage-box {
+    margin-top: 16px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.14);
+    border-radius: 12px;
+    padding: 14px 16px;
+  }
+  .usage-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+    padding: 6px 0;
+  }
+  .usage-row + .usage-row { border-top: 1px dashed rgba(255,255,255,0.14); }
+  .usage-row .u-label { font-size: 14px; opacity: 0.85; }
+  .usage-row .u-val { font-size: 14.5px; font-weight: 600; color: var(--accent-strong); white-space: nowrap; }
+  .usage-note {
+    margin: 10px 0 0;
+    font-size: 12.5px;
+    opacity: 0.65;
+    line-height: 1.4;
+  }
+
+  .buy-btn {
+    margin-top: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: var(--accent);
+    color: var(--accent-ink);
+    text-decoration: none;
+    font-family: "Karla", sans-serif;
+    font-weight: 700;
+    font-size: 17px;
+    padding: 14px 20px;
+    border-radius: 12px;
+    transition: transform 0.12s ease, background 0.15s ease;
+  }
+  .buy-btn:hover { background: var(--accent-strong); transform: translateY(-1px); }
+  .buy-btn:active { transform: translateY(0); }
+  .buy-btn svg { width: 18px; height: 18px; flex: none; }
+  .buy-btn:focus-visible { outline: 2px solid var(--accent-strong); outline-offset: 3px; }
+  .buy-sub {
+    margin: 8px 0 0;
+    text-align: center;
+    font-size: 13px;
+    opacity: 0.6;
+  }
+
+  .cta-box .foot-note {
+    margin-top: 16px;
+    padding-top: 14px;
+    border-top: 1px solid rgba(255,255,255,0.14);
+    font-size: 13.5px;
+    opacity: 0.6;
+  }
+
+  .disclaimer {
+    margin-top: 18px;
+    font-size: 13px;
+    color: var(--ink-faint);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; animation: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <span class="eyebrow">Feierabend-Paket · Beispielansicht</span>
+    <h1>18&nbsp;Uhr.<br>Werkstatt&nbsp;zu.<br><em>Büro&nbsp;läuft&nbsp;weiter.</em></h1>
+    <p class="lede">So könnte deine Steuerung aussehen — Angebote, Rechnungen, Mahnungen, dein Team, alles an einem Ort. Gleiches Prinzip, jedes Gewerk anders zugeschnitten.</p>
+
+    <div class="switcher">
+      <span class="switcher-label">Zeig mir's für:</span>
+      <div class="pills" id="pills" role="group" aria-label="Gewerk wählen"></div>
+    </div>
+
+    <div class="device">
+      <div class="device-bar">
+        <div class="who">
+          <div class="avatar" id="firmInitial">M</div>
+          <div class="firm">
+            <span id="firmName">Malerbetrieb Nachtigall</span>
+            <small id="firmOwner">Inh. J. Nachtigall</small>
+          </div>
+        </div>
+        <div class="date mono">So., 30.08.</div>
+      </div>
+      <div class="stats">
+        <div class="stat">
+          <div class="n warn" id="statOpen">4</div>
+          <div class="l">Angebote<br>offen</div>
+        </div>
+        <div class="stat">
+          <div class="n warn" id="statInvoice">2</div>
+          <div class="l">Rechnungen<br>fällig</div>
+        </div>
+        <div class="stat">
+          <div class="n ok" id="statNext">Mo</div>
+          <div class="l" id="statNextLabel">Nächster<br>Termin</div>
+        </div>
+      </div>
+      <div class="ede-line">
+        <span class="badge">✓</span>
+        <p id="edeLine">Angebot für <b>Fassade Musterstraße 12</b> ist raus — 340&nbsp;€ Material, 6&nbsp;Std. Arbeitszeit.</p>
+      </div>
+      <div class="pending-line">
+        <span class="badge">⏸</span>
+        <span class="txt">
+          <p id="pendingLine">Rechnung Fassade Musterstraße 12, 1.180&nbsp;€ — bereit zum Versand</p>
+          <span class="sub">wartet auf deine Freigabe</span>
+        </span>
+        <button class="go" type="button" tabindex="-1">Freigeben</button>
+      </div>
+      <div class="device-foot">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 15a3 3 0 0 0 3-3V6a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3z"/><path d="M19 11a7 7 0 0 1-14 0M12 18v3"/></svg>
+        Nichts geht raus, ohne dass du drüberschaust.
+      </div>
+    </div>
+  </div>
+</header>
+
+<section id="office">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Schritt 1</span>
+      <h2>Was dein KI-Betriebssystem dir abends abnimmt</h2>
+      <p>Du sprichst rein, was du brauchst. Fertig liegt's im Ablagesystem, revisionssicher — und einen eigenen Namen gibst du ihm selbst, ganz wie du willst.</p>
+    </div>
+    <div class="cards" id="officeCards"></div>
+  </div>
+</section>
+
+<section id="team">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Deine Mannschaft</span>
+      <h2>Wer arbeitet, kann was</h2>
+      <p>Jeder Mitarbeiter mit Qualifikation und Stundensatz hinterlegt — für Angebote, die von selbst richtig rechnen.</p>
+    </div>
+    <div class="team-list" id="teamList"></div>
+
+    <div class="team-divider"><span class="t">Deine KI-Abteilung</span><span class="line"></span></div>
+    <p class="team-note">Läuft im Hintergrund mit — genauso als feste Belegschaft geführt, nur ohne Lohnsteuer und Arbeitskleidung.</p>
+    <div class="agent-grid" id="agentGrid"></div>
+  </div>
+</section>
+
+<section id="governance">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Governance</span>
+      <h2>Wer entscheidet was</h2>
+      <p>Der Azubi darf am ersten Tag Werkzeug anreichen. Die Kasse führt er nicht. Genauso hält's die KI in deinem Büro — Aufgaben ja, Tresorschlüssel nein.</p>
+    </div>
+
+    <div class="cards">
+      <div class="card ampel-green">
+        <div class="card-top"><span class="card-icon emoji">🟢</span><h3>Macht die KI allein</h3></div>
+        <p>Angebote &amp; Rechnungen entwerfen (nicht verschicken), Diktate verschriftlichen, GoBD-Ablage sortieren, Recherche, Terminvorschläge.</p>
+      </div>
+      <div class="card ampel-yellow">
+        <div class="card-top"><span class="card-icon emoji">🟡</span><h3>Braucht dein Okay</h3></div>
+        <p>Rechnung oder Mail geht tatsächlich raus, Angebot landet beim Kunden, Social-Media-Post wird veröffentlicht. Ein Klick, dann erst.</p>
+      </div>
+      <div class="card ampel-red">
+        <div class="card-top"><span class="card-icon emoji">🔴</span><h3>Nie automatisch</h3></div>
+        <p>Geld überweisen, Daten löschen, Verträge oder Rechtliches final entscheiden. Bleibt für immer bei dir.</p>
+      </div>
+    </div>
+
+    <div class="team-divider"><span class="t">Entscheidungsteam</span><span class="line"></span></div>
+    <p class="team-note">Mehrere Leute am selben Server — dann braucht's einen, der den Hut aufhat. Am Einrichtungstag legen wir das fest: du oder deine Bürokraft, ein Name, schriftlich. Nicht "jeder darf alles einstellen" — sonst ändert der Azubi montags die Vorlage, und dienstags wunderst du dich, warum das Angebot komisch aussieht.</p>
+
+    <div class="decision-row">
+      <span class="card-icon emoji">👤</span>
+      <p><b>Fester Ansprechpartner ab Tag 1</b> — legt fest, was Grün, Gelb und Rot für deinen Betrieb bedeutet. Der Rest der Mannschaft arbeitet mit, eingestellt wird nur an einer Stelle.</p>
+    </div>
+
+    <p class="flow-note" style="margin-top:14px">Neues ausprobieren nicht auf eigene Faust — die KI läuft im Grün-Bereich in ihrem festen Rahmen. Fällt dir was Neues ein, eine zusätzliche Vorlage, ein weiterer Automatismus: kurzer Anruf oder Mail, wir sagen vorher was es kostet, dann bauen wir das ein. Kein Rumprobieren, das dir hinterher eine Rechnung beschert, mit der keiner gerechnet hat. Die Spanne weiter unten (3–10 bis 20–40&nbsp;€/Monat, ab Jahr 2 — Jahr 1 ist im Komfort-/Sorglos-Preis schon drin) gilt für den eingerichteten Rahmen und schwankt mit deinem Arbeitsaufkommen, nicht mit Experimenten. So behalten wir die Kostenkontrolle für dich, nicht gegen dich.</p>
+  </div>
+</section>
+
+<section id="reihenfolge">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Reihenfolge</span>
+      <h2>So kommt's bei dir rein</h2>
+      <p>Nicht alles auf einmal. Erst entlasten, dann ausbauen.</p>
+    </div>
+    <div class="steps">
+      <div class="step active">
+        <div class="num mono">01</div>
+        <div>
+          <h3>PC einrichten, Büro entlasten</h3>
+          <p>Ein Rechner auf Linux umgestellt. Angebote diktieren, E-Rechnung, Mahnungen, GoBD-Archiv.</p>
+          <span class="tag">Woche 1</span>
+        </div>
+      </div>
+      <div class="step later">
+        <div class="num mono">02</div>
+        <div>
+          <h3>Werkstatt dazu</h3>
+          <p>Material, Preise, Fuhrpark, Werkzeug-Inventar — sobald das Büro rund läuft.</p>
+          <span class="tag">später</span>
+        </div>
+      </div>
+      <div class="step later">
+        <div class="num mono">03</div>
+        <div>
+          <h3>Team einbinden</h3>
+          <p>Kollegen bekommen Zugriff auf das, was sie brauchen — nicht mehr, nicht weniger.</p>
+          <span class="tag">später</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="souveraenitaet">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Pflichten</span>
+      <h2>Der ganze Pflicht-Kram — abgehakt</h2>
+      <p>DSGVO, E-Rechnung, GoBD, AI Act. Dafür ist es da, nicht dagegen.</p>
+    </div>
+
+    <div class="cards">
+      <div class="card">
+        <div class="card-top"><span class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3 4 7v6c0 4.5 3.4 7.7 8 8 4.6-.3 8-3.5 8-8V7z"/><path d="M9 12l2 2 4-4"/></svg></span><h3>DSGVO</h3></div>
+        <p>Namen und Personal-Nr. werden vor der Verarbeitung anonymisiert — nie im Klartext. Die anonymisierte Anfrage selbst geht raus, an Claude (Anthropic, USA).</p>
+        <div class="flow">
+          <span class="flow-node">Name „J.&nbsp;Weber"</span>
+          <span class="flow-arrow">→</span>
+          <span class="flow-node">Platzhalter „MA-04"</span>
+          <span class="flow-arrow">→</span>
+          <span class="flow-node cloud">KI-Anfrage</span>
+          <span class="flow-arrow">→</span>
+          <span class="flow-node">Antwort</span>
+          <span class="flow-arrow">→</span>
+          <span class="flow-node">Name zurück</span>
+        </div>
+        <p class="flow-note">Zuordnungstabelle bleibt nur auf deinem eigenen Rechner. Kein deutsches oder europäisches Modell liefert aktuell das Diktat- und Textniveau — deshalb Claude, USA. Ehrlich gesagt statt schöngeredet: Die Anfrage verlässt den Rechner, der Klartext-Name nie.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-top"><span class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="5" y="4" width="14" height="16" rx="1.5"/><path d="M9 9h6M9 13h6M9 17h3"/></svg></span><h3>E-Rechnungspflicht</h3></div>
+        <p>Empfang und Versand im Pflichtformat (XRechnung/ZUGFeRD) ab Tag 1 — ohne dass du wissen musst, was das ist.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-top"><span class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h16M4 7v12a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V7M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"/></svg></span><h3>GoBD</h3></div>
+        <p>Jede Rechnung landet automatisch 10 Jahre revisionssicher im Archiv. Steuerberater fragt, zwei Klicks.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-top"><span class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/></svg></span><h3>EU AI Act</h3></div>
+        <p>Transparenzpflicht erfüllt: du siehst und entscheidest immer, bevor etwas rausgeht — kein Autopilot ohne dich (siehe Ampel-System "Wer entscheidet was" oben).</p>
+      </div>
+    </div>
+
+    <p class="flow-note" style="margin-top:14px">NIS2 betrifft nur bestimmte Branchen und Betriebsgrößen — für die meisten Handwerks- und Pflegebetriebe keine Pflicht, aber im Blick behalten.</p>
+
+    <div class="done-badge">
+      <span class="check">✓</span>
+      Alle EU-Pflichten für dein Büro erfüllt
+    </div>
+  </div>
+</section>
+
+<section id="stack">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Technik</span>
+      <h2>Ein PC als Server reicht</h2>
+      <p>Läuft bei dir im Büro, dein ganzer Betrieb kommt ran — vom Handy auf der Baustelle genauso wie vom Schreibtisch-PC.</p>
+    </div>
+    <div class="stack">
+      <div class="stack-item">
+        <div class="card-icon" style="margin:0 auto 8px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="4" width="16" height="12" rx="2"/><path d="M2 20h20M9 20v-4M15 20v-4"/></svg></div>
+        <div class="t">Nextcloud</div>
+        <div class="d">Akten, für alle erreichbar</div>
+      </div>
+      <div class="stack-item">
+        <div class="card-icon" style="margin:0 auto 8px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="6" cy="6" r="2.4"/><circle cx="18" cy="12" r="2.4"/><circle cx="6" cy="18" r="2.4"/><path d="M8.2 7.2 15.8 11M15.8 13 8.2 16.8"/></svg></div>
+        <div class="t">n8n</div>
+        <div class="d">Automatisierung</div>
+      </div>
+      <div class="stack-item">
+        <div class="card-icon" style="margin:0 auto 8px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3 4 7v6c0 4.5 3.4 7.7 8 8 4.6-.3 8-3.5 8-8V7z"/></svg></div>
+        <div class="t">KI-Zugang</div>
+        <div class="d">Nur fürs KI-Betriebssystem, pseudonymisiert</div>
+      </div>
+    </div>
+
+    <div class="access-row">
+      <div class="access-devices">
+        <span class="access-dev">📱 Handy</span>
+        <span class="access-dev">💻 PC</span>
+        <span class="access-dev">📋 Tablet</span>
+      </div>
+      <span class="flow-arrow">→</span>
+      <span class="access-server">🖥 Server im Büro</span>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="cta-box">
+      <div class="price">50&nbsp;€ <span>/ Monat, Schritt 1</span></div>
+      <p>Einrichtung vor Ort, deine bestehende Hardware, keine Cloud-Abo-Kette. Kein eigener KI-Account nötig — läuft über uns.</p>
+
+      <div class="usage-box">
+        <div class="usage-row">
+          <span class="u-label">Ab Jahr 2 &middot; normaler Büroalltag</span>
+          <span class="u-val mono">+ 3&ndash;10&nbsp;€</span>
+        </div>
+        <div class="usage-row">
+          <span class="u-label">Ab Jahr 2 &middot; viel Nutzung (viele Rechnungen/Diktate)</span>
+          <span class="u-val mono">+ 20&ndash;40&nbsp;€</span>
+        </div>
+        <p class="usage-note">Jahr 1 ist im Komfort-/Sorglos-Preis bereits drin. Ab Jahr 2: reine KI-Nutzungskosten, 1:1 durchgereicht, kein Aufschlag — die Spanne hängt vom Arbeitsaufkommen ab, nicht vom Ausprobieren (das ist durch den festen Rahmen oben ausgeschlossen). Wird laufend mitgemessen, kein böses Erwachen am Monatsende.</p>
+      </div>
+
+      <a class="buy-btn" href="mailto:agentur@helgereichert.de?subject=Feierabend-Paket%20%E2%80%93%20jetzt%20kaufen&body=Hallo%20Helge%2C%0A%0Aich%20will%20das%20Feierabend-Paket%20f%C3%BCr%20meinen%20Betrieb.%0A%0AFirma%3A%0AGewerk%3A%0ATelefon%3A">
+        Jetzt kaufen
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+      <p class="buy-sub">Kurze Mail, ich meld mich selbst zurück — kein Formular-Zirkus.</p>
+
+      <div class="foot-note mono">Feierabend-Paket · Helge Reichert</div>
+    </div>
+    <p class="disclaimer">Beispieldaten zur Veranschaulichung — kein echter Betrieb.</p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var GEWERKE = {
+    maler: {
+      label: "Maler", dot: "🎨",
+      initial: "M",
+      firm: "Malerbetrieb Nachtigall",
+      owner: "Inh. J. Nachtigall",
+      statOpen: "4", statInvoice: "2", statNext: "Mo", statNextLabel: "Nächster<br>Termin",
+      ede: 'Angebot für <b>Fassade Musterstraße 12</b> ist raus — 340&nbsp;€ Material, 6&nbsp;Std. Arbeitszeit.',
+      pending: "Rechnung Fassade Musterstraße 12, 1.180 € — bereit zum Versand",
+      office: [
+        { icon: 'doc', title: "Angebote diktieren", text: "Du sprichst den Auftrag rein, dein KI-Betriebssystem baut das Angebot in deinem Layout.", ex: ["Fassade Musterstr. 12", "340,00 €"] },
+        { icon: 'invoice', title: "E-Rechnung & GoBD", text: "Rechnung raus, automatisch 10 Jahre revisionssicher archiviert.", ex: ["Innenanstrich Weber", "1.180,00 €"] },
+        { icon: 'bell', title: "Mahnungen", text: "Überfällige Rechnungen erkannt, Mahntext liegt fertig zum Absenden.", ex: ["Garage Kunz, 41 Tage", "überfällig"] },
+        { icon: 'box', title: "Material & Preise", text: "Farbe, Tapete, Grundierung — Preise immer aktuell hinterlegt.", ex: ["Fassadenfarbe / m²", "6,80 €"] }
+      ],
+      team: [
+        { n: "J. Nachtigall", r: "Malermeister, Betriebsleitung", i: "JN", p: "PN-01" },
+        { n: "T. Brandt", r: "Geselle, Fassadenbau", i: "TB", p: "PN-02" },
+        { n: "S. Özdemir", r: "Geselle, Tapezierarbeiten", i: "SÖ", p: "PN-03" }
+      ]
+    },
+    pflege: {
+      label: "Pflegedienst", dot: "🏠",
+      initial: "P",
+      firm: "Ambulanter Pflegedienst Lichtblick",
+      owner: "PDL A. Berger",
+      statOpen: "3", statInvoice: "5", statNext: "14", statNextLabel: "Einsätze<br>morgen",
+      ede: 'Tourenplan für morgen steht — <b>14 Einsätze</b>, 3 Fahrer eingeteilt.',
+      pending: "Abrechnung AOK, Woche 35, 2.340 € — bereit zum Versand",
+      office: [
+        { icon: 'doc', title: "Leistungsnachweise", text: "Einsätze diktieren, dein KI-Betriebssystem erstellt den Nachweis fürs Pflegegeld.", ex: ["Frau Klein, SGB XI", "45 Min."] },
+        { icon: 'invoice', title: "Abrechnung Kassen", text: "Rechnung an Pflegekasse raus, GoBD-Archiv automatisch.", ex: ["Kasse AOK, Woche 35", "2.340,00 €"] },
+        { icon: 'bell', title: "Erinnerungen", text: "Offene Kassenzahlungen erkannt, Nachfrage liegt fertig bereit.", ex: ["TK, 30 Tage", "überfällig"] },
+        { icon: 'box', title: "Touren & Fahrtkosten", text: "Routen und Kilometerpauschalen immer aktuell hinterlegt.", ex: ["Tour Nord, 3 Fahrer", "0,35 €/km"] }
+      ],
+      team: [
+        { n: "A. Berger", r: "Pflegedienstleitung", i: "AB", p: "PN-01" },
+        { n: "M. Sørensen", r: "Pflegefachkraft", i: "MS", p: "PN-02" },
+        { n: "R. Kowalski", r: "Pflegehelfer", i: "RK", p: "PN-03" }
+      ]
+    },
+    heizung: {
+      label: "Heizung/Sanitär", dot: "🔧",
+      initial: "H",
+      firm: "Heizung & Sanitär Wagner",
+      owner: "Inh. F. Wagner",
+      statOpen: "6", statInvoice: "3", statNext: "Di", statNextLabel: "Nächster<br>Termin",
+      ede: 'Wartungsrechnung für <b>Kessel-Check Familie Weber</b> ist raus, GoBD-Archiv aktualisiert.',
+      pending: "Mahnung Firma Ecker, 52 Tage überfällig — bereit zum Versand",
+      office: [
+        { icon: 'doc', title: "Angebote diktieren", text: "Du sprichst rein, was verbaut wird, dein KI-Betriebssystem baut das Angebot.", ex: ["Heizkessel-Tausch Weber", "4.120,00 €"] },
+        { icon: 'invoice', title: "E-Rechnung & GoBD", text: "Rechnung raus, automatisch 10 Jahre revisionssicher archiviert.", ex: ["Wartung Kessel Krause", "189,00 €"] },
+        { icon: 'bell', title: "Mahnungen", text: "Überfällige Rechnungen erkannt, Mahntext liegt fertig bereit.", ex: ["Firma Ecker, 52 Tage", "überfällig"] },
+        { icon: 'box', title: "Material & Preise", text: "Kessel, Rohre, Thermostate — Preise immer aktuell hinterlegt.", ex: ["Kupferrohr 18mm / m", "9,40 €"] }
+      ],
+      team: [
+        { n: "F. Wagner", r: "Installateurmeister", i: "FW", p: "PN-01" },
+        { n: "D. Petrov", r: "Geselle, Heizungsbau", i: "DP", p: "PN-02" },
+        { n: "K. Aydın", r: "Geselle, Sanitär", i: "KA", p: "PN-03" }
+      ]
+    }
+  };
+
+  // Deine KI-Abteilung — gleiche Belegschaft für jedes Gewerk, aus der echten
+  // Agenten-Registry (desktop_agent/registry.json), Stand 30.08.2026.
+  var AGENTEN = [
+    { name: "Schreibbüro", rolle: "Angebote & Texte" },
+    { name: "Themenanalyse", rolle: "Neue Aufträge einordnen" },
+    { name: "Wissensbank-Auskunft", rolle: "Weiß, was du weißt" },
+    { name: "Bildwerkstatt", rolle: "Bilder & Vorlagen" },
+    { name: "Videostudio", rolle: "Video-Material" },
+    { name: "Poststelle", rolle: "Nachrichten senden/empfangen" },
+    { name: "Dashboard-Werkstatt", rolle: "Auswertungen bauen" },
+    { name: "Archiv", rolle: "Alles wiederfindbar ablegen" },
+    { name: "Postausgang", rolle: "Mail lesen & beantworten" },
+    { name: "Social-Media-Büro", rolle: "Posts fürs Netz" },
+    { name: "Web-Redaktion", rolle: "Webseite pflegen" },
+    { name: "Rechtsprüfung", rolle: "DSGVO & Recht im Blick" },
+    { name: "Compliance-Stelle", rolle: "Kundendaten absichern" },
+    { name: "Agenten-Werkstatt", rolle: "Baut neue Abteilungen" },
+    { name: "Trading-Desk", rolle: "Marktdaten im Blick" },
+    { name: "Sonntagsredaktion", rolle: "Wochenrückblick" },
+    { name: "Trading-Berichtswesen", rolle: "Auswertung als Tabelle" }
+  ];
+
+  var ICONS = {
+    doc: '<path d="M6 3h9l3 3v15H6z"/><path d="M15 3v3h3"/><path d="M9 12h6M9 16h6M9 8h3"/>',
+    invoice: '<rect x="5" y="4" width="14" height="16" rx="1.5"/><path d="M9 9h6M9 13h6M9 17h3"/>',
+    bell: '<path d="M12 3a5 5 0 0 0-5 5v3.5c0 1-.4 2-1.2 2.7L5 15h14l-.8-.8c-.8-.7-1.2-1.7-1.2-2.7V8a5 5 0 0 0-5-5z"/><path d="M9.5 19a2.5 2.5 0 0 0 5 0"/>',
+    box: '<path d="M3 8l9-5 9 5-9 5-9-5z"/><path d="M3 8v8l9 5 9-5V8"/><path d="M12 13v8"/>'
+  };
+
+  var pillsEl = document.getElementById('pills');
+  Object.keys(GEWERKE).forEach(function (key) {
+    var g = GEWERKE[key];
+    var b = document.createElement('button');
+    b.className = 'pill';
+    b.type = 'button';
+    b.setAttribute('data-key', key);
+    b.setAttribute('aria-pressed', 'false');
+    b.innerHTML = '<span class="dot">' + g.dot + '</span>' + g.label;
+    b.addEventListener('click', function () { render(key); });
+    pillsEl.appendChild(b);
+  });
+
+  function render(key) {
+    var g = GEWERKE[key];
+
+    Array.prototype.forEach.call(pillsEl.children, function (el) {
+      el.setAttribute('aria-pressed', el.getAttribute('data-key') === key ? 'true' : 'false');
+    });
+
+    document.getElementById('firmInitial').textContent = g.initial;
+    document.getElementById('firmName').textContent = g.firm;
+    document.getElementById('firmOwner').textContent = g.owner;
+    document.getElementById('statOpen').textContent = g.statOpen;
+    document.getElementById('statInvoice').textContent = g.statInvoice;
+    document.getElementById('statNext').textContent = g.statNext;
+    document.getElementById('statNextLabel').innerHTML = g.statNextLabel;
+    document.getElementById('edeLine').innerHTML = g.ede;
+    document.getElementById('pendingLine').textContent = g.pending;
+
+    var cardsEl = document.getElementById('officeCards');
+    cardsEl.innerHTML = '';
+    g.office.forEach(function (c) {
+      var div = document.createElement('div');
+      div.className = 'card';
+      div.innerHTML =
+        '<div class="card-top"><span class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">' + ICONS[c.icon] + '</svg></span><h3>' + c.title + '</h3></div>' +
+        '<p>' + c.text + '</p>' +
+        '<div class="example"><span>' + c.ex[0] + '</span><b>' + c.ex[1] + '</b></div>';
+      cardsEl.appendChild(div);
+    });
+
+    var teamEl = document.getElementById('teamList');
+    teamEl.innerHTML = '';
+    g.team.forEach(function (t) {
+      var row = document.createElement('div');
+      row.className = 'team-row';
+      row.innerHTML =
+        '<span class="initials">' + t.i + '</span>' +
+        '<span class="info"><span class="name">' + t.n + '</span><br><span class="role">' + t.r + '</span></span>' +
+        '<span class="pnr mono">' + t.p + '</span>';
+      teamEl.appendChild(row);
+    });
+  }
+
+  function renderAgents() {
+    var grid = document.getElementById('agentGrid');
+    var sparkIcon = '<path d="M12 3v4M12 17v4M4.2 4.2l2.8 2.8M17 17l2.8 2.8M3 12h4M17 12h4M4.2 19.8 7 17M17 7l2.8-2.8"/><circle cx="12" cy="12" r="2.2"/>';
+    AGENTEN.forEach(function (a) {
+      var card = document.createElement('div');
+      card.className = 'agent-card';
+      card.innerHTML =
+        '<span class="a-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">' + sparkIcon + '</svg></span>' +
+        '<span class="a-info"><span class="a-name">' + a.name + '</span><span class="a-role">' + a.rolle + '</span></span>';
+      grid.appendChild(card);
+    });
+  }
+
+  renderAgents();
+  render('maler');
+})();
+</script>
+
+</body>
+</html>
