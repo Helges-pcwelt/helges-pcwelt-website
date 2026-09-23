@@ -108,7 +108,7 @@
   }
 
   @media (min-width: 720px) {
-    .wrap { max-width: 860px; padding: 0 32px; }
+    .wrap { max-width: 1040px; padding: 0 32px; }
   }
 
   /* ---------- Eyebrow / labels ---------- */
@@ -1118,6 +1118,7 @@
   };
 
   var pillsEl = document.getElementById('pills');
+  pillsEl.innerHTML = '';
   Object.keys(GEWERKE).forEach(function (key) {
     var g = GEWERKE[key];
     var b = document.createElement('button');
@@ -1174,6 +1175,7 @@
 
   function renderAgents() {
     var grid = document.getElementById('agentGrid');
+    grid.innerHTML = '';
     var sparkIcon = '<path d="M12 3v4M12 17v4M4.2 4.2l2.8 2.8M17 17l2.8 2.8M3 12h4M17 12h4M4.2 19.8 7 17M17 7l2.8-2.8"/><circle cx="12" cy="12" r="2.2"/>';
     AGENTEN.forEach(function (a) {
       var card = document.createElement('div');
