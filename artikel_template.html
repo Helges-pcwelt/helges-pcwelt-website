@@ -80,17 +80,18 @@
       --accent: #7ab800;
       --accent2: #4a7c00;
       --text: #d8e8d0;
-      --muted: #7a9070;
-      --font: 'Georgia', serif;
-      --font-ui: 'Inter', -apple-system, sans-serif;
+      --muted: #a3c090;
+      --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-ui: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       background: var(--bg);
       color: var(--text);
       font-family: var(--font);
-      font-size: 1.1rem;
-      line-height: 1.8;
+      font-size: 1.2rem;
+      font-weight: 500;
+      line-height: 1.75;
     }
 
     /* ── Header ── */
@@ -145,14 +146,27 @@
       font-family: var(--font-ui);
       font-size: .85rem;
       color: var(--muted);
+      max-width: 600px;
       text-align: center;
       font-style: italic;
     }
 
     /* ── Artikel-Wrapper ── */
     .artikel {
-      width: 100%;
-      padding: 48px 32px 80px;
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 48px 40px 90px;
+    }
+
+    /* ── Prosa-Spaltenbreite: reine Textblöcke bleiben gut lesbar,
+         auch wenn der Artikel-Container breiter ist ── */
+    .lead,
+    .kurzfassung,
+    .abschnitt-text,
+    .abschnitt.ohne-bild,
+    .quellen-block,
+    .artikel-footer {
+      max-width: 780px;
     }
 
     /* ── Meta ── */
@@ -183,6 +197,7 @@
       line-height: 1.15;
       color: #fff;
       margin-bottom: 12px;
+      max-width: 900px;
     }
     h1.artikel-titel em { color: var(--accent); font-style: normal; }
 
@@ -202,13 +217,13 @@
     }
     .abschnitt.mit-bild-rechts {
       display: grid;
-      grid-template-columns: 1fr 280px;
+      grid-template-columns: 1fr 420px;
       gap: 32px;
       align-items: start;
     }
     .abschnitt.mit-bild-links {
       display: grid;
-      grid-template-columns: 280px 1fr;
+      grid-template-columns: 420px 1fr;
       gap: 32px;
       align-items: start;
     }
@@ -274,7 +289,6 @@
     }
 
     /* ── Einfacher Absatz ohne Bild ── */
-    .abschnitt.ohne-bild { max-width: 100%; }
     .abschnitt.ohne-bild p { margin-bottom: 18px; }
 
     /* ── Zitat / Highlight ── */
@@ -285,6 +299,7 @@
       background: var(--surface);
       color: #b8c8b0;
       font-style: italic;
+      max-width: 780px;
     }
 
     /* ── Footer ── */
@@ -300,12 +315,12 @@
 
     /* ── Responsive ── */
     @media (max-width: 1240px) {
-      .abschnitt.mit-bild-rechts { grid-template-columns: 1fr 240px; }
-      .abschnitt.mit-bild-links { grid-template-columns: 240px 1fr; }
+      .abschnitt.mit-bild-rechts { grid-template-columns: 1fr 360px; }
+      .abschnitt.mit-bild-links { grid-template-columns: 360px 1fr; }
     }
     @media (max-width: 1080px) {
-      .abschnitt.mit-bild-rechts { grid-template-columns: 1fr 200px; gap: 24px; }
-      .abschnitt.mit-bild-links { grid-template-columns: 200px 1fr; gap: 24px; }
+      .abschnitt.mit-bild-rechts { grid-template-columns: 1fr 300px; gap: 24px; }
+      .abschnitt.mit-bild-links { grid-template-columns: 300px 1fr; gap: 24px; }
     }
     @media (max-width: 680px) {
       .abschnitt.mit-bild-rechts,
@@ -315,6 +330,9 @@
       .abschnitt.mit-bild-links .abschnitt-text { order: 1; }
       .abschnitt.mit-bild-links .abschnitt-bild { order: 2; }
       .artikel { padding: 32px 20px 60px; }
+      .lead, .kurzfassung, .abschnitt-text, .abschnitt.ohne-bild, .quellen-block, .artikel-footer, h1.artikel-titel, blockquote.zitat {
+        max-width: 100%;
+      }
     }
   </style>
 </head>
