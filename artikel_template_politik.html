@@ -157,15 +157,26 @@
       font-family: var(--font-ui);
       font-size: .88rem;
       color: var(--muted);
+      max-width: 680px;
       text-align: center;
       font-style: italic;
       line-height: 1.5;
     }
 
-    /* ════ WRAPPER — volle Breite mit großzügigem Padding ════ */
+    /* ════ WRAPPER ════ */
     .artikel-outer {
-      width: 100%;
+      max-width: 1440px;
+      margin: 0 auto;
       padding: 52px 48px 100px;
+    }
+
+    /* ── Prosa-Spaltenbreite: reine Textblöcke bleiben gut lesbar,
+         auch wenn der Artikel-Container breiter ist ── */
+    .lead,
+    .abschnitt.ohne-bild,
+    .faq-block,
+    .artikel-footer {
+      max-width: 780px;
     }
 
     /* ════ META-ZEILE ════ */
@@ -201,6 +212,7 @@
       line-height: 1.1;
       color: #fff;
       margin-bottom: 16px;
+      max-width: 900px;
     }
     h1.artikel-titel em {
       color: var(--gold);
@@ -309,6 +321,7 @@
       font-style: italic;
       font-size: 1.05rem;
       line-height: 1.7;
+      max-width: 780px;
       border-radius: 0 3px 3px 0;
     }
 
