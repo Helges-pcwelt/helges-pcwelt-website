@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Max, Udo und die Schere: Wie deine Brötchentüte zum Bußgeldbescheid wird | helges-pcwelt.de</title>
+  <meta name="description" content="Neues Verpackungsrecht 2026: Wann Bäcker, Metzger und Tresenhändler Hersteller sind, was sie melden müssen und wie sie den Papierkram loswerden.">
+  <meta name="author" content="Helge Reichert">
+  <style>
+    :root {
+      --bg: #0a0f0a;
+      --surface: #111811;
+      --border: #1e2e1e;
+      --accent: #7ab800;
+      --accent2: #4a7c00;
+      --text: #f0f6ec;
+      --muted: #a9bd9f;
+      --font: 'Georgia', serif;
+      --font-ui: 'Inter', -apple-system, sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      font-size: 1.35rem;
+      line-height: 1.75;
+    }
+
+    /* ── Header ── */
+    .site-header {
+      background: var(--surface);
+      border-bottom: 2px solid var(--accent);
+      padding: 14px 40px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .site-header .logo {
+      font-family: var(--font-ui);
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--accent);
+      letter-spacing: .05em;
+      text-transform: uppercase;
+    }
+    .site-header .tagline {
+      font-family: var(--font-ui);
+      font-size: .8rem;
+      color: var(--muted);
+    }
+
+    /* ── Titelbild ── */
+    .hero-image {
+      width: 100%;
+      max-height: 480px;
+      object-fit: cover;
+      display: block;
+    }
+    .hero-image-placeholder {
+      width: 100%;
+      height: 380px;
+      background: linear-gradient(135deg, #0f1f0f, #1a2e1a);
+      border-bottom: 2px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
+    .hero-image-placeholder .prompt-label {
+      font-family: var(--font-ui);
+      font-size: .7rem;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: .12em;
+    }
+    .hero-image-placeholder .prompt-text {
+      font-family: var(--font-ui);
+      font-size: .85rem;
+      color: var(--muted);
+      max-width: 600px;
+      text-align: center;
+      font-style: italic;
+    }
+
+    /* ── Artikel-Wrapper ── */
+    .artikel {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 48px 32px 80px;
+    }
+
+    /* ── Meta ── */
+    .meta {
+      font-family: var(--font-ui);
+      font-size: 1rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      margin-bottom: 20px;
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+    .meta .cluster-badge {
+      background: rgba(122,184,0,.15);
+      border: 1px solid rgba(122,184,0,.3);
+      color: var(--accent);
+      padding: 3px 12px;
+      border-radius: 12px;
+    }
+
+    /* ── Titel ── */
+    h1.artikel-titel {
+      font-family: var(--font-ui);
+      font-size: clamp(2.2rem, 4.5vw, 3.2rem);
+      font-weight: 900;
+      line-height: 1.15;
+      color: #fff;
+      margin-bottom: 12px;
+    }
+    h1.artikel-titel em { color: var(--accent); font-style: normal; }
+
+    /* ── Lead ── */
+    .lead {
+      font-size: 1.55rem;
+      color: #e0ecd8;
+      line-height: 1.6;
+      margin-bottom: 40px;
+      padding-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* ── Abschnitte mit Illustrations-Bild ── */
+    .abschnitt {
+      margin-bottom: 48px;
+    }
+    .abschnitt.mit-bild-rechts {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 32px;
+      align-items: start;
+    }
+    .abschnitt.mit-bild-links {
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      gap: 32px;
+      align-items: start;
+    }
+    .abschnitt.mit-bild-links .abschnitt-text { order: 2; }
+    .abschnitt.mit-bild-links .abschnitt-bild { order: 1; }
+
+    .abschnitt-bild img {
+      width: 100%;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+      display: block;
+    }
+    .abschnitt-bild .bild-placeholder {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      background: var(--surface);
+      border: 1px dashed var(--border);
+      border-radius: 4px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 16px;
+    }
+    .bild-placeholder .prompt-label {
+      font-family: var(--font-ui);
+      font-size: .65rem;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: .1em;
+    }
+    .bild-placeholder .prompt-text {
+      font-family: var(--font-ui);
+      font-size: .75rem;
+      color: var(--muted);
+      text-align: center;
+      font-style: italic;
+    }
+
+    /* ── Text ── */
+    h2.abschnitt-h2 {
+      font-family: var(--font-ui);
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 16px;
+      padding-left: 12px;
+      border-left: 3px solid var(--accent);
+    }
+    .abschnitt-text p {
+      margin-bottom: 18px;
+    }
+    .schlagsatz {
+      font-family: var(--font-ui);
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #fff;
+      background: var(--surface);
+      border-left: 4px solid var(--accent);
+      padding: 10px 16px;
+      margin: 20px 0;
+    }
+
+    /* ── Einfacher Absatz ohne Bild ── */
+    .abschnitt.ohne-bild { max-width: 100%; }
+    .abschnitt.ohne-bild p { margin-bottom: 18px; }
+
+    /* ── Zitat / Highlight ── */
+    blockquote.zitat {
+      border-left: 4px solid var(--accent2);
+      margin: 28px 0;
+      padding: 16px 24px;
+      background: var(--surface);
+      color: #b8c8b0;
+      font-style: italic;
+    }
+
+    /* ── Footer ── */
+    .artikel-footer {
+      margin-top: 60px;
+      padding-top: 32px;
+      border-top: 1px solid var(--border);
+      font-family: var(--font-ui);
+      font-size: 1.05rem;
+      color: var(--muted);
+    }
+    .artikel-footer a { color: var(--accent); text-decoration: none; }
+
+    /* ── Responsive ── */
+    @media (max-width: 680px) {
+      .abschnitt.mit-bild-rechts,
+      .abschnitt.mit-bild-links {
+        grid-template-columns: 1fr;
+      }
+      .abschnitt.mit-bild-links .abschnitt-text { order: 1; }
+      .abschnitt.mit-bild-links .abschnitt-bild { order: 2; }
+      .artikel { padding: 32px 20px 60px; }
+    }
+  .cta-box { background: rgba(122,184,0,.10); border: 1px solid var(--accent); border-radius: 10px; padding: 22px 26px; margin: 28px 0; font-family: var(--font-ui); font-size: 1.25rem; }
+    .cta-box a { color: var(--accent); font-weight: 700; }
+    .cta-box p { margin-bottom: 10px; } .cta-box p:last-child { margin-bottom: 0; }
+    .note { font-family: var(--font-ui); font-size: 1.05rem; color: var(--muted); }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <div>
+    <div class="logo">helges-pcwelt.de</div>
+    <div class="tagline">Linux · Digitale Souveränität · Klartext</div>
+  </div>
+</header>
+
+<div class="hero-image-placeholder">
+  <span class="prompt-label">Titelbild-Prompt (16:9)</span>
+  <span class="prompt-text">Bäckerei am frühen Morgen, Verkäuferin schiebt Brötchen in eine Papiertüte mit Aufdruck, daneben ein riesiger Bußgeldbescheid, der aus der Registrierkasse kommt, leicht überzeichneter Comic-Stil.</span>
+</div>
+
+<main class="artikel">
+
+  <p class="note" style="margin-bottom:18px"><em>Keine Rechtsberatung. Stand 29.09.2026. Ersetzt keine Beratung durch einen Anwalt oder die Zentrale Stelle Verpackungsregister.</em></p>
+
+  <div class="meta">
+    <span class="cluster-badge">Verpackungsrecht</span>
+    <span>29.09.2026</span>
+    <span>Helge Reichert</span>
+  </div>
+
+  <h1 class="artikel-titel">Max, Udo und die Schere: Wie deine <em>Brötchentüte</em> zum Bußgeldbescheid wird</h1>
+
+  <p class="lead">Viertel vor sechs in Burbach. Sechs Weck, zwei Fleischkäsweck, ein Kaffee zum Mitnehmen, alles in die Tüte mit dem Namen drauf. Seit dem 12. August 2026 ist diese Tüte ein Rechtsgeschäft.</p>
+
+  <div class="abschnitt mit-bild-rechts">
+    <div class="abschnitt-text">
+      <h2 class="abschnitt-h2">Max, Udo und die Schere</h2>
+      <p>Max ist Bäcker, Udo liefert ihm die Tüten. Steht Max' Name drauf, ist Max Hersteller und hat den Papierkram, es sei denn, Max ist klein genug, dann ist es Udo, es sei denn, Udo sitzt in Polen, dann wieder Max, es sei denn, Max kauft Papier von der Rolle und schneidet selbst ab, dann ist er es sowieso.</p>
+      <div class="schlagsatz">Die Schere entscheidet, ob du ein Bußgeld riskierst. Die Schere.</div>
+      <p>Und der Teig wartet, weil der Mann, der Brötchen backen will, am Tresen Papierrollen sortiert.</p>
+    </div>
+    <div class="abschnitt-bild">
+      <div class="bild-placeholder">
+        <span class="prompt-label">Illustration 1 (1:1)</span>
+        <span class="prompt-text">Bäcker Max mit Mehl im Gesicht hält eine riesige Schere über eine Papierrolle, im Hintergrund winkt Udo aus einem Lieferwagen, Comic-Stil.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="abschnitt mit-bild-links">
+    <div class="abschnitt-bild">
+      <div class="bild-placeholder">
+        <span class="prompt-label">Illustration 2 (1:1)</span>
+        <span class="prompt-text">Ein Bäcker sitzt vor einem Laptop mit zwei Portalen auf dem Bildschirm und tippt dieselbe Zahl doppelt ein, daneben ein Wecker und ein Berg Tütenrechnungen, Comic-Stil.</span>
+      </div>
+    </div>
+    <div class="abschnitt-text">
+      <h2 class="abschnitt-h2">Was du jetzt am Hals hast</h2>
+      <p><strong>1.</strong> Registrieren, in LUCID, dem Register der Zentralen Stelle Verpackungsregister.<br>
+         <strong>2.</strong> Vertrag mit einem dualen System, bevor die erste Tüte über den Tresen geht.<br>
+         <strong>3.</strong> Jedes Jahr die Kilos melden, zweimal, dieselbe Zahl in zwei Portale.</p>
+      <div class="schlagsatz">Und das darf dir keiner abnehmen: Registrierung und LUCID-Meldung macht per Gesetz der Betrieb selbst.</div>
+      <p>Wer's schleifen lässt, riskiert Verkaufsverbot und bis zu 200.000 € Bußgeld. Für eine Tüte mit einer Laugenbrezel drin.</p>
+    </div>
+  </div>
+
+  <div class="abschnitt ohne-bild">
+    <h2 class="abschnitt-h2">Du backst, wir rechnen</h2>
+    <p>Erst der Verpackungs-Check, 15 Minuten im Erstgespräch: Bist du Max oder Udo? Bist du Hersteller, kümmern wir uns um Vertrag, Kilos und Meldung. Du schickst uns einmal im Jahr die Tütenrechnungen, Handyfoto reicht. Einmal sitzt du an der Tastatur, wir diktieren jedes Feld, 15 Minuten, fertig.</p>
+    <p>Einrichtung 265 € netto, Jahrespauschale 418 € netto, rund 35 € im Monat, ungefähr zwei Fleischkäsweck pro Woche. Die Lizenz des dualen Systems zahlst du direkt (ab ca. 39–79 € im Jahr).</p>
+    <div class="schlagsatz">Dein Mehl mahlst du ja auch nicht selbst.</div>
+    <div class="cta-box">
+      <p>→ <a href="verpackungs-check.html">Verpackungs-Check machen</a></p>
+      <p>→ <a href="feierabend-paket.html#verpackung">Das Feierabend-Paket ansehen</a></p>
+      <p>→ <a href="mailto:agentur@helgereichert.de?subject=Verpackung%20analog">Mail an agentur@helgereichert.de</a></p>
+    </div>
+  </div>
+
+  <div class="artikel-footer">
+    <p>Max und Udo nach einem Clip von Frank Helbig. · <a href="feierabend-paket.html#verpackung">← Zurück zum Feierabend-Paket</a></p>
+  </div>
+
+</main>
+</body>
+</html>
