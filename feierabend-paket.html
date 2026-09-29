@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <title>Feierabend-Paket</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
 <style>
 @font-face {
   font-family: 'Big Shoulders Display';
@@ -97,49 +98,6 @@
 
 <style>
   :root {
-    --ground: #FAF7EF;
-    --surface: #FFFFFF;
-    --surface-2: #F1EBDA;
-    --ink: #221D14;
-    --ink-muted: #5A5040;
-    --ink-faint: #6E634E;
-    --accent: #4C9A22;
-    --accent-strong: #3A7A18;
-    --accent-ink: #FFFFFF;
-    --accent-wash: #E7F1DC;
-    --line: #E4DCC6;
-    --warn: #B5791C;
-    --warn-wash: #F5E9D2;
-    --danger: #B23A2E;
-    --danger-wash: #F6DFD9;
-    --shadow: 0 1px 2px rgba(34,29,20,0.06), 0 8px 24px -12px rgba(34,29,20,0.18);
-    --radius: 14px;
-    color-scheme: light;
-  }
-
-  @media all {
-    :root:not([data-theme="light"]) {
-      --ground: #16130E;
-      --surface: #201B13;
-      --surface-2: #2A2418;
-      --ink: #FFFFFF;
-      --ink-muted: #FFFFFF;
-      --ink-faint: #FFFFFF;
-      --accent: #74C93C;
-      --accent-strong: #8BDA55;
-      --accent-ink: #14210A;
-      --accent-wash: #263620;
-      --line: #362F21;
-      --warn: #E0A93A;
-      --warn-wash: #332911;
-      --danger: #E2695A;
-      --danger-wash: #3A2018;
-      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 12px 28px -14px rgba(0,0,0,0.6);
-      color-scheme: dark;
-    }
-  }
-
-  :root[data-theme="dark"] {
     --ground: #16130E;
     --surface: #201B13;
     --surface-2: #2A2418;
@@ -741,8 +699,9 @@
     padding: 36px 0 48px;
   }
   .cta-box {
-    background: var(--ink);
-    color: var(--ground);
+    background: var(--surface-2);
+    border: 1px solid var(--accent);
+    color: #FFFFFF;
     border-radius: 18px;
     padding: 26px 22px;
   }
@@ -757,7 +716,7 @@
     font-family: "Karla", sans-serif;
     font-weight: 500;
     font-size: 16px;
-    color: var(--ground);
+    color: #FFFFFF;
     opacity: 0.85;
     text-transform: none;
   }
